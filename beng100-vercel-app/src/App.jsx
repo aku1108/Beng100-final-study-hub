@@ -110,12 +110,12 @@ const MODULES = [
     ],
     "example": {
       "source": "Week 1 lecture example",
-      "prompt": "A bioengineering lab has 5 distinct cells: C1, C2, C3, C4, C5. The lab selects 3 cells for analysis. In how many ways can you select these cells provided that (a) You replace the cells and the order matters (b) You do NOT replace and the order matters (Permutations) (c) You do NOT replace and the order does NOT matter (Combinations) (d) You replace and the order does NOT matter",
+      "prompt": "EXAMPLE: A bioengineering lab has 5 distinct cells: $C_1,C_2,C_3,C_4,C_5$. The lab selects 3 cells for analysis. In how many ways can you select these cells provided that (a) You replace the cells and the order matters (b) You do NOT replace and the order matters (Permutations) (c) You do NOT replace and the order does NOT matter (Combinations) (d) You replace and the order does NOT matter",
       "solution": "(a) With replacement/order matters: $5^3=125$.\n(b) Without replacement/order matters: $5\\cdot4\\cdot3=60=5!/(5-3)!$.\n(c) Without replacement/order does not matter: $\\binom{5}{3}=10$.\n(d) With replacement/order does not matter: $\\binom{5+3-1}{3}=\\binom{7}{3}=35$."
     },
     "practice": {
-      "source": "Homework 1 style",
-      "prompt": "A bioengineering laboratory tests 120 patient blood samples for two biomarkers. Let A be samples where biomarker A is detected and B be samples where biomarker B is detected. Suppose |A|=50, |B|=40, and |A∩B|=15. Find |A∪B|, |A^c|, |A\\B|, and the number of samples where neither biomarker is detected.",
+      "source": "Homework 1 Problem 1",
+      "prompt": "Problem 1 [16 points]. A bioengineering laboratory tests 120 patient blood samples for two biomarkers associated with early cancer detection. The following sets are defined as: $A$: samples where biomarker A is detected; $B$: samples where biomarker B is detected; $\\Omega$: the set of all tested samples. Suppose that $|A|=50$, $|B|=40$, and $|A\\cap B|=15$. (a) Find the number of samples in $A\\cup B$. (b) Describe in words what the set $A^c$ represents and calculate the number of samples in this set. (c) Describe in words what the set $A\\setminus B$ represents and calculate the number of samples in this set. (d) Find the number of samples where neither biomarker is detected.",
       "answer": "$|A\\cup B|=50+40-15=75$.\n$|A^c|=120-50=70$.\n$|A\\setminus B|=50-15=35$.\nNeither biomarker: $120-75=45$."
     }
   },
@@ -165,12 +165,12 @@ const MODULES = [
     ],
     "example": {
       "source": "Week 2 lecture example",
-      "prompt": "A single cell from a tumor is analyzed using sequencing. For this cell, we record: Mutation status in a cancer gene: M (mutation detected), N (no mutation). Expression level of the same gene: H (high expression), L (low expression). (a) List all possible outcomes in the sample space Ω={(Mutation Status, Expression level)} (b) State whether each is an outcome or an event: (M,H), {(M,H),(M,L)}, (N,L), {(M,H)} (c) Define events A: the cell carries a mutation, B: the gene is highly expressed, C: the cell has a mutation OR high expression, D: the cell has a mutation AND low expression. (d) Write and interpret A∩B and A^c. (e) Evaluate the relationship between {(M,H)} and A.",
+      "prompt": "EXAMPLE: A single cell from a tumor is analyzed using sequencing. For this cell, we record: Mutation status in a cancer gene: $M$ (mutation detected), $N$ (no mutation). Expression level of the same gene: $H$ (high expression), $L$ (low expression). (a) List all possible outcomes in the sample space $\\Omega=\\{(\\text{Mutation Status},\\text{Expression level})\\}$. (b) State whether each is an outcome or an event: $(M,H)$, $\\{(M,H),(M,L)\\}$, $(N,L)$, $\\{(M,H)\\}$. (c) Define the following events as sets of outcomes: $A$: the cell carries a mutation; $B$: the gene is highly expressed; $C$: the cell has a mutation OR high expression; $D$: the cell has a mutation AND low expression. (d) Write and interpret $A\\cap B$ and $A^c$. (e) Evaluate the relationship between $\\{(M,H)\\}$ and $A$.",
       "solution": "$\\Omega=\\{(M,H),(M,L),(N,H),(N,L)\\}$.\n$(M,H)$ and $(N,L)$ are outcomes; $\\{(M,H),(M,L)\\}$ and $\\{(M,H)\\}$ are events.\n$A=\\{(M,H),(M,L)\\}$, $B=\\{(M,H),(N,H)\\}$, $C=A\\cup B=\\{(M,H),(M,L),(N,H)\\}$, $D=\\{(M,L)\\}$.\n$A\\cap B=\\{(M,H)\\}$ means mutation and high expression. $A^c=\\{(N,H),(N,L)\\}$ means no mutation. $\\{(M,H)\\}\\subset A$."
     },
     "practice": {
-      "source": "Midterm 1 style",
-      "prompt": "A diagnostic device is produced by Line 1 with probability 0.25 and Line 2 with probability 0.75. For Line 1, P(high signal)=0.60 and P(low noise)=0.50. For Line 2, P(high signal)=0.20 and P(low noise)=0.30. Within each line, high signal and low noise are independent. Find P(high signal and low noise), P(low noise), and P(high signal | low noise).",
+      "source": "Midterm 1 Problem 1",
+      "prompt": "Problem 1 [18 points]. In a bioengineering study, a diagnostic device is manufactured using two different assembly lines. Approximately 25% of devices are produced using Line 1, while the remaining 75% are produced using Line 2. Each device is evaluated for two performance outcomes: whether it produces a high signal response and whether it achieves low measurement noise. For devices produced on Line 1, 60% produce a high signal response and 50% achieve low measurement noise. For devices produced on Line 2, 20% produce a high signal response and 30% achieve low measurement noise. It is known that, within each assembly line, the two performance outcomes are independent. (a) What is the probability that a device from Line 1 produces both a high signal response and achieves low measurement noise? (b) What is the overall probability that a randomly selected device produces both a high signal response and achieves low measurement noise? (c) What is the overall probability that a randomly selected device achieves low measurement noise? (d) Among devices that achieve low measurement noise, what fraction also produce a high signal response? (e) Based on your result in part (d), determine whether the two performance outcomes are independent in the overall population. Briefly justify your answer.",
       "answer": "Line 1 AND: $0.60(0.50)=0.30$. Line 2 AND: $0.20(0.30)=0.06$.\n$P(A\\cap B)=0.30(0.25)+0.06(0.75)=0.12$.\n$P(B)=0.50(0.25)+0.30(0.75)=0.35$.\n$P(A|B)=0.12/0.35\\approx0.343$."
     }
   },
@@ -240,12 +240,12 @@ const MODULES = [
     ],
     "example": {
       "source": "Week 3 lecture example",
-      "prompt": "A sequencing experiment analyzes 3 independent DNA sites, each of which contains a mutation with probability 1/2. Let X be the number of sites at which a mutation is detected. Find the range and PMF of X.",
+      "prompt": "EXAMPLE: A sequencing experiment analyzes 3 independent DNA sites, each of which contains a mutation with probability $1/2$. Let $X$ be the number of sites at which a mutation is detected. Find the range and PMF of $X$.",
       "solution": "$R_X=\\{0,1,2,3\\}$. Since each of the 8 outcomes is equally likely, $P(X=0)=1/8$, $P(X=1)=3/8$, $P(X=2)=3/8$, $P(X=3)=1/8$. This is also Binomial$(n=3,p=1/2)$."
     },
     "practice": {
-      "source": "Homework 3 style",
-      "prompt": "A microfluidic fluorescence assay reports signal intensity X=10,20,30 with probabilities 0.20, 0.50, 0.30. A calibration gives Y=1.5X+5. Find the PMF of Y, E[Y], and SD[Y].",
+      "source": "Homework 3 Problem 1",
+      "prompt": "Problem 1 [21 points]. In a microfluidic fluorescence assay, droplets pass through a detector that records signal intensity. Due to biological variability, the device reports three possible signal levels: 10, 20, or 30 units. Experimental characterization shows that low-intensity droplets (10 units) occur 20% of the time, medium-intensity droplets (20 units) occur 50% of the time, and high-intensity droplets (30 units) occur 30% of the time. Let $X$ denote the measured fluorescence intensity of a randomly selected droplet. To improve measurement accuracy, the system applies a calibration that rescales and shifts the signal according to $Y=1.5X+5$. (a) Compute the probability mass function (PMF) of $Y$. (b) Compute the expected value of $Y$. (c) Compute the standard deviation of $Y$.",
       "answer": "Values: $Y=20,35,50$ with probabilities $0.20,0.50,0.30$.\n$E[Y]=20(0.2)+35(0.5)+50(0.3)=36.5$.\n$E[Y^2]=400(0.2)+1225(0.5)+2500(0.3)=1442.5$.\n$Var[Y]=1442.5-36.5^2=110.25$, so $SD[Y]=10.5$."
     }
   },
@@ -310,12 +310,12 @@ const MODULES = [
     ],
     "example": {
       "source": "Week 4 lecture example",
-      "prompt": "A PCR-based assay is used to detect a specific DNA sequence in a biological sample. Due to technical and biological variability, the assay successfully detects the target in a given run with probability 0.90, and fails otherwise. Suppose the assay is repeated until 9 successful detections are observed. Determine the probability that exactly 10 runs are required. Find the expected number of runs required to obtain these 9 successful detections.",
+      "prompt": "EXAMPLE: A PCR-based assay is used to detect a specific DNA sequence in a biological sample. Due to technical and biological variability, the assay successfully detects the target in a given run with probability 0.90, and fails otherwise. Suppose the assay is repeated until 9 successful detections are observed. Determine the probability that exactly 10 runs are required. Find the expected number of runs required to obtain these 9 successful detections.",
       "solution": "$X\\sim Pascal(m=9,p=0.90)$.\n$P(X=10)=\\binom{9}{8}(0.90)^9(0.10)=9(0.90)^9(0.10)\\approx0.3487$.\n$E[X]=m/p=9/0.90=10$."
     },
     "practice": {
-      "source": "Homework 4 style",
-      "prompt": "A single-cell RNA sequencing assay detects a low-abundance gene with probability p=0.30 independently each run. The experiment is repeated until 5 successful detections are observed. Let X be total runs required. Find P(X=8), E[X], and Var[X].",
+      "source": "Homework 4 Problem 2",
+      "prompt": "Problem 2 [15 points]. A single-cell RNA sequencing assay is used to detect expression of a low-abundance gene. Due to biological variability and measurement noise, each sequencing run successfully detects the gene with probability $p=0.30$, independently of other runs. The experiment is repeated until 5 successful detections are observed. Let $X$ denote the total number of sequencing runs required to obtain these 5 successful detections. (a) What is the probability that exactly 8 runs are required to obtain the 5 successful detections? (b) What is the expected number of runs required? (c) What is the variance of the number of runs required?",
       "answer": "$X\\sim Pascal(m=5,p=0.30)$.\n$P(X=8)=\\binom{7}{4}(0.30)^5(0.70)^3\\approx0.0292$.\n$E[X]=5/0.30\\approx16.67$.\n$Var[X]=5(0.70)/(0.30)^2\\approx38.89$."
     }
   },
@@ -375,7 +375,7 @@ const MODULES = [
     ],
     "example": {
       "source": "Week 5 lecture example",
-      "prompt": "In a biochemical system, let X denote a normalized substrate concentration (scaled between 0 and 1) in a microenvironment. Suppose X has the following probability density function: f_X(x)=4x^3, 0<x≤1, and 0 otherwise. The enzymatic downstream response is inversely proportional to the substrate concentration. Specifically, let Y=1/X. Find the probability density function of Y.",
+      "prompt": "EXAMPLE: In a biochemical system, let $X$ denote a normalized substrate concentration (scaled between 0 and 1) in a microenvironment. Suppose $X$ has the following probability density function: $$f_X(x)=\\begin{cases}4x^3,&0<x\\le1\\\\0,&\\text{otherwise}\\end{cases}$$ The enzymatic downstream response is inversely proportional to the substrate concentration. Specifically, let $Y=1/X$. Find the probability density function of $Y$.",
       "solution": "Range: $Y\\in[1,\\infty)$. The inverse is $g^{-1}(y)=1/y$ and $g'(x)=-1/x^2$.\n$|g'(g^{-1}(y))|=y^2$.\n$f_Y(y)=f_X(1/y)/y^2=4(1/y)^3/y^2=4/y^5$, for $y\\ge1$; 0 otherwise."
     },
     "practice": {
@@ -510,12 +510,12 @@ const MODULES = [
     ],
     "example": {
       "source": "Week 7 lecture example",
-      "prompt": "In a molecular diagnostics experiment, the concentration of circulating tumor DNA varies across patient samples due to biological heterogeneity. The biomarker concentration varies between 1 and 2, with all concentrations in this range being equally likely. For a given concentration value x, the number of mutant DNA fragments detected during sequencing follows a Poisson distribution with rate x. Calculate the covariance between the concentration and the number of mutant DNA fragments detected during sequencing.",
+      "prompt": "EXAMPLE: In a molecular diagnostics experiment, the concentration of circulating tumor DNA varies across patient samples due to biological heterogeneity. The biomarker concentration varies between 1 and 2, with all concentrations in this range being equally likely. For a given concentration value $x$, the number of mutant DNA fragments detected during sequencing follows a Poisson distribution with rate $x$. Calculate the covariance between the concentration and the number of mutant DNA fragments detected during sequencing.",
       "solution": "Let $X\\sim U(1,2)$ and $Y|X\\sim Poisson(X)$. Then $E[X]=3/2$, $E[Y|X]=X$, so $E[Y]=3/2$.\n$E[XY]=E[E[XY|X]]=E[XE[Y|X]]=E[X^2]=\\int_1^2 x^2dx=7/3$.\n$Cov[X,Y]=7/3-(3/2)(3/2)=1/12$."
     },
     "practice": {
-      "source": "Homework 6 style",
-      "prompt": "In a multiplex biosensor experiment, Var(X)=4 and Var(Y)=9. Define Z=2X−Y and W=X+Y. Suppose Z and W are independent. Find Cov(X,Y) and the correlation between X and Y.",
+      "source": "Homework 6 Problem 1",
+      "prompt": "Problem 1 [17 points]. In a multiplex biosensor experiment, two sources of biological signal are measured from each sample: $X$: normalized receptor-binding signal, and $Y$: normalized downstream fluorescence signal. Suppose the variance of the receptor-binding signal is 4, while the variance of the fluorescence signal is 9. A bioengineer constructs two derived readouts: $Z=2X-Y$ and $W=X+Y$. The readout $Z$ represents a contrast between amplified receptor binding and fluorescence, while $W$ represents the total combined signal. Suppose experimental analysis shows that $Z$ and $W$ are independent. Find the covariance and correlation between $X$ and $Y$.",
       "answer": "Since Z and W are independent, $Cov(Z,W)=0$.\n$Cov(2X-Y,X+Y)=2Var(X)+2Cov(X,Y)-Cov(X,Y)-Var(Y)=8+Cov(X,Y)-9$.\nSet equal to 0: $Cov(X,Y)=1$.\n$\\rho=Cov/(\\sigma_X\\sigma_Y)=1/(2\\cdot3)=1/6$."
     }
   },
@@ -560,11 +560,11 @@ const MODULES = [
     ],
     "example": {
       "source": "Week 8 lecture example",
-      "prompt": "In a DNA sequencing experiment, each sequencing read independently produces an error with probability 0.05. Suppose X denotes the total number of sequencing errors among 1000 reads. A bioengineer is concerned about sequencing runs in which at least 7% of all reads contain errors, since such runs are considered experimentally unusable. For a given experiment, find an upper bound on the probability that at least 7% of reads contain sequencing errors. Solve using Markov’s inequality.",
+      "prompt": "EXAMPLE: In a DNA sequencing experiment, each sequencing read independently produces an error with probability 0.05. Suppose $X$ denotes the total number of sequencing errors among 1000 reads. A bioengineer is concerned about sequencing runs in which at least 7% of all reads contain errors, since such runs are considered experimentally unusable. For a given experiment, find an upper bound on the probability that at least 7% of reads contain sequencing errors. Solve using Markov’s inequality.",
       "solution": "$X\\sim Binomial(n=1000,p=0.05)$, so $E[X]=50$. At least 7% means $X\\ge70$.\nBy Markov: $P(X\\ge70)\\le E[X]/70=50/70\\approx0.714$."
     },
     "practice": {
-      "source": "Different type from same bound topic",
+      "source": "Different-type practice",
       "prompt": "Suppose a biosensor error count X has E[X]=40 and Var[X]=30. Use Chebyshev's inequality to bound P(|X−40|≥10). Then use it to bound P(X≥55).",
       "answer": "$P(|X-40|\\ge10)\\le30/10^2=0.30$.\nFor $P(X\\ge55)$, $X-40\\ge15$ implies $|X-40|\\ge15$, so $P(X\\ge55)\\le30/15^2=30/225=0.1333$."
     }
@@ -630,12 +630,12 @@ const MODULES = [
     ],
     "example": {
       "source": "Week 9 lecture example",
-      "prompt": "A bioengineer uses identical and independent biosensors to measure the concentration of a signaling molecule in a biological sample. Let X_i denote the concentration measured by the i-th biosensor. Suppose each measurement has expected value μ with a standard deviation of σ. How many biosensors are needed so that the average measured concentration is within ε=5 units of μ with probability at least 95%?",
+      "prompt": "EXAMPLE: A bioengineer uses identical and independent biosensors to measure the concentration of a signaling molecule in a biological sample. Let $X_i$ denote the concentration measured by the $i$-th biosensor. Suppose each measurement has expected value of $\\mu$ with a standard deviation of $\\sigma$. How many biosensors are needed so that the average measured concentration is within $\\epsilon=5$ units of $\\mu$ with probability at least 95%?",
       "solution": "Use Chebyshev on $\\bar X_n$. Need $P(|\\bar X_n-\\mu|\\ge5)\\le0.05$.\n$Var(\\bar X_n)=\\sigma^2/n$, so $P(|\\bar X_n-\\mu|\\ge5)\\le\\sigma^2/(25n)$.\nRequire $\\sigma^2/(25n)\\le0.05$, so $n\\ge\\sigma^2/1.25$. Round up to a whole number."
     },
     "practice": {
-      "source": "Homework 6 / CLT style",
-      "prompt": "A bioengineer wants 30 usable single-cell droplets. Each droplet is usable with probability 0.20 independently. Use a CLT approximation with continuity correction to estimate P(175≤T≤180), where T is the number of droplets needed to obtain 30 usable droplets. Identify the distribution first.",
+      "source": "Homework 6 Problem 4",
+      "prompt": "Problem 4 [17 points]. In a single-cell microfluidics experiment, a bioengineer loads cells into droplets. Each droplet independently contains a usable single cell with probability 0.20. Droplets that contain zero cells, multiple cells, or damaged cells are discarded. The bioengineer continues generating droplets until one usable single-cell droplet is obtained. Let $X_i$ denote the number of droplets required to obtain the $i$-th usable single-cell droplet after the previous usable droplet has been found. The bioengineer wants to obtain 30 usable single-cell droplets. Calculate the probability that at least 175 but no more than 180 droplets are generated to obtain 30 usable single-cell droplets. Perform the calculation using the Pascal distribution and also using the Central Limit Theorem with continuity correction. Compare the results.",
       "answer": "$T\\sim Pascal(m=30,p=0.20)$.\n$E[T]=m/p=150$, $Var[T]=m(1-p)/p^2=30(0.8)/0.04=600$, $SD=\\sqrt{600}$.\nContinuity correction: $P(174.5<T<180.5)$.\nApprox: $P((174.5-150)/\\sqrt{600}<Z<(180.5-150)/\\sqrt{600})=P(1.000<Z<1.245)$. Use normal CDF values to finish."
     }
   },
@@ -725,12 +725,12 @@ const MODULES = [
     ],
     "example": {
       "source": "Week 10 lecture example",
-      "prompt": "A team of bioengineers is evaluating the degradation time of a biodegradable polymer used in a tissue scaffold. The observed sample of degradation times is: T1=18, T2=21, T3=17, T4=16, T5=24, T6=20. Assuming the trials are i.i.d., find the values of the sample mean, the sample variance, and the sample standard deviation for the observed sample.",
+      "prompt": "EXAMPLE: A team of bioengineers is evaluating the degradation time of a biodegradable polymer used in a tissue scaffold. To estimate the mean and variability of the degradation time, the team records the time (in minutes) it takes for the polymer to fully degrade in six independent trials under identical experimental conditions. Let $T$ represent the degradation time. The observed sample of degradation times is: $T_1=18$, $T_2=21$, $T_3=17$, $T_4=16$, $T_5=24$, $T_6=20$. Assuming that $T_1,T_2,T_3,T_4,T_5,T_6$ are i.i.d. with the same distribution as $T$. Find the values of the sample mean, the sample variance, and the sample standard deviation for the observed sample.",
       "solution": "$\\bar T=(18+21+17+16+24+20)/6=19.33$ minutes.\n$S^2=\\frac{1}{5}\\sum(T_i-19.33)^2=8.67$ min$^2$.\n$S=\\sqrt{8.67}=2.94$ minutes."
     },
     "practice": {
-      "source": "Homework 6 style",
-      "prompt": "A bioengineer measures biomarker concentrations from 5 patients: X1=8, X2=10, X3=9, X4=13, X5=10. Compare two estimators of the population mean θ: Θ1=Xbar and Θ2=(X1+X5)/2. Calculate both observed estimates and state which would generally be preferred and why.",
+      "source": "Homework 6 Problem 5",
+      "prompt": "Problem 5 [14 points]. A bioengineer wants to estimate the true average concentration of a biomarker in a patient population. The true average concentration is denoted by $\\theta$, but its value is unknown. The bioengineer collects biomarker measurements from 5 randomly selected patients: $X_1=8$, $X_2=10$, $X_3=9$, $X_4=13$, $X_5=10$. Consider two point estimators for $\\theta$: $\\hat\\Theta_1=\\bar X=(X_1+X_2+X_3+X_4+X_5)/5$ and $\\hat\\Theta_2=(X_1+X_5)/2$. Calculate the observed estimates produced by each estimator. Which estimator would generally be preferred for estimating the true population mean, and why?",
       "answer": "$\\hat\\Theta_1=\\bar X=(8+10+9+13+10)/5=10$.\n$\\hat\\Theta_2=(8+10)/2=9$.\nGenerally prefer $\\bar X$ because it uses all observations, usually has lower variance, and is the standard unbiased estimator of the population mean when observations are i.i.d."
     }
   }
