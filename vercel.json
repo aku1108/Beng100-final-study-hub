@@ -1,0 +1,5 @@
+{
+  "installCommand": "cd beng100-vercel-app && npm install",
+  "buildCommand": "cd beng100-vercel-app && npm run build",
+  "outputDirectory": "beng100-vercel-app/dist"
+}

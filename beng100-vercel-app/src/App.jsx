@@ -1,5 +1,5 @@
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 function escapeHtml(str="") {
   return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
@@ -714,7 +714,7 @@ const MODULES = [
       ],
       [
         "Critical rule",
-        "Reject H0 if p<\\alpha$$",
+        "$$\\text{Reject }H_0\\text{ if }p<\\alpha$$",
         "Small p-value = data is unlikely under H0."
       ],
       [
@@ -1281,7 +1281,7 @@ const QUICK_SHEETS = [
       ],
       [
         "Critical rule",
-        "Reject H0 if p<\\alpha$$",
+        "$$\\text{Reject }H_0\\text{ if }p<\\alpha$$",
         "Small p-value = data is unlikely under H0."
       ],
       [
@@ -1708,6 +1708,45 @@ const FINALS = [
   }
 ];
 
+const FINAL_TOPIC_WEEKS = new Set(["Week 2","Week 4","Week 5","Week 6","Week 7","Week 9","Week 10"]);
+const STORAGE_KEY = "beng100-study-progress-v2";
+
+function flattenText(value) {
+  if (Array.isArray(value)) return value.map(flattenText).join(" ");
+  if (value && typeof value === "object") return Object.values(value).map(flattenText).join(" ");
+  return String(value || "");
+}
+function matchesQuery(value, q) {
+  return flattenText(value).toLowerCase().includes(q.trim().toLowerCase());
+}
+function useStoredState(key, initialValue) {
+  const [value,setValue] = useState(() => {
+    if (typeof window === "undefined") return initialValue;
+    try {
+      const saved = window.localStorage.getItem(key);
+      return saved ? JSON.parse(saved) : initialValue;
+    } catch {
+      return initialValue;
+    }
+  });
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
+  return [value,setValue];
+}
+function pct(done, total) {
+  return total ? Math.round((done / total) * 100) : 0;
+}
+function ProgressBar({ value, color=C.indigo }) {
+  return <div style={{ height:"8px", background:"var(--color-background-secondary)", border:"0.5px solid var(--color-border-tertiary)", borderRadius:"999px", overflow:"hidden" }}>
+    <div style={{ width:`${Math.max(0, Math.min(100, value))}%`, height:"100%", background:color }} />
+  </div>;
+}
+function EmptyState({ children }) {
+  return <div style={{ ...S.card, textAlign:"center", color:"var(--color-text-secondary)", fontSize:"13px" }}>{children}</div>;
+}
+
 function FormulaTable({ formulas, compact=false }) {
   return <div style={{ overflowX:"auto" }}><table style={{ width:"100%", borderCollapse:"collapse", fontSize:compact?"12px":"12.5px" }}>
     <thead><tr style={{ borderBottom:"1px solid var(--color-border-tertiary)" }}>
@@ -1727,19 +1766,30 @@ function Reveal({ title="Hidden answer", children, color=C.indigo }) {
     {open && <div style={{ marginTop:"0.75rem", padding:"0.85rem 1rem", borderRadius:"var(--border-radius-md)", background:"var(--color-background-secondary)", border:"0.5px dashed var(--color-border-secondary)", fontSize:"13px", lineHeight:1.75 }}><strong>{title}</strong><br/><MathBlock text={children}/></div>}
   </div>;
 }
-function ModuleCard({ m }) {
+function ModuleCard({ m, progress={}, onProgressChange=()=>{} }) {
   const [open,setOpen] = useState(false);
   const [section,setSection] = useState("formulas");
+  const weekProgress = progress[m.week] || {};
+  const completed = ["formulas","example","practice"].filter(k=>weekProgress[k]).length;
+  function toggleProgress(key) {
+    onProgressChange(m.week, { ...weekProgress, [key]: !weekProgress[key] });
+  }
   return <div style={{ ...S.card, borderColor:open?`${m.color}55`:"var(--color-border-tertiary)" }}>
     <div onClick={()=>setOpen(!open)} style={{ display:"flex", justifyContent:"space-between", gap:"1rem", cursor:"pointer" }}>
       <div>
-        <div style={{ display:"flex", gap:"6px", flexWrap:"wrap", marginBottom:"6px" }}><Pill color={m.color} bg={m.bg}>{m.week}</Pill><Pill color={C.gray} bg={C.grayBg}>{m.lectures}</Pill></div>
+        <div style={{ display:"flex", gap:"6px", flexWrap:"wrap", marginBottom:"6px" }}><Pill color={m.color} bg={m.bg}>{m.week}</Pill><Pill color={C.gray} bg={C.grayBg}>{m.lectures}</Pill><Pill color={completed===3?C.teal:C.gray} bg={completed===3?C.tealBg:C.grayBg}>{completed}/3 done</Pill>{FINAL_TOPIC_WEEKS.has(m.week) && <Pill color={C.red} bg={C.redBg}>final-heavy</Pill>}</div>
         <h3 style={{ margin:"0 0 4px", fontSize:"15px" }}>{m.title}</h3>
         <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"13px", lineHeight:1.6 }}>{m.focus}</p>
       </div>
       <span style={{ color:m.color, fontSize:"24px", lineHeight:1 }}>{open?"−":"+"}</span>
     </div>
     {open && <div style={{ marginTop:"1rem" }}>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(150px, 1fr))", gap:"8px", marginBottom:"0.9rem" }}>
+        {[["formulas","Formula sheet"],["example","Source example"],["practice","Practice done"]].map(([id,label])=><label key={id} style={{ display:"flex", gap:"7px", alignItems:"center", fontSize:"12.5px", color:"var(--color-text-secondary)", background:"var(--color-background-secondary)", border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.55rem 0.65rem" }}>
+          <input type="checkbox" checked={!!weekProgress[id]} onChange={()=>toggleProgress(id)} />
+          {label}
+        </label>)}
+      </div>
       <div style={{ display:"flex", gap:"8px", flexWrap:"wrap", marginBottom:"0.9rem" }}>
         {[['formulas','Formula sheet'],['example','Source example'],['practice','Practice question']].map(([id,label])=><button key={id} onClick={()=>setSection(id)} style={S.btn(section===id?'primary':'outline', m.color)}>{label}</button>)}
       </div>
@@ -1759,39 +1809,100 @@ function ModuleCard({ m }) {
     </div>}
   </div>;
 }
-function LecturesTab() {
+function DashboardTab({ progress, onProgressChange, setTab }) {
+  const totalTasks = MODULES.length * 3;
+  const doneTasks = MODULES.reduce((sum,m)=>sum + ["formulas","example","practice"].filter(k=>progress[m.week]?.[k]).length, 0);
+  const finalDone = MODULES.filter(m=>FINAL_TOPIC_WEEKS.has(m.week)).reduce((sum,m)=>sum + ["formulas","example","practice"].filter(k=>progress[m.week]?.[k]).length, 0);
+  const nextModule = MODULES.find(m => ["formulas","example","practice"].some(k => !progress[m.week]?.[k])) || MODULES[0];
+  const nextProgress = progress[nextModule.week] || {};
+  const stats = [
+    ["Overall progress", `${pct(doneTasks,totalTasks)}%`, `${doneTasks}/${totalTasks} study tasks checked off`, C.indigo],
+    ["Final-heavy topics", `${pct(finalDone,FINAL_TOPIC_WEEKS.size*3)}%`, "Bayes, continuous RVs, joint RVs, CLT, MLE/tests", C.red],
+    ["Practice finals", `${FINALS.length}`, "Timed versions with hidden solutions and keyword scoring", C.teal],
+  ];
+  return <div style={S.content}>
+    <div style={{ ...S.card, display:"grid", gridTemplateColumns:"minmax(0, 1.5fr) minmax(260px, 0.8fr)", gap:"1rem", alignItems:"start" }}>
+      <div>
+        <Pill color={C.indigo} bg={C.indigoBg}>BENG 100 final study hub</Pill>
+        <h1 style={{ margin:"0.65rem 0 0.35rem", fontSize:"clamp(24px, 4vw, 40px)", lineHeight:1.1, letterSpacing:0 }}>Study what matters, then prove it under time.</h1>
+        <p style={{ margin:"0 0 1rem", color:"var(--color-text-secondary)", lineHeight:1.7, fontSize:"14px" }}>Use the lecture cards for recall, the formula sheet for fast lookup, the practice bank for untimed reps, and the final tab when you are ready for a full run.</p>
+        <div style={{ display:"flex", gap:"8px", flexWrap:"wrap" }}>
+          <button style={S.btn("primary", C.indigo)} onClick={()=>setTab("lectures")}>Continue lectures</button>
+          <button style={S.btn("outline")} onClick={()=>setTab("final")}>Start timed final</button>
+        </div>
+      </div>
+      <div style={{ background:nextModule.bg, border:`0.5px solid ${nextModule.color}40`, borderRadius:"var(--border-radius-md)", padding:"1rem" }}>
+        <Pill color={nextModule.color} bg="var(--color-background-primary)">Next up · {nextModule.week}</Pill>
+        <h3 style={{ margin:"0.7rem 0 0.4rem", fontSize:"16px" }}>{nextModule.title}</h3>
+        <ProgressBar value={pct(["formulas","example","practice"].filter(k=>nextProgress[k]).length, 3)} color={nextModule.color} />
+        <div style={{ display:"flex", gap:"8px", flexWrap:"wrap", marginTop:"0.8rem" }}>
+          {["formulas","example","practice"].map(k=><label key={k} style={{ fontSize:"12px", display:"flex", gap:"5px", alignItems:"center" }}>
+            <input type="checkbox" checked={!!nextProgress[k]} onChange={()=>onProgressChange(nextModule.week, { ...nextProgress, [k]: !nextProgress[k] })}/>
+            {k}
+          </label>)}
+        </div>
+      </div>
+    </div>
+    <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(220px, 1fr))", gap:"12px", marginBottom:"12px" }}>
+      {stats.map(([label,value,detail,color])=><div key={label} style={S.card}>
+        <div style={{ color, fontSize:"26px", fontWeight:800, lineHeight:1 }}>{value}</div>
+        <h3 style={{ margin:"0.45rem 0 0.25rem", fontSize:"14px" }}>{label}</h3>
+        <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"12.5px", lineHeight:1.6 }}>{detail}</p>
+      </div>)}
+    </div>
+    <div style={S.card}>
+      <h3 style={{ margin:"0 0 0.8rem", fontSize:"15px" }}>Week Checklist</h3>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(230px, 1fr))", gap:"10px" }}>
+        {MODULES.map(m=>{
+          const done = ["formulas","example","practice"].filter(k=>progress[m.week]?.[k]).length;
+          return <div key={m.week} style={{ border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.75rem" }}>
+            <div style={{ display:"flex", justifyContent:"space-between", gap:"8px", alignItems:"center", marginBottom:"0.55rem" }}><Pill color={m.color} bg={m.bg}>{m.week}</Pill><span style={{ fontSize:"12px", color:"var(--color-text-secondary)" }}>{done}/3</span></div>
+            <strong style={{ fontSize:"13px" }}>{m.title}</strong>
+            <div style={{ marginTop:"0.65rem" }}><ProgressBar value={pct(done,3)} color={m.color}/></div>
+          </div>
+        })}
+      </div>
+    </div>
+  </div>;
+}
+function LecturesTab({ progress, onProgressChange }) {
   const [q,setQ] = useState("");
-  const filtered = MODULES.filter(m => (m.week+m.lectures+m.title+m.focus).toLowerCase().includes(q.toLowerCase()));
+  const filtered = MODULES.filter(m => matchesQuery(m, q));
   return <div style={S.content}>
     <div style={S.alert(C.indigo,C.indigoBg)}>Each lecture card now starts with the formula sheet, then a source example, then a different-type practice question with the answer hidden. Final exam examples are kept out of the lecture practice area.</div>
     <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search week/topic, e.g. Bayes, CLT, covariance, MLE" style={{ width:"100%", padding:"0.7rem 0.9rem", borderRadius:"var(--border-radius-md)", border:"0.75px solid var(--color-border-secondary)", marginBottom:"1rem", fontSize:"13px" }}/>
-    {filtered.map(m=><ModuleCard key={m.week} m={m}/>)}
+    {filtered.length ? filtered.map(m=><ModuleCard key={m.week} m={m} progress={progress} onProgressChange={onProgressChange}/>) : <EmptyState>No lecture cards match that search.</EmptyState>}
   </div>;
 }
 function FormulaSheetTab() {
   const [onlyFinal,setOnlyFinal] = useState(false);
-  const finalTopics = new Set(["Week 2","Week 4","Week 5","Week 6","Week 7","Week 9","Week 10"]);
+  const [q,setQ] = useState("");
+  const sheets = QUICK_SHEETS.filter(s=>!onlyFinal || FINAL_TOPIC_WEEKS.has(s.label.split(' ')[0]+' '+s.label.split(' ')[1])).filter(s=>matchesQuery(s, q));
   return <div style={S.content}>
     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:"1rem", flexWrap:"wrap", marginBottom:"1rem" }}>
       <div style={S.alert(C.amber,C.amberBg)}>This is organized by lecture/week, not just by topic. Use this when making your real cheat sheet.</div>
       <label style={{ fontSize:"13px", display:"flex", gap:"6px", alignItems:"center" }}><input type="checkbox" checked={onlyFinal} onChange={e=>setOnlyFinal(e.target.checked)}/> Final-heavy topics only</label>
     </div>
-    {QUICK_SHEETS.filter(s=>!onlyFinal || finalTopics.has(s.label.split(' ')[0]+' '+s.label.split(' ')[1])).map(s=><div key={s.label} style={S.card}>
+    <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search formulas, meanings, or when-to-use notes" style={{ width:"100%", padding:"0.7rem 0.9rem", borderRadius:"var(--border-radius-md)", border:"0.75px solid var(--color-border-secondary)", marginBottom:"1rem", fontSize:"13px" }}/>
+    {sheets.length ? sheets.map(s=><div key={s.label} style={S.card}>
       <div style={{ display:"flex", gap:"8px", alignItems:"center", flexWrap:"wrap", marginBottom:"0.75rem" }}><Pill color={s.color} bg={s.bg}>{s.label}</Pill><h3 style={{ margin:0, fontSize:"15px" }}>{s.title}</h3></div>
       <FormulaTable formulas={s.formulas} compact/>
-    </div>)}
+    </div>) : <EmptyState>No formulas match that search.</EmptyState>}
   </div>;
 }
 function PracticeBankTab() {
+  const [q,setQ] = useState("");
   const problems = MODULES.map(m=>({ week:m.week, title:m.title, color:m.color, bg:m.bg, ...m.practice }));
+  const filtered = problems.filter(p=>matchesQuery(p, q));
   return <div style={S.content}>
     <div style={S.alert(C.teal,C.tealBg)}>These are non-final practice questions. Answers stay hidden until you reveal them, so you can use this as normal practice before trying the timed final.</div>
-    {problems.map((p,i)=><div key={i} style={S.card}>
+    <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search practice by topic, source, or wording" style={{ width:"100%", padding:"0.7rem 0.9rem", borderRadius:"var(--border-radius-md)", border:"0.75px solid var(--color-border-secondary)", marginBottom:"1rem", fontSize:"13px" }}/>
+    {filtered.length ? filtered.map((p,i)=><div key={`${p.week}-${i}`} style={S.card}>
       <div style={{ display:"flex", gap:"8px", flexWrap:"wrap", marginBottom:"0.75rem" }}><Pill color={p.color} bg={p.bg}>{p.week}</Pill><Pill color={C.gray} bg={C.grayBg}>{p.source}</Pill></div>
       <h3 style={{ margin:"0 0 0.6rem", fontSize:"15px" }}>{p.title}</h3>
       <div style={{ fontSize:"13.5px", lineHeight:1.8 }}><MathBlock text={p.prompt}/></div>
       <Reveal color={p.color} title="Answer">{p.answer}</Reveal>
-    </div>)}
+    </div>) : <EmptyState>No practice questions match that search.</EmptyState>}
   </div>;
 }
 function formatTime(sec) {
@@ -1864,20 +1975,25 @@ function TimedFinalTab() {
   </div>;
 }
 export default function StudyHub() {
-  const [tab,setTab] = useState('lectures');
+  const [tab,setTab] = useState('dashboard');
+  const [progress,setProgress] = useStoredState(STORAGE_KEY, {});
+  function updateProgress(week, nextWeekProgress) {
+    setProgress(current => ({ ...current, [week]: nextWeekProgress }));
+  }
   return <div style={S.app}>
     <div style={S.header}>
       <div style={{ width:"34px", height:"34px", borderRadius:"9px", background:C.indigo, display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:800 }}>B</div>
       <div>
-        <h2 style={{ margin:0, fontSize:"16px" }}>BENG 100 Study Hub — Formula + Practice Final Edition</h2>
+        <h2 style={{ margin:0, fontSize:"16px" }}>BENG 100 Study Hub</h2>
         <p style={{ margin:0, fontSize:"11.5px", color:"var(--color-text-secondary)" }}>Lectures 1–20 · formulas first · source examples · hidden practice · 3-hour timed final versions</p>
       </div>
       <div style={{ marginLeft:"auto", display:"flex", gap:"6px", flexWrap:"wrap" }}><Pill color={C.red} bg={C.redBg}>Show derivations for full credit</Pill></div>
     </div>
     <div style={S.tabBar}>{[
-      ['lectures','📖 Lecture hub'], ['formula','📋 Formula sheet'], ['practice','✏️ Practice bank'], ['final','⏱️ Timed practice final']
+      ['dashboard','Dashboard'], ['lectures','Lecture hub'], ['formula','Formula sheet'], ['practice','Practice bank'], ['final','Timed final']
     ].map(([id,label])=><button key={id} style={S.tab(tab===id)} onClick={()=>setTab(id)}>{label}</button>)}</div>
-    {tab==='lectures' && <LecturesTab/>}
+    {tab==='dashboard' && <DashboardTab progress={progress} onProgressChange={updateProgress} setTab={setTab}/>}
+    {tab==='lectures' && <LecturesTab progress={progress} onProgressChange={updateProgress}/>}
     {tab==='formula' && <FormulaSheetTab/>}
     {tab==='practice' && <PracticeBankTab/>}
     {tab==='final' && <TimedFinalTab/>}
