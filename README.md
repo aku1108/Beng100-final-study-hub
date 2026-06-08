@@ -1,16 +1,27 @@
 # BENG 100 Study Hub
 
-A React + Vite study app for BENG 100 final exam review. It includes lecture formula sheets, source-style examples, hidden practice answers, local study progress tracking, and timed practice final versions.
+A React + Vite study app for BENG 100 final exam review. It is now tuned around the professor's final exam guidance: aim for 95+ points, solve 9 of 10 problems cleanly, practice Spring 2025 first, and focus on derivations for the announced high-priority topics.
 
 ## Features
 
 - Dashboard with overall progress and final-heavy topic tracking
+- A+ Plan tab with exam logistics, score target, previous-final order, and professor focus topics
 - Lecture hub for Weeks 1-10 / Lectures 1-20
 - Searchable formula sheet
 - Searchable practice bank with hidden answers
 - Timed practice final mode with keyword-based scoring
 - KaTeX rendering for math formulas
 - Progress saved locally in the browser
+
+## Final Exam Focus
+
+- Exam: Thursday, June 11, 7:00-10:00 PM, CENTR 214
+- Format: 10 problems, 11 points each, 110 total points
+- A+ target: 95+ points, so 9 strong solutions can be enough
+- Bring: blue book and one double-sided 8.5 x 11 cheat sheet
+- No digital devices or calculators
+
+Priority topics include Bayes' rule, conditioning on random variables, total probability, total expectation, total variance, transformations, MGFs, covariance, inequalities, CLT, estimator bias, MLE, hypothesis testing, and common discrete/continuous random variables.
 
 ## Project Structure
 

@@ -1710,6 +1710,44 @@ const FINALS = [
 
 const FINAL_TOPIC_WEEKS = new Set(["Week 2","Week 4","Week 5","Week 6","Week 7","Week 9","Week 10"]);
 const STORAGE_KEY = "beng100-study-progress-v2";
+const EXAM_INFO = {
+  date: "Thursday, June 11",
+  time: "7:00-10:00 PM",
+  room: "CENTR 214",
+  problems: "10 problems",
+  points: "110 points total",
+  target: "95+ points = A+",
+  strategy: "Correctly solve 9 of 10 problems and write derivations clearly."
+};
+const FINAL_FOCUS = [
+  ["Bayes + total probability", "Week 2", "test-positive, partitions, conditional probability"],
+  ["Conditioning on random variables", "Weeks 6-7", "conditional PMF/PDF, E[Y|X], Var(Y|X)"],
+  ["Total expectation/variance", "Week 7", "nested random systems and mixture problems"],
+  ["Transformations", "Week 5", "find support, inverse, derivative/Jacobian, CDF method"],
+  ["MGFs", "Week 7", "identify distributions and get moments"],
+  ["Covariance", "Week 7", "E[XY]-E[X]E[Y], variance of sums"],
+  ["Inequalities", "Week 8", "Markov, Chebyshev, Chernoff-style bounds"],
+  ["CLT", "Week 9", "normal approximation, sums/averages, continuity correction"],
+  ["Bias/MSE of estimators", "Weeks 9-10", "E[estimator]-parameter and variance tradeoffs"],
+  ["MLE", "Week 10", "likelihood, log likelihood, derivative, second-derivative check"],
+  ["Hypothesis testing", "Week 10", "z statistic, p-value, reject/fail-to-reject, Type I/II"],
+  ["Common random variables", "Weeks 3-5", "Bernoulli, Binomial, Geometric, Pascal, Hypergeometric, Poisson, Exponential, Gamma, Normal"]
+];
+const FINAL_PREP_STEPS = [
+  "Do Spring 2025 first because your professor said it is the closest in content, structure, difficulty, and style.",
+  "For every missed problem, write the trigger words, the formula family, and the first correct setup line.",
+  "Then do Spring 2024 and Spring 2023 as extra reps, but prioritize fixing Spring 2025 mistakes first.",
+  "Practice without a calculator, phone, laptop, tablet, or notes besides one double-sided letter-sized cheat sheet.",
+  "Build the cheat sheet around derivation steps and decision rules, not only final formulas."
+];
+const CHEAT_SHEET_BLOCKS = [
+  "Bayes/conditioning: total probability, Bayes, conditional PMF/PDF, independence checks",
+  "RV reference: common discrete/continuous distributions with mean, variance, support",
+  "Transformations: support mapping, inverse formula, CDF method, non-monotone branch sum",
+  "Moments: LOTUS, covariance, MGF definitions, total expectation/variance",
+  "Bounds/CLT: Markov, Chebyshev, Chernoff setup, normal approximation templates",
+  "Inference: bias, MSE, likelihood/log likelihood, MLE steps, z-test and p-value rules"
+];
 
 function flattenText(value) {
   if (Array.isArray(value)) return value.map(flattenText).join(" ");
@@ -1816,19 +1854,21 @@ function DashboardTab({ progress, onProgressChange, setTab }) {
   const nextModule = MODULES.find(m => ["formulas","example","practice"].some(k => !progress[m.week]?.[k])) || MODULES[0];
   const nextProgress = progress[nextModule.week] || {};
   const stats = [
+    ["A+ target", "95+", "9 strong problems out of 10 is enough for A+", C.red],
     ["Overall progress", `${pct(doneTasks,totalTasks)}%`, `${doneTasks}/${totalTasks} study tasks checked off`, C.indigo],
-    ["Final-heavy topics", `${pct(finalDone,FINAL_TOPIC_WEEKS.size*3)}%`, "Bayes, continuous RVs, joint RVs, CLT, MLE/tests", C.red],
-    ["Practice finals", `${FINALS.length}`, "Timed versions with hidden solutions and keyword scoring", C.teal],
+    ["Professor focus", `${FINAL_FOCUS.length}`, "priority topics pulled from the final announcement", C.teal],
+    ["Practice finals", `${FINALS.length}`, "start with Spring 2025 style first", C.amber],
   ];
   return <div style={S.content}>
     <div style={{ ...S.card, display:"grid", gridTemplateColumns:"minmax(0, 1.5fr) minmax(260px, 0.8fr)", gap:"1rem", alignItems:"start" }}>
       <div>
-        <Pill color={C.indigo} bg={C.indigoBg}>BENG 100 final study hub</Pill>
-        <h1 style={{ margin:"0.65rem 0 0.35rem", fontSize:"clamp(24px, 4vw, 40px)", lineHeight:1.1, letterSpacing:0 }}>Study what matters, then prove it under time.</h1>
-        <p style={{ margin:"0 0 1rem", color:"var(--color-text-secondary)", lineHeight:1.7, fontSize:"14px" }}>Use the lecture cards for recall, the formula sheet for fast lookup, the practice bank for untimed reps, and the final tab when you are ready for a full run.</p>
+        <Pill color={C.indigo} bg={C.indigoBg}>Final: {EXAM_INFO.date} · {EXAM_INFO.time}</Pill>
+        <h1 style={{ margin:"0.65rem 0 0.35rem", fontSize:"clamp(24px, 4vw, 40px)", lineHeight:1.1, letterSpacing:0 }}>Aim for 9 clean solutions, not random coverage.</h1>
+        <p style={{ margin:"0 0 1rem", color:"var(--color-text-secondary)", lineHeight:1.7, fontSize:"14px" }}>{EXAM_INFO.problems}, {EXAM_INFO.points}. {EXAM_INFO.target}. Focus on derivations, setup, and recognizing which formula family each problem is asking for.</p>
         <div style={{ display:"flex", gap:"8px", flexWrap:"wrap" }}>
-          <button style={S.btn("primary", C.indigo)} onClick={()=>setTab("lectures")}>Continue lectures</button>
+          <button style={S.btn("primary", C.red)} onClick={()=>setTab("plan")}>Open A+ plan</button>
           <button style={S.btn("outline")} onClick={()=>setTab("final")}>Start timed final</button>
+          <button style={S.btn("outline")} onClick={()=>setTab("formula")}>Build cheat sheet</button>
         </div>
       </div>
       <div style={{ background:nextModule.bg, border:`0.5px solid ${nextModule.color}40`, borderRadius:"var(--border-radius-md)", padding:"1rem" }}>
@@ -1843,12 +1883,30 @@ function DashboardTab({ progress, onProgressChange, setTab }) {
         </div>
       </div>
     </div>
+    <div style={{ ...S.alert(C.red,C.redBg), display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(180px, 1fr))", gap:"8px" }}>
+      <span><strong>Room:</strong> {EXAM_INFO.room}</span>
+      <span><strong>Bring:</strong> blue book + one double-sided 8.5 x 11 cheat sheet</span>
+      <span><strong>No devices:</strong> no calculator, laptop, tablet, or phone</span>
+    </div>
     <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(220px, 1fr))", gap:"12px", marginBottom:"12px" }}>
       {stats.map(([label,value,detail,color])=><div key={label} style={S.card}>
         <div style={{ color, fontSize:"26px", fontWeight:800, lineHeight:1 }}>{value}</div>
         <h3 style={{ margin:"0.45rem 0 0.25rem", fontSize:"14px" }}>{label}</h3>
         <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"12.5px", lineHeight:1.6 }}>{detail}</p>
       </div>)}
+    </div>
+    <div style={S.card}>
+      <div style={{ display:"flex", justifyContent:"space-between", gap:"1rem", flexWrap:"wrap", alignItems:"center", marginBottom:"0.8rem" }}>
+        <h3 style={{ margin:0, fontSize:"15px" }}>Professor Priority Topics</h3>
+        <button style={S.btn("outline")} onClick={()=>setTab("plan")}>See full plan</button>
+      </div>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(230px, 1fr))", gap:"8px" }}>
+        {FINAL_FOCUS.slice(0,6).map(([topic,week,why])=><div key={topic} style={{ border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.7rem", background:"var(--color-background-secondary)" }}>
+          <Pill color={FINAL_TOPIC_WEEKS.has(week) ? C.red : C.indigo} bg={FINAL_TOPIC_WEEKS.has(week) ? C.redBg : C.indigoBg}>{week}</Pill>
+          <h4 style={{ margin:"0.5rem 0 0.25rem", fontSize:"13px" }}>{topic}</h4>
+          <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"12px", lineHeight:1.5 }}>{why}</p>
+        </div>)}
+      </div>
     </div>
     <div style={S.card}>
       <h3 style={{ margin:"0 0 0.8rem", fontSize:"15px" }}>Week Checklist</h3>
@@ -1905,6 +1963,74 @@ function PracticeBankTab() {
     </div>) : <EmptyState>No practice questions match that search.</EmptyState>}
   </div>;
 }
+function FinalPlanTab({ setTab }) {
+  return <div style={S.content}>
+    <div style={{ ...S.card, display:"grid", gridTemplateColumns:"minmax(0, 1fr) minmax(240px, 0.55fr)", gap:"1rem", alignItems:"start" }}>
+      <div>
+        <Pill color={C.red} bg={C.redBg}>A+ target: {EXAM_INFO.target}</Pill>
+        <h1 style={{ margin:"0.65rem 0 0.35rem", fontSize:"clamp(24px, 4vw, 36px)", lineHeight:1.1, letterSpacing:0 }}>Your goal is 9 complete derivations.</h1>
+        <p style={{ margin:"0 0 1rem", color:"var(--color-text-secondary)", lineHeight:1.7, fontSize:"14px" }}>The exam is {EXAM_INFO.problems}, each worth 11 points. Since 95+ is A+, one weak problem is survivable if the other nine are organized, justified, and finished.</p>
+        <div style={{ display:"flex", gap:"8px", flexWrap:"wrap" }}>
+          <button style={S.btn("primary", C.red)} onClick={()=>setTab("final")}>Take timed final</button>
+          <button style={S.btn("outline")} onClick={()=>setTab("formula")}>Review formulas</button>
+          <button style={S.btn("outline")} onClick={()=>setTab("practice")}>Untimed reps</button>
+        </div>
+      </div>
+      <div style={{ background:C.redBg, color:C.red, border:`0.5px solid ${C.red}40`, borderRadius:"var(--border-radius-md)", padding:"1rem", lineHeight:1.7, fontSize:"13px" }}>
+        <strong>Exam logistics</strong><br/>
+        {EXAM_INFO.date}, {EXAM_INFO.time}<br/>
+        {EXAM_INFO.room}<br/>
+        Bring a blue book and one double-sided 8.5 x 11 cheat sheet.<br/>
+        No calculator or digital devices.
+      </div>
+    </div>
+
+    <div style={S.card}>
+      <h3 style={{ margin:"0 0 0.75rem", fontSize:"15px" }}>Previous Final Order</h3>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(220px, 1fr))", gap:"10px" }}>
+        {[
+          ["1", "Spring 2025", "Do this first. It is the closest match to the current exam style, structure, difficulty, and content."],
+          ["2", "Spring 2024", "Use after 2025 mistakes are corrected. Look for repeated topic patterns."],
+          ["3", "Spring 2023", "Use as extra endurance and recognition practice."]
+        ].map(([num,title,body])=><div key={title} style={{ border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.85rem", background:"var(--color-background-secondary)" }}>
+          <Pill color={num==="1"?C.red:C.gray} bg={num==="1"?C.redBg:C.grayBg}>Step {num}</Pill>
+          <h4 style={{ margin:"0.6rem 0 0.25rem", fontSize:"14px" }}>{title}</h4>
+          <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"12.5px", lineHeight:1.6 }}>{body}</p>
+        </div>)}
+      </div>
+    </div>
+
+    <div style={S.card}>
+      <h3 style={{ margin:"0 0 0.75rem", fontSize:"15px" }}>Professor Focus Topics</h3>
+      <div style={{ overflowX:"auto" }}>
+        <table style={{ width:"100%", borderCollapse:"collapse", fontSize:"12.5px" }}>
+          <thead><tr style={{ borderBottom:"1px solid var(--color-border-tertiary)" }}>
+            {["Topic","Where","What to drill"].map(h=><th key={h} style={{ textAlign:"left", padding:"8px", color:"var(--color-text-secondary)" }}>{h}</th>)}
+          </tr></thead>
+          <tbody>{FINAL_FOCUS.map(([topic,week,drill])=><tr key={topic} style={{ borderBottom:"0.5px solid var(--color-border-tertiary)" }}>
+            <td style={{ padding:"8px", fontWeight:700, verticalAlign:"top" }}>{topic}</td>
+            <td style={{ padding:"8px", verticalAlign:"top" }}><Pill color={C.indigo} bg={C.indigoBg}>{week}</Pill></td>
+            <td style={{ padding:"8px", color:"var(--color-text-secondary)", lineHeight:1.6, verticalAlign:"top" }}>{drill}</td>
+          </tr>)}</tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(260px, 1fr))", gap:"12px" }}>
+      <div style={S.card}>
+        <h3 style={{ margin:"0 0 0.75rem", fontSize:"15px" }}>A+ Prep Loop</h3>
+        {FINAL_PREP_STEPS.map((step,i)=><div key={step} style={{ display:"grid", gridTemplateColumns:"28px 1fr", gap:"8px", marginBottom:"0.7rem", alignItems:"start" }}>
+          <span style={{ width:"24px", height:"24px", borderRadius:"50%", background:C.indigoBg, color:C.indigo, display:"inline-flex", alignItems:"center", justifyContent:"center", fontSize:"12px", fontWeight:800 }}>{i+1}</span>
+          <span style={{ color:"var(--color-text-secondary)", fontSize:"13px", lineHeight:1.6 }}>{step}</span>
+        </div>)}
+      </div>
+      <div style={S.card}>
+        <h3 style={{ margin:"0 0 0.75rem", fontSize:"15px" }}>Cheat Sheet Blocks</h3>
+        {CHEAT_SHEET_BLOCKS.map(block=><div key={block} style={{ padding:"0.55rem 0", borderBottom:"0.5px solid var(--color-border-tertiary)", color:"var(--color-text-secondary)", fontSize:"13px", lineHeight:1.55 }}>{block}</div>)}
+      </div>
+    </div>
+  </div>;
+}
 function formatTime(sec) {
   const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = sec%60;
   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
@@ -1950,7 +2076,7 @@ function TimedFinalTab() {
   const max = final.questions.reduce((a,q)=>a+q.points,0);
 
   return <div style={S.content}>
-    <div style={S.alert(C.red,C.redBg)}>Timed final mode locks answer boxes after submission or when the 3-hour timer hits zero. Scoring is automatic but keyword/rubric-based, so use the revealed solutions to check partial-credit details.</div>
+    <div style={S.alert(C.red,C.redBg)}>Real final target: 10 problems, 110 points, 95+ for A+. Use this timed mode to practice finishing clean derivations in 3 hours, then grade with the revealed solutions because automatic scoring is keyword/rubric-based.</div>
     <div style={{ ...S.card, display:"flex", gap:"1rem", flexWrap:"wrap", alignItems:"center", justifyContent:"space-between", position:"sticky", top:"110px", zIndex:8 }}>
       <div style={{ display:"flex", gap:"8px", flexWrap:"wrap", alignItems:"center" }}>
         <select value={version} onChange={e=>setVersion(e.target.value)} disabled={started && !finished} style={{ padding:"0.5rem", borderRadius:"var(--border-radius-md)", border:"0.75px solid var(--color-border-secondary)", fontSize:"13px" }}>{FINALS.map(f=><option key={f.id} value={f.id}>{f.title}</option>)}</select>
@@ -1985,14 +2111,15 @@ export default function StudyHub() {
       <div style={{ width:"34px", height:"34px", borderRadius:"9px", background:C.indigo, display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:800 }}>B</div>
       <div>
         <h2 style={{ margin:0, fontSize:"16px" }}>BENG 100 Study Hub</h2>
-        <p style={{ margin:0, fontSize:"11.5px", color:"var(--color-text-secondary)" }}>Lectures 1–20 · formulas first · source examples · hidden practice · 3-hour timed final versions</p>
+        <p style={{ margin:0, fontSize:"11.5px", color:"var(--color-text-secondary)" }}>A+ final prep · Spring 2025 first · professor focus topics · derivations over memorization</p>
       </div>
       <div style={{ marginLeft:"auto", display:"flex", gap:"6px", flexWrap:"wrap" }}><Pill color={C.red} bg={C.redBg}>Show derivations for full credit</Pill></div>
     </div>
     <div style={S.tabBar}>{[
-      ['dashboard','Dashboard'], ['lectures','Lecture hub'], ['formula','Formula sheet'], ['practice','Practice bank'], ['final','Timed final']
+      ['dashboard','Dashboard'], ['plan','A+ Plan'], ['lectures','Lecture hub'], ['formula','Formula sheet'], ['practice','Practice bank'], ['final','Timed final']
     ].map(([id,label])=><button key={id} style={S.tab(tab===id)} onClick={()=>setTab(id)}>{label}</button>)}</div>
     {tab==='dashboard' && <DashboardTab progress={progress} onProgressChange={updateProgress} setTab={setTab}/>}
+    {tab==='plan' && <FinalPlanTab setTab={setTab}/>}
     {tab==='lectures' && <LecturesTab progress={progress} onProgressChange={updateProgress}/>}
     {tab==='formula' && <FormulaSheetTab/>}
     {tab==='practice' && <PracticeBankTab/>}
