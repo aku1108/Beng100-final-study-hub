@@ -1887,16 +1887,22 @@ function Reveal({ title="Hidden answer", children, color=C.indigo }) {
     {open && <div style={{ marginTop:"0.75rem", padding:"0.85rem 1rem", borderRadius:"var(--border-radius-md)", background:"var(--color-background-secondary)", border:"0.5px dashed var(--color-border-secondary)", fontSize:"13px", lineHeight:1.75 }}><strong>{title}</strong><br/><MathBlock text={children}/></div>}
   </div>;
 }
-function ModuleCard({ m, progress={}, onProgressChange=()=>{} }) {
+function ModuleCard({ m, progress={}, onProgressChange=()=>{}, targetWeek="" }) {
   const [open,setOpen] = useState(false);
   const [section,setSection] = useState("formulas");
+  const cardRef = useRef(null);
   const weekProgress = progress[m.week] || {};
   const finalTopic = FINAL_TOPIC_MAP[m.week];
   const completed = ["formulas","example","practice"].filter(k=>weekProgress[k]).length;
+  useEffect(() => {
+    if (targetWeek !== m.week) return;
+    setOpen(true);
+    window.setTimeout(() => cardRef.current?.scrollIntoView({ behavior:"smooth", block:"start" }), 30);
+  }, [targetWeek, m.week]);
   function toggleProgress(key) {
     onProgressChange(m.week, { ...weekProgress, [key]: !weekProgress[key] });
   }
-  return <div style={{ ...S.card, borderColor:open?`${m.color}55`:"var(--color-border-tertiary)" }}>
+  return <div ref={cardRef} id={`lecture-${m.week.toLowerCase().replace(/\s+/g,"-")}`} style={{ ...S.card, borderColor:open?`${m.color}55`:"var(--color-border-tertiary)", scrollMarginTop:"130px" }}>
     <div onClick={()=>setOpen(!open)} style={{ display:"flex", justifyContent:"space-between", gap:"1rem", cursor:"pointer" }}>
       <div>
         <div style={{ display:"flex", gap:"6px", flexWrap:"wrap", marginBottom:"6px" }}><Pill color={m.color} bg={m.bg}>{m.week}</Pill><Pill color={C.gray} bg={C.grayBg}>{m.lectures}</Pill><Pill color={completed===3?C.teal:C.gray} bg={completed===3?C.tealBg:C.grayBg}>{completed}/3 done</Pill>{finalTopic && <Pill color={finalTopic.priority==="support"?C.gray:C.red} bg={finalTopic.priority==="support"?C.grayBg:C.redBg}>{finalTopic.priority}</Pill>}</div>
@@ -2012,10 +2018,15 @@ function DashboardTab({ progress, onProgressChange, setTab }) {
 }
 function LecturesTab({ progress, onProgressChange }) {
   const [q,setQ] = useState("");
+  const [targetWeek,setTargetWeek] = useState("");
   const priorityRank = { "A+ core": 0, "high": 1, "support": 2 };
   const filtered = MODULES
     .filter(m => matchesQuery(m, q))
     .sort((a,b) => (priorityRank[FINAL_TOPIC_MAP[a.week]?.priority] ?? 3) - (priorityRank[FINAL_TOPIC_MAP[b.week]?.priority] ?? 3));
+  function jumpToWeek(week) {
+    setQ("");
+    setTargetWeek(week);
+  }
   return <div style={S.content}>
     <div style={S.alert(C.red,C.redBg)}><strong>Lecture hub is now final-first.</strong> Use the cards below to match each lecture week to the professor's announced final topics. Start with A+ core topics, then high-priority inequalities, then support review.</div>
     <div style={S.card}>
@@ -2029,16 +2040,16 @@ function LecturesTab({ progress, onProgressChange }) {
       <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(240px, 1fr))", gap:"8px" }}>
         {MODULES.map(m=>{
           const info = FINAL_TOPIC_MAP[m.week];
-          return <div key={m.week} style={{ border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.75rem", background:info?.priority==="support"?"var(--color-background-secondary)":m.bg }}>
+          return <button key={m.week} onClick={()=>jumpToWeek(m.week)} style={{ border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.75rem", background:info?.priority==="support"?"var(--color-background-secondary)":m.bg, textAlign:"left", cursor:"pointer", color:"var(--color-text-primary)" }}>
             <div style={{ display:"flex", gap:"6px", flexWrap:"wrap", marginBottom:"0.55rem" }}><Pill color={m.color} bg="var(--color-background-primary)">{m.week}</Pill>{info && <Pill color={info.priority==="support"?C.gray:C.red} bg={info.priority==="support"?C.grayBg:C.redBg}>{info.priority}</Pill>}</div>
             <strong style={{ fontSize:"13px" }}>{m.title}</strong>
             <p style={{ margin:"0.45rem 0 0", color:"var(--color-text-secondary)", fontSize:"12px", lineHeight:1.55 }}>{info?.topics.join(", ")}</p>
-          </div>;
+          </button>;
         })}
       </div>
     </div>
     <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search week/topic, e.g. Bayes, CLT, covariance, MLE" style={{ width:"100%", padding:"0.7rem 0.9rem", borderRadius:"var(--border-radius-md)", border:"0.75px solid var(--color-border-secondary)", marginBottom:"1rem", fontSize:"13px" }}/>
-    {filtered.length ? filtered.map(m=><ModuleCard key={m.week} m={m} progress={progress} onProgressChange={onProgressChange}/>) : <EmptyState>No lecture cards match that search.</EmptyState>}
+    {filtered.length ? filtered.map(m=><ModuleCard key={m.week} m={m} progress={progress} onProgressChange={onProgressChange} targetWeek={targetWeek}/>) : <EmptyState>No lecture cards match that search.</EmptyState>}
   </div>;
 }
 function FormulaSheetTab() {
