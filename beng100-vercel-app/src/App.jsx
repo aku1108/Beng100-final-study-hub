@@ -1860,6 +1860,10 @@ function flattenText(value) {
 function matchesQuery(value, q) {
   return flattenText(value).toLowerCase().includes(q.trim().toLowerCase());
 }
+function firstWeekLabel(label="") {
+  const match = String(label).match(/Week\s+\d+/);
+  return match ? match[0] : "";
+}
 function useStoredState(key, initialValue) {
   const [value,setValue] = useState(() => {
     if (typeof window === "undefined") return initialValue;
@@ -1960,7 +1964,7 @@ function ModuleCard({ m, progress={}, onProgressChange=()=>{}, targetWeek="" }) 
     </div>}
   </div>;
 }
-function DashboardTab({ progress, onProgressChange, setTab }) {
+function DashboardTab({ progress, onProgressChange, setTab, jumpToLecture }) {
   const totalTasks = MODULES.length * 3;
   const doneTasks = MODULES.reduce((sum,m)=>sum + ["formulas","example","practice"].filter(k=>progress[m.week]?.[k]).length, 0);
   const finalDone = MODULES.filter(m=>FINAL_TOPIC_WEEKS.has(m.week)).reduce((sum,m)=>sum + ["formulas","example","practice"].filter(k=>progress[m.week]?.[k]).length, 0);
@@ -2014,11 +2018,11 @@ function DashboardTab({ progress, onProgressChange, setTab }) {
         <button style={S.btn("outline")} onClick={()=>setTab("plan")}>See full plan</button>
       </div>
       <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(230px, 1fr))", gap:"8px" }}>
-        {FINAL_FOCUS.slice(0,6).map(([topic,week,why])=><div key={topic} style={{ border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.7rem", background:"var(--color-background-secondary)" }}>
+        {FINAL_FOCUS.slice(0,6).map(([topic,week,why])=><button key={topic} onClick={()=>jumpToLecture(firstWeekLabel(week))} style={{ border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.7rem", background:"var(--color-background-secondary)", textAlign:"left", cursor:"pointer", color:"var(--color-text-primary)" }}>
           <Pill color={FINAL_TOPIC_WEEKS.has(week) ? C.red : C.indigo} bg={FINAL_TOPIC_WEEKS.has(week) ? C.redBg : C.indigoBg}>{week}</Pill>
           <h4 style={{ margin:"0.5rem 0 0.25rem", fontSize:"13px" }}>{topic}</h4>
           <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"12px", lineHeight:1.5 }}>{why}</p>
-        </div>)}
+        </button>)}
       </div>
     </div>
     <div style={S.card}>
@@ -2036,7 +2040,7 @@ function DashboardTab({ progress, onProgressChange, setTab }) {
     </div>
   </div>;
 }
-function LecturesTab({ progress, onProgressChange }) {
+function LecturesTab({ progress, onProgressChange, initialTargetWeek="" }) {
   const [q,setQ] = useState("");
   const [targetWeek,setTargetWeek] = useState("");
   const studyOrder = [...MODULES].sort((a,b) => (FINAL_TOPIC_MAP[a.week]?.order ?? 99) - (FINAL_TOPIC_MAP[b.week]?.order ?? 99));
@@ -2047,6 +2051,9 @@ function LecturesTab({ progress, onProgressChange }) {
     setQ("");
     setTargetWeek(week);
   }
+  useEffect(() => {
+    if (initialTargetWeek) jumpToWeek(initialTargetWeek);
+  }, [initialTargetWeek]);
   return <div style={S.content}>
     <div style={S.alert(C.red,C.redBg)}><strong>Lecture hub is ordered for learning plus priority.</strong> Go from easier foundations into the highest-value final topics: Bayes, distributions, transformations, conditioning, covariance/MGF, inequalities, CLT, then MLE/testing.</div>
     <div style={S.card}>
@@ -2243,9 +2250,15 @@ function TimedFinalTab() {
 }
 export default function StudyHub() {
   const [tab,setTab] = useState('dashboard');
+  const [lectureTarget,setLectureTarget] = useState("");
   const [progress,setProgress] = useStoredState(STORAGE_KEY, {});
   function updateProgress(week, nextWeekProgress) {
     setProgress(current => ({ ...current, [week]: nextWeekProgress }));
+  }
+  function jumpToLecture(week) {
+    if (!week) return;
+    setLectureTarget(week);
+    setTab("lectures");
   }
   return <div style={S.app}>
     <div style={S.header}>
@@ -2259,9 +2272,9 @@ export default function StudyHub() {
     <div style={S.tabBar}>{[
       ['dashboard','Dashboard'], ['plan','A+ Plan'], ['lectures','Lecture hub'], ['formula','Formula sheet'], ['practice','Practice bank'], ['final','Timed final']
     ].map(([id,label])=><button key={id} style={S.tab(tab===id)} onClick={()=>setTab(id)}>{label}</button>)}</div>
-    {tab==='dashboard' && <DashboardTab progress={progress} onProgressChange={updateProgress} setTab={setTab}/>}
+    {tab==='dashboard' && <DashboardTab progress={progress} onProgressChange={updateProgress} setTab={setTab} jumpToLecture={jumpToLecture}/>}
     {tab==='plan' && <FinalPlanTab setTab={setTab}/>}
-    {tab==='lectures' && <LecturesTab progress={progress} onProgressChange={updateProgress}/>}
+    {tab==='lectures' && <LecturesTab progress={progress} onProgressChange={updateProgress} initialTargetWeek={lectureTarget}/>}
     {tab==='formula' && <FormulaSheetTab/>}
     {tab==='practice' && <PracticeBankTab/>}
     {tab==='final' && <TimedFinalTab/>}
