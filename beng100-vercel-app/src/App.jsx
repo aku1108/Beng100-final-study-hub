@@ -1739,7 +1739,7 @@ c) For a new patient who shows 73 PVCs in a one-hour recording, compute the p-va
   }
 ];
 
-const FINAL_TOPIC_WEEKS = new Set(["Week 2","Week 4","Week 5","Week 6","Week 7","Week 9","Week 10"]);
+const FINAL_TOPIC_WEEKS = new Set(["Week 2","Week 3","Week 4","Week 5","Week 6","Week 7","Week 8","Week 9","Week 10"]);
 const STORAGE_KEY = "beng100-study-progress-v2";
 const EXAM_INFO = {
   date: "Thursday, June 11",
@@ -1764,6 +1764,58 @@ const FINAL_FOCUS = [
   ["Hypothesis testing", "Week 10", "z statistic, p-value, reject/fail-to-reject, Type I/II"],
   ["Common random variables", "Weeks 3-5", "Bernoulli, Binomial, Geometric, Pascal, Hypergeometric, Poisson, Exponential, Gamma, Normal"]
 ];
+const FINAL_TOPIC_MAP = {
+  "Week 1": {
+    priority: "support",
+    topics: ["sets/sample spaces", "counting", "union/complement"],
+    examUse: "Foundation for probability setups. Review quickly, but do not let it steal time from conditioning, CLT, MLE, and testing."
+  },
+  "Week 2": {
+    priority: "A+ core",
+    topics: ["Bayes' rule", "law of total probability", "conditional probability", "independence"],
+    examUse: "Likely appears as a test-positive, subgroup, partition, or conditional probability problem."
+  },
+  "Week 3": {
+    priority: "A+ core",
+    topics: ["PMF", "expectation", "variance", "Bernoulli/Binomial/Geometric"],
+    examUse: "This is the language behind most discrete RV problems and common distribution recognition."
+  },
+  "Week 4": {
+    priority: "A+ core",
+    topics: ["Pascal", "Hypergeometric", "Poisson", "continuous RV basics"],
+    examUse: "Know the support, mean, variance, and when each distribution is triggered by wording."
+  },
+  "Week 5": {
+    priority: "A+ core",
+    topics: ["method of transformations", "Exponential", "Gamma", "Normal", "standardization"],
+    examUse: "Professor named transformations directly. Always start with support, inverse/CDF, then derivative."
+  },
+  "Week 6": {
+    priority: "A+ core",
+    topics: ["joint PMF/PDF", "marginal distributions", "conditional PMF/PDF"],
+    examUse: "This is the base for conditioning on a random variable and conditional expectations."
+  },
+  "Week 7": {
+    priority: "A+ core",
+    topics: ["law of total expectation", "law of total variance", "covariance", "MGF"],
+    examUse: "Very high value: several professor-listed topics are concentrated here."
+  },
+  "Week 8": {
+    priority: "high",
+    topics: ["Markov", "Chebyshev", "Chernoff", "probability bounds"],
+    examUse: "Professor named inequalities. Memorize trigger conditions and what information each bound needs."
+  },
+  "Week 9": {
+    priority: "A+ core",
+    topics: ["CLT", "sample mean", "bias", "MSE", "point estimators"],
+    examUse: "Use for normal approximations, continuity correction, and estimator comparison."
+  },
+  "Week 10": {
+    priority: "A+ core",
+    topics: ["sample variance", "MLE", "hypothesis testing", "p-values"],
+    examUse: "Week 10 is included. Expect derivation-style work for MLE or clear decision rules for tests."
+  }
+};
 const FINAL_PREP_STEPS = [
   "Do Spring 2025 first because your professor said it is the closest in content, structure, difficulty, and style.",
   "For every missed problem, write the trigger words, the formula family, and the first correct setup line.",
@@ -1839,6 +1891,7 @@ function ModuleCard({ m, progress={}, onProgressChange=()=>{} }) {
   const [open,setOpen] = useState(false);
   const [section,setSection] = useState("formulas");
   const weekProgress = progress[m.week] || {};
+  const finalTopic = FINAL_TOPIC_MAP[m.week];
   const completed = ["formulas","example","practice"].filter(k=>weekProgress[k]).length;
   function toggleProgress(key) {
     onProgressChange(m.week, { ...weekProgress, [key]: !weekProgress[key] });
@@ -1846,13 +1899,16 @@ function ModuleCard({ m, progress={}, onProgressChange=()=>{} }) {
   return <div style={{ ...S.card, borderColor:open?`${m.color}55`:"var(--color-border-tertiary)" }}>
     <div onClick={()=>setOpen(!open)} style={{ display:"flex", justifyContent:"space-between", gap:"1rem", cursor:"pointer" }}>
       <div>
-        <div style={{ display:"flex", gap:"6px", flexWrap:"wrap", marginBottom:"6px" }}><Pill color={m.color} bg={m.bg}>{m.week}</Pill><Pill color={C.gray} bg={C.grayBg}>{m.lectures}</Pill><Pill color={completed===3?C.teal:C.gray} bg={completed===3?C.tealBg:C.grayBg}>{completed}/3 done</Pill>{FINAL_TOPIC_WEEKS.has(m.week) && <Pill color={C.red} bg={C.redBg}>final-heavy</Pill>}</div>
+        <div style={{ display:"flex", gap:"6px", flexWrap:"wrap", marginBottom:"6px" }}><Pill color={m.color} bg={m.bg}>{m.week}</Pill><Pill color={C.gray} bg={C.grayBg}>{m.lectures}</Pill><Pill color={completed===3?C.teal:C.gray} bg={completed===3?C.tealBg:C.grayBg}>{completed}/3 done</Pill>{finalTopic && <Pill color={finalTopic.priority==="support"?C.gray:C.red} bg={finalTopic.priority==="support"?C.grayBg:C.redBg}>{finalTopic.priority}</Pill>}</div>
         <h3 style={{ margin:"0 0 4px", fontSize:"15px" }}>{m.title}</h3>
-        <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"13px", lineHeight:1.6 }}>{m.focus}</p>
+        <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"13px", lineHeight:1.6 }}>{finalTopic?.examUse || m.focus}</p>
       </div>
       <span style={{ color:m.color, fontSize:"24px", lineHeight:1 }}>{open?"−":"+"}</span>
     </div>
     {open && <div style={{ marginTop:"1rem" }}>
+      {finalTopic && <div style={{ background:finalTopic.priority==="support"?C.grayBg:C.redBg, color:finalTopic.priority==="support"?C.gray:C.red, border:`0.5px solid ${(finalTopic.priority==="support"?C.gray:C.red)}40`, borderRadius:"var(--border-radius-md)", padding:"0.75rem 0.85rem", marginBottom:"0.9rem", fontSize:"12.5px", lineHeight:1.65 }}>
+        <strong>Final exam connection:</strong> {finalTopic.topics.join(" · ")}
+      </div>}
       <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(150px, 1fr))", gap:"8px", marginBottom:"0.9rem" }}>
         {[["formulas","Formula sheet"],["example","Source example"],["practice","Practice done"]].map(([id,label])=><label key={id} style={{ display:"flex", gap:"7px", alignItems:"center", fontSize:"12.5px", color:"var(--color-text-secondary)", background:"var(--color-background-secondary)", border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.55rem 0.65rem" }}>
           <input type="checkbox" checked={!!weekProgress[id]} onChange={()=>toggleProgress(id)} />
@@ -1956,9 +2012,31 @@ function DashboardTab({ progress, onProgressChange, setTab }) {
 }
 function LecturesTab({ progress, onProgressChange }) {
   const [q,setQ] = useState("");
-  const filtered = MODULES.filter(m => matchesQuery(m, q));
+  const priorityRank = { "A+ core": 0, "high": 1, "support": 2 };
+  const filtered = MODULES
+    .filter(m => matchesQuery(m, q))
+    .sort((a,b) => (priorityRank[FINAL_TOPIC_MAP[a.week]?.priority] ?? 3) - (priorityRank[FINAL_TOPIC_MAP[b.week]?.priority] ?? 3));
   return <div style={S.content}>
-    <div style={S.alert(C.indigo,C.indigoBg)}>Each lecture card now starts with the formula sheet, then a source example, then a different-type practice question with the answer hidden. Final exam examples are kept out of the lecture practice area.</div>
+    <div style={S.alert(C.red,C.redBg)}><strong>Lecture hub is now final-first.</strong> Use the cards below to match each lecture week to the professor's announced final topics. Start with A+ core topics, then high-priority inequalities, then support review.</div>
+    <div style={S.card}>
+      <div style={{ display:"flex", justifyContent:"space-between", gap:"1rem", alignItems:"center", flexWrap:"wrap", marginBottom:"0.75rem" }}>
+        <div>
+          <h3 style={{ margin:"0 0 0.25rem", fontSize:"15px" }}>Final Topics Roadmap</h3>
+          <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"12.5px", lineHeight:1.55 }}>Professor-listed topics mapped to the lecture weeks you should review.</p>
+        </div>
+        <Pill color={C.red} bg={C.redBg}>9 strong problems = A+</Pill>
+      </div>
+      <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(240px, 1fr))", gap:"8px" }}>
+        {MODULES.map(m=>{
+          const info = FINAL_TOPIC_MAP[m.week];
+          return <div key={m.week} style={{ border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.75rem", background:info?.priority==="support"?"var(--color-background-secondary)":m.bg }}>
+            <div style={{ display:"flex", gap:"6px", flexWrap:"wrap", marginBottom:"0.55rem" }}><Pill color={m.color} bg="var(--color-background-primary)">{m.week}</Pill>{info && <Pill color={info.priority==="support"?C.gray:C.red} bg={info.priority==="support"?C.grayBg:C.redBg}>{info.priority}</Pill>}</div>
+            <strong style={{ fontSize:"13px" }}>{m.title}</strong>
+            <p style={{ margin:"0.45rem 0 0", color:"var(--color-text-secondary)", fontSize:"12px", lineHeight:1.55 }}>{info?.topics.join(", ")}</p>
+          </div>;
+        })}
+      </div>
+    </div>
     <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search week/topic, e.g. Bayes, CLT, covariance, MLE" style={{ width:"100%", padding:"0.7rem 0.9rem", borderRadius:"var(--border-radius-md)", border:"0.75px solid var(--color-border-secondary)", marginBottom:"1rem", fontSize:"13px" }}/>
     {filtered.length ? filtered.map(m=><ModuleCard key={m.week} m={m} progress={progress} onProgressChange={onProgressChange}/>) : <EmptyState>No lecture cards match that search.</EmptyState>}
   </div>;
