@@ -4,6 +4,9 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 function escapeHtml(str="") {
   return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
+function formatPartSpacing(str="") {
+  return String(str).replace(/([.:?])\s+\(([a-j])\)\s+/g, "$1\n\n($2) ");
+}
 function loadKatex(cb) {
   if (typeof window === "undefined") return;
   if (window.renderMathInElement) { cb(); return; }
@@ -26,7 +29,7 @@ function loadKatex(cb) {
 }
 function MathBlock({ text, mono=false }) {
   const ref = useRef(null);
-  const safe = useMemo(() => escapeHtml(text).replace(/\n/g,"<br/>"), [text]);
+  const safe = useMemo(() => escapeHtml(formatPartSpacing(text)).replace(/\n/g,"<br/>"), [text]);
   useEffect(() => {
     loadKatex(() => {
       if (ref.current && window.renderMathInElement) {
@@ -116,7 +119,7 @@ const MODULES = [
     "practice": {
       "source": "Homework 1 Problem 1",
       "prompt": "Problem 1 [16 points]. A bioengineering laboratory tests 120 patient blood samples for two biomarkers associated with early cancer detection. The following sets are defined as: $A$: samples where biomarker A is detected; $B$: samples where biomarker B is detected; $\\Omega$: the set of all tested samples. Suppose that $|A|=50$, $|B|=40$, and $|A\\cap B|=15$. (a) Find the number of samples in $A\\cup B$. (b) Describe in words what the set $A^c$ represents and calculate the number of samples in this set. (c) Describe in words what the set $A\\setminus B$ represents and calculate the number of samples in this set. (d) Find the number of samples where neither biomarker is detected.",
-      "answer": "$|A\\cup B|=50+40-15=75$.\n$|A^c|=120-50=70$.\n$|A\\setminus B|=50-15=35$.\nNeither biomarker: $120-75=45$."
+      "answer": "(a) $|A\\cup B|=|A|+|B|-|A\\cap B|=50+40-15=75$.\n\n(b) $A^c$ means samples where biomarker A is not detected. $|A^c|=120-50=70$.\n\n(c) $A\\setminus B$ means samples where biomarker A is detected but biomarker B is not detected. $|A\\setminus B|=50-15=35$.\n\n(d) Neither biomarker: $120-|A\\cup B|=120-75=45$."
     }
   },
   {
@@ -171,7 +174,7 @@ const MODULES = [
     "practice": {
       "source": "Midterm 1 Problem 1",
       "prompt": "Problem 1 [18 points]. In a bioengineering study, a diagnostic device is manufactured using two different assembly lines. Approximately 25% of devices are produced using Line 1, while the remaining 75% are produced using Line 2. Each device is evaluated for two performance outcomes: whether it produces a high signal response and whether it achieves low measurement noise. For devices produced on Line 1, 60% produce a high signal response and 50% achieve low measurement noise. For devices produced on Line 2, 20% produce a high signal response and 30% achieve low measurement noise. It is known that, within each assembly line, the two performance outcomes are independent. (a) What is the probability that a device from Line 1 produces both a high signal response and achieves low measurement noise? (b) What is the overall probability that a randomly selected device produces both a high signal response and achieves low measurement noise? (c) What is the overall probability that a randomly selected device achieves low measurement noise? (d) Among devices that achieve low measurement noise, what fraction also produce a high signal response? (e) Based on your result in part (d), determine whether the two performance outcomes are independent in the overall population. Briefly justify your answer.",
-      "answer": "Line 1 AND: $0.60(0.50)=0.30$. Line 2 AND: $0.20(0.30)=0.06$.\n$P(A\\cap B)=0.30(0.25)+0.06(0.75)=0.12$.\n$P(B)=0.50(0.25)+0.30(0.75)=0.35$.\n$P(A|B)=0.12/0.35\\approx0.343$."
+      "answer": "(a) For Line 1, independence gives $0.60(0.50)=0.30$.\n\n(b) For Line 2, the AND probability is $0.20(0.30)=0.06$, so overall $P(A\\cap B)=0.30(0.25)+0.06(0.75)=0.12$.\n\n(c) $P(B)=0.50(0.25)+0.30(0.75)=0.35$.\n\n(d) $P(A|B)=P(A\\cap B)/P(B)=0.12/0.35\\approx0.343$.\n\n(e) Not independent overall, because $P(A|B)\\approx0.343$ is not equal to $P(A)=0.60(0.25)+0.20(0.75)=0.30$."
     }
   },
   {
@@ -246,7 +249,7 @@ const MODULES = [
     "practice": {
       "source": "Homework 3 Problem 1",
       "prompt": "Problem 1 [21 points]. In a microfluidic fluorescence assay, droplets pass through a detector that records signal intensity. Due to biological variability, the device reports three possible signal levels: 10, 20, or 30 units. Experimental characterization shows that low-intensity droplets (10 units) occur 20% of the time, medium-intensity droplets (20 units) occur 50% of the time, and high-intensity droplets (30 units) occur 30% of the time. Let $X$ denote the measured fluorescence intensity of a randomly selected droplet. To improve measurement accuracy, the system applies a calibration that rescales and shifts the signal according to $Y=1.5X+5$. (a) Compute the probability mass function (PMF) of $Y$. (b) Compute the expected value of $Y$. (c) Compute the standard deviation of $Y$.",
-      "answer": "Values: $Y=20,35,50$ with probabilities $0.20,0.50,0.30$.\n$E[Y]=20(0.2)+35(0.5)+50(0.3)=36.5$.\n$E[Y^2]=400(0.2)+1225(0.5)+2500(0.3)=1442.5$.\n$Var[Y]=1442.5-36.5^2=110.25$, so $SD[Y]=10.5$."
+      "answer": "(a) The possible values are $Y=20,35,50$ with probabilities $0.20,0.50,0.30$.\n\n(b) $E[Y]=20(0.2)+35(0.5)+50(0.3)=36.5$.\n\n(c) $E[Y^2]=400(0.2)+1225(0.5)+2500(0.3)=1442.5$. Then $Var[Y]=1442.5-36.5^2=110.25$, so $SD[Y]=10.5$."
     }
   },
   {
@@ -316,7 +319,7 @@ const MODULES = [
     "practice": {
       "source": "Homework 4 Problem 2",
       "prompt": "Problem 2 [15 points]. A single-cell RNA sequencing assay is used to detect expression of a low-abundance gene. Due to biological variability and measurement noise, each sequencing run successfully detects the gene with probability $p=0.30$, independently of other runs. The experiment is repeated until 5 successful detections are observed. Let $X$ denote the total number of sequencing runs required to obtain these 5 successful detections. (a) What is the probability that exactly 8 runs are required to obtain the 5 successful detections? (b) What is the expected number of runs required? (c) What is the variance of the number of runs required?",
-      "answer": "$X\\sim Pascal(m=5,p=0.30)$.\n$P(X=8)=\\binom{7}{4}(0.30)^5(0.70)^3\\approx0.0292$.\n$E[X]=5/0.30\\approx16.67$.\n$Var[X]=5(0.70)/(0.30)^2\\approx38.89$."
+      "answer": "(a) $X\\sim Pascal(m=5,p=0.30)$, so $P(X=8)=\\binom{7}{4}(0.30)^5(0.70)^3\\approx0.0292$.\n\n(b) $E[X]=m/p=5/0.30\\approx16.67$.\n\n(c) $Var[X]=m(1-p)/p^2=5(0.70)/(0.30)^2\\approx38.89$."
     }
   },
   {
