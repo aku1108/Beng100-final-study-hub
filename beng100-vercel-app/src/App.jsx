@@ -1928,18 +1928,15 @@ function compactFormulaText(str="") {
 }
 function renderFormulaSheetHtml() {
   const renderRows = sheet => sheet.formulas.map(([name, formula, use]) => `
-    <div class="formula-row">
+    <div class="formula-row ${weekFromSheetLabel(sheet.label) === "Week 1" ? "week-one-row" : ""}">
       <div class="formula-name">${escapeHtml(name)}</div>
       <div class="formula-math">${escapeHtml(compactFormulaText(formula))}</div>
-      <div class="formula-use">${escapeHtml(use)}</div>
+      ${weekFromSheetLabel(sheet.label) === "Week 1" ? "" : `<div class="formula-use">${escapeHtml(use)}</div>`}
     </div>
   `).join("");
   const pages = FORMULA_SHEET_PAGES.map((page, pageIndex) => `
     <section class="page">
-      <header>
-        <div></div>
-        <div class="page-number">Page ${pageIndex + 1}/2</div>
-      </header>
+      <header></header>
       <main>
         ${formulasForPage(page).map(sheet => `
           <section class="week-block">
@@ -1971,6 +1968,7 @@ function renderFormulaSheetHtml() {
     .week-block { break-inside: avoid; margin-bottom: 2.5px; }
     .formula-grid { display: grid; gap: 1.5px; }
     .formula-row { display: grid; grid-template-columns: 20% 39% 41%; gap: 2px; align-items: start; border-bottom: .4px solid #ececec; padding-bottom: 1px; }
+    .formula-row.week-one-row { grid-template-columns: 38% 62%; }
     .formula-name { font-size: 6.7px; font-weight: 700; line-height: 1.15; }
     .formula-math { font-size: 6.4px; line-height: 1.12; overflow-wrap: anywhere; }
     .formula-use { font-size: 6.25px; color: #444; line-height: 1.18; }
@@ -2022,19 +2020,19 @@ function openPrintableFormulaSheet() {
 }
 function FormulaA4Page({ page, index }) {
   return <div style={{ background:"#fff", color:"#171717", border:"1px solid var(--color-border-tertiary)", boxShadow:"0 2px 8px #00000014", width:"100%", maxWidth:"1123px", minHeight:"794px", margin:"0 auto 18px", padding:"26px", overflow:"hidden" }}>
-    <div style={{ display:"flex", justifyContent:"space-between", gap:"10px", alignItems:"flex-start", borderBottom:"1px solid #222", paddingBottom:"6px", marginBottom:"6px" }}>
-      <div></div>
-      <Pill color={C.gray} bg={C.grayBg}>Page {index + 1}/2</Pill>
-    </div>
+    <div style={{ borderBottom:"1px solid #222", paddingBottom:"6px", marginBottom:"6px" }} />
     <div style={{ columnCount:3, columnGap:"18px" }}>
       {formulasForPage(page).map(sheet=><section key={sheet.label} style={{ breakInside:"avoid", marginBottom:"7px" }}>
         <h3 style={{ margin:"0 0 4px", fontSize:"10px", lineHeight:1.2, borderBottom:"0.5px solid #ddd", paddingBottom:"2px" }}>{sheet.label} · {sheet.title}</h3>
         <div style={{ display:"grid", gap:"3px" }}>
-          {sheet.formulas.map(([name, formula, use])=><div key={`${sheet.label}-${name}`} style={{ display:"grid", gridTemplateColumns:"20% 39% 41%", gap:"3px", borderBottom:"0.5px solid #eee", paddingBottom:"2px", alignItems:"start" }}>
+          {sheet.formulas.map(([name, formula, use])=>{
+            const isWeekOne = weekFromSheetLabel(sheet.label) === "Week 1";
+            return <div key={`${sheet.label}-${name}`} style={{ display:"grid", gridTemplateColumns:isWeekOne?"38% 62%":"20% 39% 41%", gap:"3px", borderBottom:"0.5px solid #eee", paddingBottom:"2px", alignItems:"start" }}>
             <div style={{ fontSize:"8px", fontWeight:800, lineHeight:1.15 }}>{name}</div>
             <div style={{ fontSize:"7.5px", lineHeight:1.2, overflowWrap:"anywhere" }}><MathBlock text={compactFormulaText(formula)}/></div>
-            <div style={{ fontSize:"7.2px", color:"#444", lineHeight:1.22 }}><MathBlock text={use}/></div>
-          </div>)}
+            {!isWeekOne && <div style={{ fontSize:"7.2px", color:"#444", lineHeight:1.22 }}><MathBlock text={use}/></div>}
+          </div>;
+          })}
         </div>
       </section>)}
     </div>
