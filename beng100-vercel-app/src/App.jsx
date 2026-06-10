@@ -1295,6 +1295,16 @@ const QUICK_SHEETS = [
     ]
   }
 ];
+const FORMULA_SHEET_PAGES = [
+  {
+    title: "Page 1: Probability, Bayes, Random Variables, Common Distributions",
+    weeks: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"]
+  },
+  {
+    title: "Page 2: Joint RVs, Moments, Bounds, CLT, Estimation, Testing",
+    weeks: ["Week 6", "Week 7", "Week 8", "Week 9", "Week 10"]
+  }
+];
 const FINALS = [
   {
     "id": "2025",
@@ -1907,6 +1917,136 @@ function FormulaTable({ formulas, compact=false }) {
     </tr>)}</tbody>
   </table></div>;
 }
+function weekFromSheetLabel(label="") {
+  return firstWeekLabel(label);
+}
+function formulasForPage(page) {
+  return page.weeks.map(week => QUICK_SHEETS.find(s => weekFromSheetLabel(s.label) === week)).filter(Boolean);
+}
+function compactFormulaText(str="") {
+  return String(str).replace(/\$\$/g, "$");
+}
+function renderFormulaSheetHtml() {
+  const renderRows = sheet => sheet.formulas.map(([name, formula, use]) => `
+    <div class="formula-row">
+      <div class="formula-name">${escapeHtml(name)}</div>
+      <div class="formula-math">${escapeHtml(compactFormulaText(formula))}</div>
+      <div class="formula-use">${escapeHtml(use)}</div>
+    </div>
+  `).join("");
+  const pages = FORMULA_SHEET_PAGES.map((page, pageIndex) => `
+    <section class="page">
+      <header>
+        <div>
+          <div class="eyebrow">BENG 100 Final Cheat Sheet</div>
+          <h1>${escapeHtml(page.title)}</h1>
+        </div>
+        <div class="page-number">Page ${pageIndex + 1}/2</div>
+      </header>
+      <main>
+        ${formulasForPage(page).map(sheet => `
+          <section class="week-block">
+            <h2>${escapeHtml(sheet.label)} · ${escapeHtml(sheet.title)}</h2>
+            <div class="formula-grid">${renderRows(sheet)}</div>
+          </section>
+        `).join("")}
+      </main>
+    </section>
+  `).join("");
+  return `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>BENG 100 Two-Page Formula Sheet</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <style>
+    @page { size: A4; margin: 0; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e8e8e8; color: #171717; font-family: Arial, Helvetica, sans-serif; }
+    .toolbar { position: sticky; top: 0; z-index: 2; padding: 10px 14px; background: #fff; border-bottom: 1px solid #ccc; display: flex; gap: 8px; align-items: center; }
+    .toolbar button { border: 1px solid #777; background: #111827; color: #fff; border-radius: 6px; padding: 8px 11px; cursor: pointer; }
+    .toolbar span { font-size: 12px; color: #555; }
+    .page { width: 210mm; min-height: 297mm; margin: 12px auto; padding: 7mm; background: #fff; page-break-after: always; overflow: hidden; }
+    header { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; border-bottom: 1px solid #111; padding-bottom: 4px; margin-bottom: 4px; }
+    .eyebrow, .page-number { font-size: 8px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #555; }
+    h1 { margin: 1px 0 0; font-size: 12px; line-height: 1.15; }
+    h2 { margin: 4px 0 2px; font-size: 8.2px; line-height: 1.15; color: #111827; border-bottom: .5px solid #d7d7d7; padding-bottom: 1px; }
+    main { column-count: 2; column-gap: 4mm; }
+    .week-block { break-inside: avoid; margin-bottom: 2.5px; }
+    .formula-grid { display: grid; gap: 1.5px; }
+    .formula-row { display: grid; grid-template-columns: 20% 39% 41%; gap: 2px; align-items: start; border-bottom: .4px solid #ececec; padding-bottom: 1px; }
+    .formula-name { font-size: 6.7px; font-weight: 700; line-height: 1.15; }
+    .formula-math { font-size: 6.4px; line-height: 1.12; overflow-wrap: anywhere; }
+    .formula-use { font-size: 6.25px; color: #444; line-height: 1.18; }
+    .katex { font-size: 1em !important; }
+    .katex-display { margin: 0; overflow: visible; text-align: left; }
+    @media print {
+      body { background: #fff; }
+      .toolbar { display: none; }
+      .page { margin: 0; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar"><button onclick="window.print()">Print / Save as PDF</button><span>Use paper size A4, scale 100%, margins none/default.</span></div>
+  ${pages}
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script>
+    window.addEventListener("load", function() {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false }
+        ],
+        throwOnError: false
+      });
+    });
+  </script>
+</body>
+</html>`;
+}
+function downloadFormulaSheet() {
+  const blob = new Blob([renderFormulaSheetHtml()], { type: "text/html;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "beng100-two-page-a4-formula-sheet.html";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+function openPrintableFormulaSheet() {
+  const win = window.open("", "_blank");
+  if (!win) return;
+  win.document.open();
+  win.document.write(renderFormulaSheetHtml());
+  win.document.close();
+}
+function FormulaA4Page({ page, index }) {
+  return <div style={{ background:"#fff", color:"#171717", border:"1px solid var(--color-border-tertiary)", boxShadow:"0 2px 8px #00000014", width:"100%", maxWidth:"794px", minHeight:"1123px", margin:"0 auto 18px", padding:"26px", overflow:"hidden" }}>
+    <div style={{ display:"flex", justifyContent:"space-between", gap:"10px", alignItems:"flex-start", borderBottom:"1px solid #222", paddingBottom:"6px", marginBottom:"6px" }}>
+      <div>
+        <div style={{ fontSize:"9px", fontWeight:800, textTransform:"uppercase", color:"#555" }}>BENG 100 Final Cheat Sheet</div>
+        <h2 style={{ margin:"2px 0 0", fontSize:"15px", lineHeight:1.15 }}>{page.title}</h2>
+      </div>
+      <Pill color={C.gray} bg={C.grayBg}>Page {index + 1}/2</Pill>
+    </div>
+    <div style={{ columnCount:2, columnGap:"18px" }}>
+      {formulasForPage(page).map(sheet=><section key={sheet.label} style={{ breakInside:"avoid", marginBottom:"7px" }}>
+        <h3 style={{ margin:"0 0 4px", fontSize:"10px", lineHeight:1.2, borderBottom:"0.5px solid #ddd", paddingBottom:"2px" }}>{sheet.label} · {sheet.title}</h3>
+        <div style={{ display:"grid", gap:"3px" }}>
+          {sheet.formulas.map(([name, formula, use])=><div key={`${sheet.label}-${name}`} style={{ display:"grid", gridTemplateColumns:"20% 39% 41%", gap:"3px", borderBottom:"0.5px solid #eee", paddingBottom:"2px", alignItems:"start" }}>
+            <div style={{ fontSize:"8px", fontWeight:800, lineHeight:1.15 }}>{name}</div>
+            <div style={{ fontSize:"7.5px", lineHeight:1.2, overflowWrap:"anywhere" }}><MathBlock text={compactFormulaText(formula)}/></div>
+            <div style={{ fontSize:"7.2px", color:"#444", lineHeight:1.22 }}><MathBlock text={use}/></div>
+          </div>)}
+        </div>
+      </section>)}
+    </div>
+  </div>;
+}
 function Reveal({ title="Hidden answer", children, color=C.indigo }) {
   const [open,setOpen] = useState(false);
   return <div style={{ marginTop:"0.8rem" }}>
@@ -2088,8 +2228,23 @@ function FormulaSheetTab() {
   const [q,setQ] = useState("");
   const sheets = QUICK_SHEETS.filter(s=>!onlyFinal || FINAL_TOPIC_WEEKS.has(s.label.split(' ')[0]+' '+s.label.split(' ')[1])).filter(s=>matchesQuery(s, q));
   return <div style={S.content}>
+    <div style={{ ...S.card, display:"flex", justifyContent:"space-between", gap:"1rem", alignItems:"center", flexWrap:"wrap" }}>
+      <div>
+        <Pill color={C.amber} bg={C.amberBg}>Two-page A4 sheet</Pill>
+        <h2 style={{ margin:"0.55rem 0 0.25rem", fontSize:"20px" }}>Downloadable Formula Sheet</h2>
+        <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"13px", lineHeight:1.6 }}>All current formula content is compressed into two A4 pages. Use the print button to save as PDF from your browser.</p>
+      </div>
+      <div style={{ display:"flex", gap:"8px", flexWrap:"wrap" }}>
+        <button style={S.btn("primary", C.amber)} onClick={downloadFormulaSheet}>Download A4 HTML</button>
+        <button style={S.btn("outline")} onClick={openPrintableFormulaSheet}>Open print / save PDF</button>
+      </div>
+    </div>
+    <div style={S.alert(C.amber,C.amberBg)}>For a PDF: press <strong>Open print / save PDF</strong>, then choose “Save as PDF” in the print window. Set paper size to A4.</div>
+    <div style={{ display:"grid", gap:"18px", marginBottom:"1rem" }}>
+      {FORMULA_SHEET_PAGES.map((page,i)=><FormulaA4Page key={page.title} page={page} index={i}/>)}
+    </div>
     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:"1rem", flexWrap:"wrap", marginBottom:"1rem" }}>
-      <div style={S.alert(C.amber,C.amberBg)}>This is organized by lecture/week, not just by topic. Use this when making your real cheat sheet.</div>
+      <div style={S.alert(C.gray,C.grayBg)}>Searchable full formula tables are still below for studying on screen.</div>
       <label style={{ fontSize:"13px", display:"flex", gap:"6px", alignItems:"center" }}><input type="checkbox" checked={onlyFinal} onChange={e=>setOnlyFinal(e.target.checked)}/> Final-heavy topics only</label>
     </div>
     <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search formulas, meanings, or when-to-use notes" style={{ width:"100%", padding:"0.7rem 0.9rem", borderRadius:"var(--border-radius-md)", border:"0.75px solid var(--color-border-secondary)", marginBottom:"1rem", fontSize:"13px" }}/>
