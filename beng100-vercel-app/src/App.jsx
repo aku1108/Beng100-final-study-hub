@@ -821,6 +821,26 @@ const EXTRA_EXAMPLES = {
       type: "Total expectation",
       prompt: "If $E[Y|X]=2X+1$ and $E[X]=4$, find $E[Y]$.",
       solution: "Use total expectation: $E[Y]=E[E[Y|X]]=E[2X+1]=2(4)+1=9$."
+    },
+    {
+      type: "Total variance",
+      prompt: "Suppose $E[Y|X]=X$ and $Var(Y|X)=2$. If $Var(X)=5$, find $Var(Y)$.",
+      solution: "Use $Var(Y)=E[Var(Y|X)]+Var(E[Y|X])$. So $Var(Y)=E[2]+Var(X)=2+5=7$."
+    },
+    {
+      type: "Correlation",
+      prompt: "If $Cov(X,Y)=6$, $Var(X)=9$, and $Var(Y)=16$, find $\\rho_{XY}$.",
+      solution: "$\\sigma_X=3$ and $\\sigma_Y=4$, so $\\rho_{XY}=Cov(X,Y)/(\\sigma_X\\sigma_Y)=6/(3\\cdot4)=1/2$."
+    },
+    {
+      type: "MGF moments",
+      prompt: "If $M_X(t)=e^{3t+2t^2}$, find $E[X]$ using the MGF pattern.",
+      solution: "$E[X]=M_X'(0)$. Since $M_X'(t)=(3+4t)e^{3t+2t^2}$, $M_X'(0)=3$."
+    },
+    {
+      type: "Independent sum MGF",
+      prompt: "If $X$ and $Y$ are independent with $M_X(t)=e^{2(e^t-1)}$ and $M_Y(t)=e^{5(e^t-1)}$, identify the distribution of $X+Y$.",
+      solution: "For independent sums, $M_{X+Y}(t)=M_X(t)M_Y(t)=e^{7(e^t-1)}$. This is Poisson$(7)$."
     }
   ],
   "Week 8": [
