@@ -1953,13 +1953,13 @@ function renderFormulaSheetHtml() {
   <title>BENG 100 Two-Page Formula Sheet</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <style>
-    @page { size: A4 landscape; margin: 0; }
+    @page { size: letter landscape; margin: 0; }
     * { box-sizing: border-box; }
     body { margin: 0; background: #e8e8e8; color: #171717; font-family: Arial, Helvetica, sans-serif; }
     .toolbar { position: sticky; top: 0; z-index: 2; padding: 10px 14px; background: #fff; border-bottom: 1px solid #ccc; display: flex; gap: 8px; align-items: center; }
     .toolbar button { border: 1px solid #777; background: #111827; color: #fff; border-radius: 6px; padding: 8px 11px; cursor: pointer; }
     .toolbar span { font-size: 12px; color: #555; }
-    .page { width: 1123px; min-height: 794px; margin: 12px auto; padding: 26px; background: #fff; page-break-after: always; overflow: hidden; }
+    .page { width: 1056px; min-height: 816px; margin: 12px auto; padding: 26px; background: #fff; page-break-after: always; overflow: hidden; }
     header { border-bottom: 1px solid #111; padding-bottom: 6px; margin-bottom: 6px; }
     .page-number { font-size: 8px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #555; }
     main { column-count: 3; column-gap: 18px; }
@@ -1980,7 +1980,7 @@ function renderFormulaSheetHtml() {
   </style>
 </head>
 <body>
-  <div class="toolbar"><button onclick="window.print()">Print / Save as PDF</button><span>Use paper size A4, orientation landscape, scale 100%, margins none/default.</span></div>
+  <div class="toolbar"><button onclick="window.print()">Print / Save as PDF</button><span>Use paper size Letter 8.5 x 11, orientation landscape, scale 100%, margins none/default.</span></div>
   ${pages}
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -2003,7 +2003,7 @@ function downloadFormulaSheet() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "beng100-two-page-a4-formula-sheet.html";
+  a.download = "beng100-two-page-letter-formula-sheet.html";
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -2017,7 +2017,7 @@ function openPrintableFormulaSheet() {
   win.document.close();
 }
 function FormulaA4Page({ page, index }) {
-  return <div style={{ background:"#fff", color:"#171717", border:"1px solid var(--color-border-tertiary)", boxShadow:"0 2px 8px #00000014", width:"100%", maxWidth:"1123px", minHeight:"794px", margin:"0 auto 18px", padding:"26px", overflow:"hidden" }}>
+  return <div style={{ background:"#fff", color:"#171717", border:"1px solid var(--color-border-tertiary)", boxShadow:"0 2px 8px #00000014", width:"100%", maxWidth:"1056px", minHeight:"816px", margin:"0 auto 18px", padding:"26px", overflow:"hidden" }}>
     <div style={{ borderBottom:"1px solid #222", paddingBottom:"6px", marginBottom:"6px" }} />
     <div style={{ columnCount:3, columnGap:"18px" }}>
       {formulasForPage(page).map(sheet=><section key={sheet.label} style={{ breakInside:"avoid", marginBottom:"5px", border:"0.5px solid #d9d9d9", borderRadius:"3px", padding:"3px" }}>
@@ -2218,16 +2218,16 @@ function FormulaSheetTab() {
   return <div style={S.content}>
     <div style={{ ...S.card, display:"flex", justifyContent:"space-between", gap:"1rem", alignItems:"center", flexWrap:"wrap" }}>
       <div>
-        <Pill color={C.amber} bg={C.amberBg}>Two-page A4 sheet</Pill>
+        <Pill color={C.amber} bg={C.amberBg}>Two-page 8.5 x 11 sheet</Pill>
         <h2 style={{ margin:"0.55rem 0 0.25rem", fontSize:"20px" }}>Downloadable Formula Sheet</h2>
-        <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"13px", lineHeight:1.6 }}>All current formula content is compressed into two landscape A4 pages. Use the print button to save as PDF from your browser.</p>
+        <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"13px", lineHeight:1.6 }}>All current formula content is compressed into two landscape 8.5 x 11 pages. Use the print button to save as PDF from your browser.</p>
       </div>
       <div style={{ display:"flex", gap:"8px", flexWrap:"wrap" }}>
-        <button style={S.btn("primary", C.amber)} onClick={downloadFormulaSheet}>Download A4 HTML</button>
+        <button style={S.btn("primary", C.amber)} onClick={downloadFormulaSheet}>Download 8.5 x 11 HTML</button>
         <button style={S.btn("outline")} onClick={openPrintableFormulaSheet}>Open print / save PDF</button>
       </div>
     </div>
-    <div style={S.alert(C.amber,C.amberBg)}>For a PDF: press <strong>Open print / save PDF</strong>, then choose “Save as PDF” in the print window. Set paper size to A4 and orientation to landscape.</div>
+    <div style={S.alert(C.amber,C.amberBg)}>For a PDF: press <strong>Open print / save PDF</strong>, then choose “Save as PDF” in the print window. Set paper size to Letter 8.5 x 11 and orientation to landscape.</div>
     <div style={{ display:"grid", gap:"18px", marginBottom:"1rem" }}>
       {FORMULA_SHEET_PAGES.map((page,i)=><FormulaA4Page key={page.title} page={page} index={i}/>)}
     </div>
