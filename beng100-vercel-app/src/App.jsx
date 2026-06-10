@@ -228,17 +228,17 @@ const MODULES = [
       [
         "Bernoulli",
         "$$P(X=1)=p,\\ E[X]=p,\\ Var[X]=p(1-p)$$",
-        "Single yes/no trial."
+        "Identify: one trial only; success/failure; $X$ is 0 or 1."
       ],
       [
         "Binomial",
         "$$P(X=k)=\\binom nkp^k(1-p)^{n-k},\\ E[X]=np,\\ Var[X]=np(1-p)$$",
-        "Fixed number of independent trials; count successes."
+        "Identify: fixed number $n$ of independent trials; count successes."
       ],
       [
         "Geometric",
         "$$P(X=k)=(1-p)^{k-1}p,\\ E[X]=1/p,\\ Var[X]=(1-p)/p^2$$",
-        "Number of trials until first success."
+        "Identify: repeat until first success; $X$ is the trial number of that first success."
       ]
     ],
     "example": {
@@ -902,7 +902,7 @@ const QUICK_SHEETS = [
       [
         "Pascal / negative binomial",
         "$$P(X=k)=\\binom{k-1}{m-1}p^m(1-p)^{k-m},\\ k=m,m+1,\\ldots$$",
-        "Number of trials required to get m successes."
+        "Identify: repeat independent trials until the m-th success; $X$ is total trials needed."
       ],
       [
         "Pascal mean/variance",
@@ -912,7 +912,7 @@ const QUICK_SHEETS = [
       [
         "Hypergeometric",
         "$$P(X=k)=\\frac{\\binom Kk\\binom{N-K}{n-k}}{\\binom Nn}$$",
-        "Sampling without replacement from N items with K successes."
+        "Identify: sampling without replacement from a finite population; count successes."
       ],
       [
         "Hypergeometric mean/variance",
@@ -922,12 +922,12 @@ const QUICK_SHEETS = [
       [
         "Poisson",
         "$$P(X=k)=e^{-\\lambda}\\frac{\\lambda^k}{k!},\\quad k=0,1,2,\\ldots$$",
-        "Counts events in fixed time/space with constant rate."
+        "Identify: count events in fixed time/area/volume with rate $\\lambda$; words like errors, arrivals, mutations, spikes."
       ],
       [
         "Poisson properties",
         "$$E[X]=\\lambda,\\quad Var[X]=\\lambda$$",
-        "Also use as Binomial approximation when n large, p small, $\\lambda=np$."
+        "Check: support $0,1,2,...$ and mean = variance = $\\lambda$. Approx Binomial when n large, p small, $\\lambda=np$."
       ],
       [
         "PDF properties",
@@ -947,7 +947,7 @@ const QUICK_SHEETS = [
       [
         "Uniform",
         "$$X\\sim U(a,b): f(x)=1/(b-a),\\ E[X]=(a+b)/2,\\ Var[X]=(b-a)^2/12$$",
-        "All values in an interval equally likely."
+        "Identify: all values in interval equally likely, random position/time/concentration between a and b."
       ]
     ]
   },
@@ -980,22 +980,22 @@ const QUICK_SHEETS = [
       [
         "Exponential PDF/CDF",
         "$$f(x)=\\lambda e^{-\\lambda x},\\ x\\ge0;\\quad F(x)=1-e^{-\\lambda x}$$",
-        "Waiting time until first event; memoryless."
+        "Identify: waiting time until first event, lifetime, decay time, time between Poisson events."
       ],
       [
         "Exponential properties",
         "$$E[X]=1/\\lambda,\\quad Var[X]=1/\\lambda^2,\\quad P(X>s+t|X>s)=P(X>t)$$",
-        "Use with rate/waiting-time language."
+        "Decision rule: if asking count, use Poisson; if asking waiting time, use Exponential."
       ],
       [
         "Gamma",
         "$$f(x)=\\frac{\\lambda^\\alpha}{\\Gamma(\\alpha)}x^{\\alpha-1}e^{-\\lambda x},\\quad E[X]=\\alpha/\\lambda,\\ Var[X]=\\alpha/\\lambda^2$$",
-        "Waiting time until alpha-th event / sum of exponentials."
+        "Identify: waiting time until the $\\alpha$-th event, or sum of independent Exponential(rate $\\lambda$) variables."
       ],
       [
         "Normal",
         "$$f(x)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}}e^{-(x-\\mu)^2/(2\\sigma^2)}$$",
-        "Measurement with many small independent noise sources."
+        "Identify: measurement noise, biological variation, averages/CLT, symmetric bell-shaped data."
       ],
       [
         "Standardization",
@@ -1304,6 +1304,18 @@ const FORMULA_SHEET_PAGES = [
     title: "Page 2: Joint RVs, Moments, Bounds, CLT, Estimation, Testing",
     weeks: ["Week 6", "Week 7", "Week 8", "Week 9", "Week 10"]
   }
+];
+const DISTRIBUTION_ID_GUIDE = [
+  ["Bernoulli", "One trial, yes/no, success/failure.", "$X\\in\\{0,1\\}$"],
+  ["Binomial", "Fixed number $n$ of independent trials; count successes.", "$X=0,1,...,n$"],
+  ["Geometric", "Repeat until first success; X = trial number of first success.", "$X=1,2,...$"],
+  ["Pascal", "Repeat until m-th success; X = total trials needed.", "$X=m,m+1,...$"],
+  ["Hypergeometric", "Sample without replacement from finite population.", "uses $N,K,n$"],
+  ["Poisson", "Count events in fixed time/area/volume with rate $\\lambda$.", "errors, arrivals, mutations, spikes"],
+  ["Uniform", "All values in interval equally likely.", "$a<X<b$"],
+  ["Exponential", "Waiting time until first event; time between Poisson events.", "if count -> Poisson; if wait -> Exponential"],
+  ["Gamma", "Waiting time until $\\alpha$-th event or sum of exponentials.", "$\\alpha$ stages/events"],
+  ["Normal", "Measurement noise, biological variation, averages/CLT.", "bell-shaped / standardized z"]
 ];
 const FINALS = [
   {
@@ -1934,10 +1946,24 @@ function renderFormulaSheetHtml() {
       ${weekFromSheetLabel(sheet.label) === "Week 1" ? "" : `<div class="formula-use">${escapeHtml(use)}</div>`}
     </div>
   `).join("");
+  const renderDistributionGuide = () => `
+    <section class="week-block id-guide">
+      <div class="formula-grid">
+        ${DISTRIBUTION_ID_GUIDE.map(([name, clue, key]) => `
+          <div class="formula-row">
+            <div class="formula-name">${escapeHtml(name)}</div>
+            <div class="formula-math">${escapeHtml(clue)}</div>
+            <div class="formula-use">${escapeHtml(key)}</div>
+          </div>
+        `).join("")}
+      </div>
+    </section>
+  `;
   const pages = FORMULA_SHEET_PAGES.map((page, pageIndex) => `
     <section class="page">
       <header></header>
       <main>
+        ${pageIndex === 0 ? renderDistributionGuide() : ""}
         ${formulasForPage(page).map(sheet => `
           <section class="week-block">
             <div class="formula-grid">${renderRows(sheet)}</div>
@@ -2020,6 +2046,15 @@ function FormulaA4Page({ page, index }) {
   return <div style={{ background:"#fff", color:"#171717", border:"1px solid var(--color-border-tertiary)", boxShadow:"0 2px 8px #00000014", width:"100%", maxWidth:"1056px", minHeight:"816px", margin:"0 auto 18px", padding:"26px", overflow:"hidden" }}>
     <div style={{ borderBottom:"1px solid #222", paddingBottom:"6px", marginBottom:"6px" }} />
     <div style={{ columnCount:3, columnGap:"18px" }}>
+      {index === 0 && <section style={{ breakInside:"avoid", marginBottom:"5px", border:"0.5px solid #d9d9d9", borderRadius:"3px", padding:"3px" }}>
+        <div style={{ display:"grid", gap:"3px" }}>
+          {DISTRIBUTION_ID_GUIDE.map(([name, clue, key])=><div key={name} style={{ display:"grid", gridTemplateColumns:"20% 39% 41%", gap:"3px", borderBottom:"0.5px solid #eee", paddingBottom:"2px", alignItems:"start" }}>
+            <div style={{ fontSize:"8px", fontWeight:800, lineHeight:1.15 }}>{name}</div>
+            <div style={{ fontSize:"7.5px", lineHeight:1.2, overflowWrap:"anywhere" }}><MathBlock text={clue}/></div>
+            <div style={{ fontSize:"7.2px", color:"#444", lineHeight:1.22 }}><MathBlock text={key}/></div>
+          </div>)}
+        </div>
+      </section>}
       {formulasForPage(page).map(sheet=><section key={sheet.label} style={{ breakInside:"avoid", marginBottom:"5px", border:"0.5px solid #d9d9d9", borderRadius:"3px", padding:"3px" }}>
         <div style={{ display:"grid", gap:"3px" }}>
           {sheet.formulas.map(([name, formula, use])=>{
