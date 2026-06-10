@@ -263,7 +263,7 @@ const MODULES = [
       [
         "Pascal / negative binomial",
         "$$P(X=k)=\\binom{k-1}{m-1}p^m(1-p)^{k-m},\\ k=m,m+1,\\ldots$$",
-        "Number of trials required to get m successes."
+        "Trigger: repeated independent trials until the m-th success. X = total trials needed."
       ],
       [
         "Pascal mean/variance",
@@ -273,7 +273,7 @@ const MODULES = [
       [
         "Hypergeometric",
         "$$P(X=k)=\\frac{\\binom Kk\\binom{N-K}{n-k}}{\\binom Nn}$$",
-        "Sampling without replacement from N items with K successes."
+        "Trigger: sample without replacement from a finite group. Count successes in n draws."
       ],
       [
         "Hypergeometric mean/variance",
@@ -283,12 +283,12 @@ const MODULES = [
       [
         "Poisson",
         "$$P(X=k)=e^{-\\lambda}\\frac{\\lambda^k}{k!},\\quad k=0,1,2,\\ldots$$",
-        "Counts events in fixed time/space with constant rate."
+        "Trigger: count events in fixed time/area/volume with rate $\\lambda$; events occur independently. Words: number of errors, arrivals, mutations, spikes."
       ],
       [
         "Poisson properties",
         "$$E[X]=\\lambda,\\quad Var[X]=\\lambda$$",
-        "Also use as Binomial approximation when n large, p small, $\\lambda=np$."
+        "Poisson check: support is $0,1,2,...$ and mean = variance = $\\lambda$. Approx Binomial when n large, p small, $\\lambda=np$."
       ],
       [
         "PDF properties",
@@ -308,7 +308,7 @@ const MODULES = [
       [
         "Uniform",
         "$$X\\sim U(a,b): f(x)=1/(b-a),\\ E[X]=(a+b)/2,\\ Var[X]=(b-a)^2/12$$",
-        "All values in an interval equally likely."
+        "Trigger: all values in an interval equally likely, random location/time/concentration between a and b."
       ]
     ],
     "example": {
@@ -353,22 +353,22 @@ const MODULES = [
       [
         "Exponential PDF/CDF",
         "$$f(x)=\\lambda e^{-\\lambda x},\\ x\\ge0;\\quad F(x)=1-e^{-\\lambda x}$$",
-        "Waiting time until first event; memoryless."
+        "Trigger: waiting time until first event, lifetime, decay time, time between Poisson events."
       ],
       [
         "Exponential properties",
         "$$E[X]=1/\\lambda,\\quad Var[X]=1/\\lambda^2,\\quad P(X>s+t|X>s)=P(X>t)$$",
-        "Use with rate/waiting-time language."
+        "Clue: memoryless wording or rate $\\lambda$ per time. If asking count, think Poisson; if asking waiting time, think Exponential."
       ],
       [
         "Gamma",
         "$$f(x)=\\frac{\\lambda^\\alpha}{\\Gamma(\\alpha)}x^{\\alpha-1}e^{-\\lambda x},\\quad E[X]=\\alpha/\\lambda,\\ Var[X]=\\alpha/\\lambda^2$$",
-        "Waiting time until alpha-th event / sum of exponentials."
+        "Trigger: waiting time until the $\\alpha$-th event, or sum of independent Exponential(rate $\\lambda$) variables."
       ],
       [
         "Normal",
         "$$f(x)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}}e^{-(x-\\mu)^2/(2\\sigma^2)}$$",
-        "Measurement with many small independent noise sources."
+        "Trigger: measurement noise, biological variation, averages/CLT, symmetric bell-shaped data."
       ],
       [
         "Standardization",
@@ -1959,17 +1959,17 @@ function renderFormulaSheetHtml() {
     .toolbar { position: sticky; top: 0; z-index: 2; padding: 10px 14px; background: #fff; border-bottom: 1px solid #ccc; display: flex; gap: 8px; align-items: center; }
     .toolbar button { border: 1px solid #777; background: #111827; color: #fff; border-radius: 6px; padding: 8px 11px; cursor: pointer; }
     .toolbar span { font-size: 12px; color: #555; }
-    .page { width: 297mm; min-height: 210mm; margin: 12px auto; padding: 7mm; background: #fff; page-break-after: always; overflow: hidden; }
-    header { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; border-bottom: 1px solid #111; padding-bottom: 4px; margin-bottom: 4px; }
+    .page { width: 1123px; min-height: 794px; margin: 12px auto; padding: 26px; background: #fff; page-break-after: always; overflow: hidden; }
+    header { border-bottom: 1px solid #111; padding-bottom: 6px; margin-bottom: 6px; }
     .page-number { font-size: 8px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #555; }
-    main { column-count: 3; column-gap: 4mm; }
-    .week-block { break-inside: avoid; margin-bottom: 3px; border: .5px solid #d9d9d9; border-radius: 3px; padding: 2px; }
-    .formula-grid { display: grid; gap: 1.5px; }
-    .formula-row { display: grid; grid-template-columns: 20% 39% 41%; gap: 2px; align-items: start; border-bottom: .4px solid #ececec; padding-bottom: 1px; }
+    main { column-count: 3; column-gap: 18px; }
+    .week-block { break-inside: avoid; margin-bottom: 5px; border: .5px solid #d9d9d9; border-radius: 3px; padding: 3px; }
+    .formula-grid { display: grid; gap: 3px; }
+    .formula-row { display: grid; grid-template-columns: 20% 39% 41%; gap: 3px; align-items: start; border-bottom: .5px solid #eee; padding-bottom: 2px; }
     .formula-row.week-one-row { grid-template-columns: 38% 62%; }
-    .formula-name { font-size: 6.7px; font-weight: 700; line-height: 1.15; }
-    .formula-math { font-size: 6.4px; line-height: 1.12; overflow-wrap: anywhere; }
-    .formula-use { font-size: 6.25px; color: #444; line-height: 1.18; }
+    .formula-name { font-size: 8px; font-weight: 700; line-height: 1.15; }
+    .formula-math { font-size: 7.5px; line-height: 1.2; overflow-wrap: anywhere; }
+    .formula-use { font-size: 7.2px; color: #444; line-height: 1.22; }
     .katex { font-size: 1em !important; }
     .katex-display { margin: 0; overflow: visible; text-align: left; }
     @media print {
