@@ -738,6 +738,128 @@ const MODULES = [
     }
   }
 ];
+const EXTRA_EXAMPLES = {
+  "Week 1": [
+    {
+      type: "Set counting",
+      prompt: "A lab tests 80 samples. $|A|=35$, $|B|=28$, and $|A\\cap B|=10$. Find $|A\\cup B|$ and the number in neither event.",
+      solution: "$|A\\cup B|=35+28-10=53$. Neither is $80-53=27$."
+    },
+    {
+      type: "Counting setup",
+      prompt: "A researcher chooses 4 distinct sensors from 9 sensors. How many choices are possible if order does not matter?",
+      solution: "Use combinations: $\\binom{9}{4}=126$."
+    }
+  ],
+  "Week 2": [
+    {
+      type: "Bayes test-positive",
+      prompt: "Disease prevalence is $0.04$. A test has sensitivity $0.95$ and false-positive rate $0.08$. Find $P(\\text{disease}|+)$.",
+      solution: "$P(+)=0.95(0.04)+0.08(0.96)=0.1148$. Bayes gives $0.95(0.04)/0.1148\\approx0.331$."
+    },
+    {
+      type: "Independence check",
+      prompt: "If $P(A)=0.4$, $P(B)=0.5$, and $P(A\\cap B)=0.18$, are $A$ and $B$ independent?",
+      solution: "Check $P(A)P(B)=0.4(0.5)=0.20$. Since $0.18\\ne0.20$, they are not independent."
+    }
+  ],
+  "Week 3": [
+    {
+      type: "PMF validity",
+      prompt: "A random variable has $P(X=0)=c$, $P(X=1)=2c$, and $P(X=2)=3c$. Find $c$ and $E[X]$.",
+      solution: "$c+2c+3c=1$, so $c=1/6$. $E[X]=0(c)+1(2c)+2(3c)=8c=4/3$."
+    },
+    {
+      type: "Identify distribution",
+      prompt: "A device is tested 12 times independently. Each test succeeds with probability $0.8$. Let $X$ be the number of successes.",
+      solution: "Fixed number of independent trials and count successes, so $X\\sim Binomial(n=12,p=0.8)$."
+    }
+  ],
+  "Week 4": [
+    {
+      type: "Distribution ID",
+      prompt: "A sequencing machine records the number of read errors in one fixed cycle. Errors occur independently at a constant average rate.",
+      solution: "This is Poisson because it counts events in a fixed interval. Use $X\\sim Poisson(\\lambda)$, where $\\lambda$ is the expected error count per cycle."
+    },
+    {
+      type: "Pascal vs geometric",
+      prompt: "A detector is run until 5 successful detections occur. Let $X$ be the total number of runs needed.",
+      solution: "This is Pascal/negative binomial. $m=5$ successes, $k$ is total runs, and $p$ is success probability per run."
+    }
+  ],
+  "Week 5": [
+    {
+      type: "Transformation support",
+      prompt: "Let $X\\sim U(0,1)$ and $Y=2X+3$. Find the support of $Y$ and the density shape.",
+      solution: "Since $0<X<1$, $3<Y<5$. Linear transformation of a uniform stays uniform: $f_Y(y)=1/2$ for $3<y<5$."
+    },
+    {
+      type: "Count vs waiting time",
+      prompt: "Events occur at rate $\\lambda$. Which distribution for the number of events in 10 minutes? Which for time until first event?",
+      solution: "Count in fixed time: Poisson with mean $10\\lambda$. Waiting time until first event: Exponential(rate $\\lambda$)."
+    }
+  ],
+  "Week 6": [
+    {
+      type: "Marginal PMF",
+      prompt: "Given a joint PMF table $p_{XY}(x,y)$, how do you find $p_X(x)$?",
+      solution: "Sum out $Y$: $p_X(x)=\\sum_y p_{XY}(x,y)$."
+    },
+    {
+      type: "Conditional PMF",
+      prompt: "Given $p_{XY}(x,y)$, how do you find $p_{X|Y}(x|y)$?",
+      solution: "Fix $Y=y$ and normalize: $p_{X|Y}(x|y)=p_{XY}(x,y)/p_Y(y)$."
+    }
+  ],
+  "Week 7": [
+    {
+      type: "Covariance shortcut",
+      prompt: "If $E[X]=2$, $E[Y]=5$, and $E[XY]=13$, find $Cov(X,Y)$.",
+      solution: "$Cov(X,Y)=E[XY]-E[X]E[Y]=13-2(5)=3$."
+    },
+    {
+      type: "Total expectation",
+      prompt: "If $E[Y|X]=2X+1$ and $E[X]=4$, find $E[Y]$.",
+      solution: "Use total expectation: $E[Y]=E[E[Y|X]]=E[2X+1]=2(4)+1=9$."
+    }
+  ],
+  "Week 8": [
+    {
+      type: "Markov trigger",
+      prompt: "A nonnegative error count has $E[X]=12$. Bound $P(X\\ge40)$.",
+      solution: "Use Markov because $X\\ge0$ and only the mean is needed: $P(X\\ge40)\\le12/40=0.30$."
+    },
+    {
+      type: "Chebyshev trigger",
+      prompt: "A measurement has mean 100 and variance 25. Bound $P(|X-100|\\ge10)$.",
+      solution: "Use Chebyshev: $P(|X-100|\\ge10)\\le25/10^2=0.25$."
+    }
+  ],
+  "Week 9": [
+    {
+      type: "CLT setup",
+      prompt: "For iid measurements with $\\mu=20$, $\\sigma=4$, and $n=64$, approximate $P(\\bar X>21)$.",
+      solution: "$SE=4/\\sqrt{64}=0.5$. $Z=(21-20)/0.5=2$. Probability is $P(Z>2)$."
+    },
+    {
+      type: "Bias check",
+      prompt: "If $E[\\hat\\theta]=\\theta+3$, what is the bias of $\\hat\\theta$?",
+      solution: "$Bias(\\hat\\theta)=E[\\hat\\theta]-\\theta=(\\theta+3)-\\theta=3$."
+    }
+  ],
+  "Week 10": [
+    {
+      type: "MLE setup",
+      prompt: "For iid Poisson$(\\lambda)$ data, what likelihood should you start with?",
+      solution: "$L(\\lambda)=\\prod_{i=1}^n e^{-\\lambda}\\lambda^{x_i}/x_i!$. Then use log likelihood and differentiate."
+    },
+    {
+      type: "Hypothesis test decision",
+      prompt: "If a right-tailed z test gives $z=2.1$ and $\\alpha=0.05$, what is the reject rule?",
+      solution: "Reject when $z>z_{0.95}=1.645$. Since $2.1>1.645$, reject $H_0$ at $0.05$."
+    }
+  ]
+};
 const QUICK_SHEETS = [
   {
     "label": "Week 1 Lectures 1–2",
@@ -2120,6 +2242,14 @@ function ModuleCard({ m, progress={}, onProgressChange=()=>{}, targetWeek="" }) 
         <h4 style={{ margin:"0.75rem 0 0.35rem", color:m.color }}>Example wording from source</h4>
         <div style={{ fontSize:"13.5px", lineHeight:1.75 }}><MathBlock text={m.example.prompt}/></div>
         <Reveal title="Example solution" color={m.color}>{m.example.solution}</Reveal>
+        {!!EXTRA_EXAMPLES[m.week]?.length && <div style={{ marginTop:"1rem", display:"grid", gap:"8px" }}>
+          <h4 style={{ margin:"0.25rem 0 0", color:m.color }}>More example types</h4>
+          {EXTRA_EXAMPLES[m.week].map(ex=><div key={ex.type} style={{ background:"var(--color-background-primary)", border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.85rem" }}>
+            <Pill color={m.color} bg={m.bg}>{ex.type}</Pill>
+            <div style={{ marginTop:"0.55rem", fontSize:"13px", lineHeight:1.7 }}><MathBlock text={ex.prompt}/></div>
+            <Reveal title="Example setup / answer" color={m.color}>{ex.solution}</Reveal>
+          </div>)}
+        </div>}
       </div>}
       {section==='practice' && <div style={{ background:"var(--color-background-secondary)", borderRadius:"var(--border-radius-md)", padding:"1rem", border:"0.5px solid var(--color-border-tertiary)" }}>
         <Pill color={m.color} bg={m.bg}>{m.practice.source}</Pill>
