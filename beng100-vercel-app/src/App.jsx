@@ -2196,11 +2196,11 @@ function DashboardTab({ progress, onProgressChange, setTab, jumpToLecture }) {
       <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(230px, 1fr))", gap:"10px" }}>
         {MODULES.map(m=>{
           const done = ["formulas","example","practice"].filter(k=>progress[m.week]?.[k]).length;
-          return <div key={m.week} style={{ border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.75rem" }}>
+          return <button key={m.week} onClick={()=>jumpToLecture(m.week)} style={{ border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.75rem", background:"var(--color-background-primary)", textAlign:"left", cursor:"pointer", color:"var(--color-text-primary)" }}>
             <div style={{ display:"flex", justifyContent:"space-between", gap:"8px", alignItems:"center", marginBottom:"0.55rem" }}><Pill color={m.color} bg={m.bg}>{m.week}</Pill><span style={{ fontSize:"12px", color:"var(--color-text-secondary)" }}>{done}/3</span></div>
             <strong style={{ fontSize:"13px" }}>{m.title}</strong>
             <div style={{ marginTop:"0.65rem" }}><ProgressBar value={pct(done,3)} color={m.color}/></div>
-          </div>
+          </button>
         })}
       </div>
     </div>
