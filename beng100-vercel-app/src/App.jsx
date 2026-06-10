@@ -1960,18 +1960,18 @@ function renderFormulaSheetHtml() {
   <title>BENG 100 Two-Page Formula Sheet</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <style>
-    @page { size: A4; margin: 0; }
+    @page { size: A4 landscape; margin: 0; }
     * { box-sizing: border-box; }
     body { margin: 0; background: #e8e8e8; color: #171717; font-family: Arial, Helvetica, sans-serif; }
     .toolbar { position: sticky; top: 0; z-index: 2; padding: 10px 14px; background: #fff; border-bottom: 1px solid #ccc; display: flex; gap: 8px; align-items: center; }
     .toolbar button { border: 1px solid #777; background: #111827; color: #fff; border-radius: 6px; padding: 8px 11px; cursor: pointer; }
     .toolbar span { font-size: 12px; color: #555; }
-    .page { width: 210mm; min-height: 297mm; margin: 12px auto; padding: 7mm; background: #fff; page-break-after: always; overflow: hidden; }
+    .page { width: 297mm; min-height: 210mm; margin: 12px auto; padding: 7mm; background: #fff; page-break-after: always; overflow: hidden; }
     header { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; border-bottom: 1px solid #111; padding-bottom: 4px; margin-bottom: 4px; }
     .eyebrow, .page-number { font-size: 8px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #555; }
     h1 { margin: 1px 0 0; font-size: 12px; line-height: 1.15; }
     h2 { margin: 4px 0 2px; font-size: 8.2px; line-height: 1.15; color: #111827; border-bottom: .5px solid #d7d7d7; padding-bottom: 1px; }
-    main { column-count: 2; column-gap: 4mm; }
+    main { column-count: 3; column-gap: 4mm; }
     .week-block { break-inside: avoid; margin-bottom: 2.5px; }
     .formula-grid { display: grid; gap: 1.5px; }
     .formula-row { display: grid; grid-template-columns: 20% 39% 41%; gap: 2px; align-items: start; border-bottom: .4px solid #ececec; padding-bottom: 1px; }
@@ -1988,7 +1988,7 @@ function renderFormulaSheetHtml() {
   </style>
 </head>
 <body>
-  <div class="toolbar"><button onclick="window.print()">Print / Save as PDF</button><span>Use paper size A4, scale 100%, margins none/default.</span></div>
+  <div class="toolbar"><button onclick="window.print()">Print / Save as PDF</button><span>Use paper size A4, orientation landscape, scale 100%, margins none/default.</span></div>
   ${pages}
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -2025,7 +2025,7 @@ function openPrintableFormulaSheet() {
   win.document.close();
 }
 function FormulaA4Page({ page, index }) {
-  return <div style={{ background:"#fff", color:"#171717", border:"1px solid var(--color-border-tertiary)", boxShadow:"0 2px 8px #00000014", width:"100%", maxWidth:"794px", minHeight:"1123px", margin:"0 auto 18px", padding:"26px", overflow:"hidden" }}>
+  return <div style={{ background:"#fff", color:"#171717", border:"1px solid var(--color-border-tertiary)", boxShadow:"0 2px 8px #00000014", width:"100%", maxWidth:"1123px", minHeight:"794px", margin:"0 auto 18px", padding:"26px", overflow:"hidden" }}>
     <div style={{ display:"flex", justifyContent:"space-between", gap:"10px", alignItems:"flex-start", borderBottom:"1px solid #222", paddingBottom:"6px", marginBottom:"6px" }}>
       <div>
         <div style={{ fontSize:"9px", fontWeight:800, textTransform:"uppercase", color:"#555" }}>BENG 100 Final Cheat Sheet</div>
@@ -2033,7 +2033,7 @@ function FormulaA4Page({ page, index }) {
       </div>
       <Pill color={C.gray} bg={C.grayBg}>Page {index + 1}/2</Pill>
     </div>
-    <div style={{ columnCount:2, columnGap:"18px" }}>
+    <div style={{ columnCount:3, columnGap:"18px" }}>
       {formulasForPage(page).map(sheet=><section key={sheet.label} style={{ breakInside:"avoid", marginBottom:"7px" }}>
         <h3 style={{ margin:"0 0 4px", fontSize:"10px", lineHeight:1.2, borderBottom:"0.5px solid #ddd", paddingBottom:"2px" }}>{sheet.label} · {sheet.title}</h3>
         <div style={{ display:"grid", gap:"3px" }}>
@@ -2232,14 +2232,14 @@ function FormulaSheetTab() {
       <div>
         <Pill color={C.amber} bg={C.amberBg}>Two-page A4 sheet</Pill>
         <h2 style={{ margin:"0.55rem 0 0.25rem", fontSize:"20px" }}>Downloadable Formula Sheet</h2>
-        <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"13px", lineHeight:1.6 }}>All current formula content is compressed into two A4 pages. Use the print button to save as PDF from your browser.</p>
+        <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"13px", lineHeight:1.6 }}>All current formula content is compressed into two landscape A4 pages. Use the print button to save as PDF from your browser.</p>
       </div>
       <div style={{ display:"flex", gap:"8px", flexWrap:"wrap" }}>
         <button style={S.btn("primary", C.amber)} onClick={downloadFormulaSheet}>Download A4 HTML</button>
         <button style={S.btn("outline")} onClick={openPrintableFormulaSheet}>Open print / save PDF</button>
       </div>
     </div>
-    <div style={S.alert(C.amber,C.amberBg)}>For a PDF: press <strong>Open print / save PDF</strong>, then choose “Save as PDF” in the print window. Set paper size to A4.</div>
+    <div style={S.alert(C.amber,C.amberBg)}>For a PDF: press <strong>Open print / save PDF</strong>, then choose “Save as PDF” in the print window. Set paper size to A4 and orientation to landscape.</div>
     <div style={{ display:"grid", gap:"18px", marginBottom:"1rem" }}>
       {FORMULA_SHEET_PAGES.map((page,i)=><FormulaA4Page key={page.title} page={page} index={i}/>)}
     </div>
