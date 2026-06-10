@@ -1963,7 +1963,7 @@ function renderFormulaSheetHtml() {
     header { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; border-bottom: 1px solid #111; padding-bottom: 4px; margin-bottom: 4px; }
     .page-number { font-size: 8px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #555; }
     main { column-count: 3; column-gap: 4mm; }
-    .week-block { break-inside: avoid; margin-bottom: 2.5px; }
+    .week-block { break-inside: avoid; margin-bottom: 3px; border: .5px solid #d9d9d9; border-radius: 3px; padding: 2px; }
     .formula-grid { display: grid; gap: 1.5px; }
     .formula-row { display: grid; grid-template-columns: 20% 39% 41%; gap: 2px; align-items: start; border-bottom: .4px solid #ececec; padding-bottom: 1px; }
     .formula-row.week-one-row { grid-template-columns: 38% 62%; }
@@ -2020,7 +2020,7 @@ function FormulaA4Page({ page, index }) {
   return <div style={{ background:"#fff", color:"#171717", border:"1px solid var(--color-border-tertiary)", boxShadow:"0 2px 8px #00000014", width:"100%", maxWidth:"1123px", minHeight:"794px", margin:"0 auto 18px", padding:"26px", overflow:"hidden" }}>
     <div style={{ borderBottom:"1px solid #222", paddingBottom:"6px", marginBottom:"6px" }} />
     <div style={{ columnCount:3, columnGap:"18px" }}>
-      {formulasForPage(page).map(sheet=><section key={sheet.label} style={{ breakInside:"avoid", marginBottom:"7px" }}>
+      {formulasForPage(page).map(sheet=><section key={sheet.label} style={{ breakInside:"avoid", marginBottom:"5px", border:"0.5px solid #d9d9d9", borderRadius:"3px", padding:"3px" }}>
         <div style={{ display:"grid", gap:"3px" }}>
           {sheet.formulas.map(([name, formula, use])=>{
             const isWeekOne = weekFromSheetLabel(sheet.label) === "Week 1";
