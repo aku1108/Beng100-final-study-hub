@@ -1937,10 +1937,7 @@ function renderFormulaSheetHtml() {
   const pages = FORMULA_SHEET_PAGES.map((page, pageIndex) => `
     <section class="page">
       <header>
-        <div>
-          <div class="eyebrow">BENG 100 Final Cheat Sheet</div>
-          <h1>${escapeHtml(page.title)}</h1>
-        </div>
+        <div></div>
         <div class="page-number">Page ${pageIndex + 1}/2</div>
       </header>
       <main>
@@ -1968,8 +1965,7 @@ function renderFormulaSheetHtml() {
     .toolbar span { font-size: 12px; color: #555; }
     .page { width: 297mm; min-height: 210mm; margin: 12px auto; padding: 7mm; background: #fff; page-break-after: always; overflow: hidden; }
     header { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; border-bottom: 1px solid #111; padding-bottom: 4px; margin-bottom: 4px; }
-    .eyebrow, .page-number { font-size: 8px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #555; }
-    h1 { margin: 1px 0 0; font-size: 12px; line-height: 1.15; }
+    .page-number { font-size: 8px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #555; }
     h2 { margin: 4px 0 2px; font-size: 8.2px; line-height: 1.15; color: #111827; border-bottom: .5px solid #d7d7d7; padding-bottom: 1px; }
     main { column-count: 3; column-gap: 4mm; }
     .week-block { break-inside: avoid; margin-bottom: 2.5px; }
@@ -2027,10 +2023,7 @@ function openPrintableFormulaSheet() {
 function FormulaA4Page({ page, index }) {
   return <div style={{ background:"#fff", color:"#171717", border:"1px solid var(--color-border-tertiary)", boxShadow:"0 2px 8px #00000014", width:"100%", maxWidth:"1123px", minHeight:"794px", margin:"0 auto 18px", padding:"26px", overflow:"hidden" }}>
     <div style={{ display:"flex", justifyContent:"space-between", gap:"10px", alignItems:"flex-start", borderBottom:"1px solid #222", paddingBottom:"6px", marginBottom:"6px" }}>
-      <div>
-        <div style={{ fontSize:"9px", fontWeight:800, textTransform:"uppercase", color:"#555" }}>BENG 100 Final Cheat Sheet</div>
-        <h2 style={{ margin:"2px 0 0", fontSize:"15px", lineHeight:1.15 }}>{page.title}</h2>
-      </div>
+      <div></div>
       <Pill color={C.gray} bg={C.grayBg}>Page {index + 1}/2</Pill>
     </div>
     <div style={{ columnCount:3, columnGap:"18px" }}>
