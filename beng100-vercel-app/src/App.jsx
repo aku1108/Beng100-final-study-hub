@@ -902,32 +902,32 @@ const QUICK_SHEETS = [
       [
         "Pascal / negative binomial",
         "$$P(X=k)=\\binom{k-1}{m-1}p^m(1-p)^{k-m},\\ k=m,m+1,\\ldots$$",
-        "Identify: repeat independent trials until the m-th success; $X$ is total trials needed."
+        "Identify: repeat independent trials until the m-th success. $k$ = total trials, $m$ = required successes, $p$ = success probability."
       ],
       [
         "Pascal mean/variance",
         "$$E[X]=m/p,\\quad Var[X]=m(1-p)/p^2$$",
-        "Use after identifying Pascal."
+        "$m$ = number of successes you need; $p$ = probability of success on each trial."
       ],
       [
         "Hypergeometric",
         "$$P(X=k)=\\frac{\\binom Kk\\binom{N-K}{n-k}}{\\binom Nn}$$",
-        "Identify: sampling without replacement from a finite population; count successes."
+        "Identify: sample without replacement. $N$ = total population, $K$ = successes in population, $n$ = sample size, $k$ = successes drawn."
       ],
       [
         "Hypergeometric mean/variance",
         "$$E[X]=nK/N,\\quad Var[X]=n\\frac KN(1-\\frac KN)\\frac{N-n}{N-1}$$",
-        "Use for finite populations without replacement."
+        "$K/N$ is success fraction; $(N-n)/(N-1)$ is finite-population correction."
       ],
       [
         "Poisson",
         "$$P(X=k)=e^{-\\lambda}\\frac{\\lambda^k}{k!},\\quad k=0,1,2,\\ldots$$",
-        "Identify: count events in fixed time/area/volume with rate $\\lambda$; words like errors, arrivals, mutations, spikes."
+        "Identify: count events in fixed time/area/volume. $k$ = event count; $\\lambda$ = expected count/rate for that interval."
       ],
       [
         "Poisson properties",
         "$$E[X]=\\lambda,\\quad Var[X]=\\lambda$$",
-        "Check: support $0,1,2,...$ and mean = variance = $\\lambda$. Approx Binomial when n large, p small, $\\lambda=np$."
+        "Check: support $0,1,2,...$ and mean = variance = $\\lambda$. Approx Binomial when $n$ large, $p$ small, $\\lambda=np$."
       ],
       [
         "PDF properties",
@@ -947,7 +947,7 @@ const QUICK_SHEETS = [
       [
         "Uniform",
         "$$X\\sim U(a,b): f(x)=1/(b-a),\\ E[X]=(a+b)/2,\\ Var[X]=(b-a)^2/12$$",
-        "Identify: all values in interval equally likely, random position/time/concentration between a and b."
+        "Identify: all values in interval equally likely. $a$ = lower endpoint, $b$ = upper endpoint."
       ]
     ]
   },
@@ -1307,12 +1307,12 @@ const FORMULA_SHEET_PAGES = [
 ];
 const DISTRIBUTION_ID_GUIDE = [
   ["Bernoulli", "One trial, yes/no, success/failure.", "$X\\in\\{0,1\\}$"],
-  ["Binomial", "Fixed number $n$ of independent trials; count successes.", "$X=0,1,...,n$"],
-  ["Geometric", "Repeat until first success; X = trial number of first success.", "$X=1,2,...$"],
-  ["Pascal", "Repeat until m-th success; X = total trials needed.", "$X=m,m+1,...$"],
-  ["Hypergeometric", "Sample without replacement from finite population.", "uses $N,K,n$"],
-  ["Poisson", "Count events in fixed time/area/volume with rate $\\lambda$.", "errors, arrivals, mutations, spikes"],
-  ["Uniform", "All values in interval equally likely.", "$a<X<b$"],
+  ["Binomial", "Fixed number $n$ independent trials; count successes.", "$n$ trials, $k$ successes, $p$ success prob"],
+  ["Geometric", "Repeat until first success; X = trial number of first success.", "$k$ = first-success trial"],
+  ["Pascal", "Repeat until m-th success; X = total trials needed.", "$k$ total trials, $m$ successes, $p$ success prob"],
+  ["Hypergeometric", "Sample without replacement from finite population.", "$N$ total, $K$ successes, $n$ sample, $k$ drawn successes"],
+  ["Poisson", "Count events in fixed time/area/volume with rate $\\lambda$.", "$k$ count, $\\lambda$ expected count in interval"],
+  ["Uniform", "All values in interval equally likely.", "$a$ lower, $b$ upper"],
   ["Exponential", "Waiting time until first event; time between Poisson events.", "if count -> Poisson; if wait -> Exponential"],
   ["Gamma", "Waiting time until $\\alpha$-th event or sum of exponentials.", "$\\alpha$ stages/events"],
   ["Normal", "Measurement noise, biological variation, averages/CLT.", "bell-shaped / standardized z"]
