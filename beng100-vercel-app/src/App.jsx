@@ -64,7 +64,7 @@ function Pill({ color=C.indigo, bg=C.indigoBg, children }) { return <span style=
 const MODULES = [
   {
     "week": "Week 1",
-    "lectures": "Lectures 1–2",
+    "lectures": "Lectures 1-2",
     "title": "Probability, Statistics, Counting, Sets",
     "color": "#5F5E5A",
     "bg": "#F1EFE8",
@@ -114,7 +114,7 @@ const MODULES = [
     "example": {
       "source": "Week 1 lecture example",
       "prompt": "EXAMPLE: A bioengineering lab has 5 distinct cells: $C_1,C_2,C_3,C_4,C_5$. The lab selects 3 cells for analysis. In how many ways can you select these cells provided that (a) You replace the cells and the order matters (b) You do NOT replace and the order matters (Permutations) (c) You do NOT replace and the order does NOT matter (Combinations) (d) You replace and the order does NOT matter",
-      "solution": "(a) With replacement/order matters: $5^3=125$.\n(b) Without replacement/order matters: $5\\cdot4\\cdot3=60=5!/(5-3)!$.\n(c) Without replacement/order does not matter: $\\binom{5}{3}=10$.\n(d) With replacement/order does not matter: $\\binom{5+3-1}{3}=\\binom{7}{3}=35$."
+      "solution": "Step 1: Match each part to the counting rule.\n\n(a) Replacement allowed and order matters, so use $n^k$: $5^3=125$.\n\n(b) No replacement and order matters, so use permutations: $5\\cdot4\\cdot3=60=5!/(5-3)!$.\n\n(c) No replacement and order does not matter, so use combinations: $\\binom{5}{3}=10$.\n\n(d) Replacement allowed and order does not matter, so use stars and bars: $\\binom{5+3-1}{3}=\\binom{7}{3}=35$."
     },
     "practice": {
       "source": "Homework 1 Problem 1",
@@ -124,7 +124,7 @@ const MODULES = [
   },
   {
     "week": "Week 2",
-    "lectures": "Lectures 3–4",
+    "lectures": "Lectures 3-4",
     "title": "Probability Spaces, Conditional Probability, Bayes",
     "color": "#0F6E56",
     "bg": "#E1F5EE",
@@ -169,7 +169,7 @@ const MODULES = [
     "example": {
       "source": "Week 2 lecture example",
       "prompt": "EXAMPLE: A single cell from a tumor is analyzed using sequencing. For this cell, we record: Mutation status in a cancer gene: $M$ (mutation detected), $N$ (no mutation). Expression level of the same gene: $H$ (high expression), $L$ (low expression). (a) List all possible outcomes in the sample space $\\Omega=\\{(\\text{Mutation Status},\\text{Expression level})\\}$. (b) State whether each is an outcome or an event: $(M,H)$, $\\{(M,H),(M,L)\\}$, $(N,L)$, $\\{(M,H)\\}$. (c) Define the following events as sets of outcomes: $A$: the cell carries a mutation; $B$: the gene is highly expressed; $C$: the cell has a mutation OR high expression; $D$: the cell has a mutation AND low expression. (d) Write and interpret $A\\cap B$ and $A^c$. (e) Evaluate the relationship between $\\{(M,H)\\}$ and $A$.",
-      "solution": "$\\Omega=\\{(M,H),(M,L),(N,H),(N,L)\\}$.\n$(M,H)$ and $(N,L)$ are outcomes; $\\{(M,H),(M,L)\\}$ and $\\{(M,H)\\}$ are events.\n$A=\\{(M,H),(M,L)\\}$, $B=\\{(M,H),(N,H)\\}$, $C=A\\cup B=\\{(M,H),(M,L),(N,H)\\}$, $D=\\{(M,L)\\}$.\n$A\\cap B=\\{(M,H)\\}$ means mutation and high expression. $A^c=\\{(N,H),(N,L)\\}$ means no mutation. $\\{(M,H)\\}\\subset A$."
+      "solution": "Step 1: List every mutation-expression pair: $\\Omega=\\{(M,H),(M,L),(N,H),(N,L)\\}$.\n\nStep 2: Classify outcomes versus events. $(M,H)$ and $(N,L)$ are single outcomes. $\\{(M,H),(M,L)\\}$ and $\\{(M,H)\\}$ are events because they are sets of outcomes.\n\nStep 3: Write the requested events as sets: $A=\\{(M,H),(M,L)\\}$, $B=\\{(M,H),(N,H)\\}$, $C=A\\cup B=\\{(M,H),(M,L),(N,H)\\}$, and $D=\\{(M,L)\\}$.\n\nStep 4: Interpret the set operations. $A\\cap B=\\{(M,H)\\}$ means mutation and high expression. $A^c=\\{(N,H),(N,L)\\}$ means no mutation.\n\nStep 5: Compare the singleton event with $A$: $\\{(M,H)\\}\\subset A$."
     },
     "practice": {
       "source": "Midterm 1 Problem 1",
@@ -179,7 +179,7 @@ const MODULES = [
   },
   {
     "week": "Week 3",
-    "lectures": "Lectures 5–6",
+    "lectures": "Lectures 5-6",
     "title": "Random Variables, PMF, Expected Value, Variance",
     "color": "#854F0B",
     "bg": "#FAEEDA",
@@ -244,7 +244,7 @@ const MODULES = [
     "example": {
       "source": "Week 3 lecture example",
       "prompt": "EXAMPLE: A sequencing experiment analyzes 3 independent DNA sites, each of which contains a mutation with probability $1/2$. Let $X$ be the number of sites at which a mutation is detected. Find the range and PMF of $X$.",
-      "solution": "$R_X=\\{0,1,2,3\\}$. Since each of the 8 outcomes is equally likely, $P(X=0)=1/8$, $P(X=1)=3/8$, $P(X=2)=3/8$, $P(X=3)=1/8$. This is also Binomial$(n=3,p=1/2)$."
+      "solution": "Step 1: Identify what $X$ counts. It counts the number of mutated sites among 3 sites, so $R_X=\\{0,1,2,3\\}$.\n\nStep 2: Count the equally likely outcomes. With 3 independent sites, there are $2^3=8$ mutation/no-mutation patterns.\n\nStep 3: Count patterns for each value: $\\binom30=1$, $\\binom31=3$, $\\binom32=3$, and $\\binom33=1$.\n\nStep 4: Divide by 8 to get the PMF: $P(X=0)=1/8$, $P(X=1)=3/8$, $P(X=2)=3/8$, and $P(X=3)=1/8$.\n\nStep 5: Distribution check: this is $X\\sim Binomial(n=3,p=1/2)$."
     },
     "practice": {
       "source": "Homework 3 Problem 1",
@@ -254,7 +254,7 @@ const MODULES = [
   },
   {
     "week": "Week 4",
-    "lectures": "Lectures 7–8",
+    "lectures": "Lectures 7-8",
     "title": "Pascal, Hypergeometric, Poisson, Continuous RVs",
     "color": "#993C1D",
     "bg": "#FAECE7",
@@ -314,7 +314,7 @@ const MODULES = [
     "example": {
       "source": "Week 4 lecture example",
       "prompt": "EXAMPLE: A PCR-based assay is used to detect a specific DNA sequence in a biological sample. Due to technical and biological variability, the assay successfully detects the target in a given run with probability 0.90, and fails otherwise. Suppose the assay is repeated until 9 successful detections are observed. Determine the probability that exactly 10 runs are required. Find the expected number of runs required to obtain these 9 successful detections.",
-      "solution": "$X\\sim Pascal(m=9,p=0.90)$.\n$P(X=10)=\\binom{9}{8}(0.90)^9(0.10)=9(0.90)^9(0.10)\\approx0.3487$.\n$E[X]=m/p=9/0.90=10$."
+      "solution": "Step 1: Identify the distribution. The assay repeats until the 9th success, so $X\\sim Pascal(m=9,p=0.90)$, where $X$ is the total number of runs.\n\nStep 2: For exactly 10 runs, the 10th run must be the 9th success. The first 9 runs must contain exactly 8 successes.\n\nStep 3: Apply the Pascal PMF: $P(X=10)=\\binom{10-1}{9-1}(0.90)^9(0.10)^{10-9}$.\n\nStep 4: Simplify: $P(X=10)=\\binom98(0.90)^9(0.10)=9(0.90)^9(0.10)\\approx0.3487$.\n\nStep 5: Use the Pascal mean: $E[X]=m/p=9/0.90=10$."
     },
     "practice": {
       "source": "Homework 4 Problem 2",
@@ -324,7 +324,7 @@ const MODULES = [
   },
   {
     "week": "Week 5",
-    "lectures": "Lectures 9–10",
+    "lectures": "Lectures 9-10",
     "title": "Transformations and Continuous Distributions",
     "color": "#185FA5",
     "bg": "#E6F1FB",
@@ -379,17 +379,17 @@ const MODULES = [
     "example": {
       "source": "Week 5 lecture example",
       "prompt": "EXAMPLE: In a biochemical system, let $X$ denote a normalized substrate concentration (scaled between 0 and 1) in a microenvironment. Suppose $X$ has the following probability density function: $$f_X(x)=\\begin{cases}4x^3,&0<x\\le1\\\\0,&\\text{otherwise}\\end{cases}$$ The enzymatic downstream response is inversely proportional to the substrate concentration. Specifically, let $Y=1/X$. Find the probability density function of $Y$.",
-      "solution": "Range: $Y\\in[1,\\infty)$. The inverse is $g^{-1}(y)=1/y$ and $g'(x)=-1/x^2$.\n$|g'(g^{-1}(y))|=y^2$.\n$f_Y(y)=f_X(1/y)/y^2=4(1/y)^3/y^2=4/y^5$, for $y\\ge1$; 0 otherwise."
+      "solution": "Step 1: Find the range of $Y$. Since $0<X\\le1$ and $Y=1/X$, we have $Y\\in[1,\\infty)$.\n\nStep 2: Find the inverse transformation: $y=1/x$ gives $g^{-1}(y)=1/y$.\n\nStep 3: Compute the derivative term. Since $g'(x)=-1/x^2$, $|g'(g^{-1}(y))|=y^2$.\n\nStep 4: Apply the transformation formula: $f_Y(y)=f_X(g^{-1}(y))/|g'(g^{-1}(y))|$.\n\nStep 5: Substitute: $f_Y(y)=f_X(1/y)/y^2=4(1/y)^3/y^2=4/y^5$ for $y\\ge1$, and $0$ otherwise."
     },
     "practice": {
-      "source": "Homework 5 style",
-      "prompt": "Let X~Exponential(λ=2). Define Y=2+3X. Find P(X>2), E[Y], Var[Y], SD[Y], and P(X>2 | Y<11).",
+      "source": "Homework 5 Problem 1",
+      "prompt": "Problem 1 [20 points]. In a bioengineering experiment, a researcher studies the decay of a fluorescent signal in a biosensor after activation. Let $X$ (in hours) denote the time until the signal decays to baseline. Experimental observations show that the probability that the signal decays in a short time interval is proportional to the length of that interval, and this probability does not depend on how long the signal has already persisted. Further, experiments show that the signal decays at an average rate of 2 events per hour. The total processing time required for downstream analysis depends on the decay time and is modeled as $Y=2+3X$, where 2 hours represents fixed preparation time and $3X$ accounts for signal-dependent processing. (a) Find $P(X>2)$. (b) Find the expected, variance, and standard deviation of $Y$. (c) Find $P(X>2|Y<11)$.",
       "answer": "$P(X>2)=e^{-4}\\approx0.0183$.\n$E[Y]=2+3(1/2)=7/2$.\n$Var[Y]=3^2(1/4)=9/4$, so $SD[Y]=3/2$.\n$Y<11\\Leftrightarrow X<3$, so $P(X>2|Y<11)=P(2<X<3)/P(X<3)=(e^{-4}-e^{-6})/(1-e^{-6})\\approx0.0158$."
     }
   },
   {
     "week": "Week 6",
-    "lectures": "Lectures 11–12",
+    "lectures": "Lectures 11-12",
     "title": "Joint, Marginal, Conditional Distributions",
     "color": "#3C3489",
     "bg": "#EEEDFE",
@@ -443,18 +443,18 @@ const MODULES = [
     ],
     "example": {
       "source": "Week 6 lecture example",
-      "prompt": "Consider a sequencing assay where X is the number of mutated DNA fragments detected in a sample (X∈{0,1}) and Y is the number of sequencing errors observed in the same sample (Y∈{0,1,2}). The joint PMF is: p(0,0)=1/6, p(1,0)=1/8, p(0,1)=1/4, p(1,1)=1/6, p(0,2)=1/8, p(1,2)=1/6. (a) What is the probability that a sample contains no detected mutations and at most one sequencing error? (b) Determine the marginal distributions. (c) What is P(Y=1|X=0)? (d) Are mutation detection and sequencing error independent?",
-      "solution": "(a) $P(X=0,Y\\le1)=1/6+1/4=5/12$.\n(b) $P_X(0)=13/24$, $P_X(1)=11/24$; $P_Y(0)=7/24$, $P_Y(1)=5/12$, $P_Y(2)=7/24$.\n(c) $P(Y=1|X=0)=(1/4)/(13/24)=6/13$.\n(d) Not independent because $P(Y=1|X=0)=6/13\\ne P(Y=1)=5/12$."
+      "prompt": "EXAMPLE: Consider a sequencing assay where $X$ is the number of mutated DNA fragments detected in a sample ($X\\in\\{0,1\\}$) and $Y$ is the number of sequencing errors observed in the same sample ($Y\\in\\{0,1,2\\}$). The joint PMF is: $p(0,0)=1/6$, $p(1,0)=1/8$, $p(0,1)=1/4$, $p(1,1)=1/6$, $p(0,2)=1/8$, $p(1,2)=1/6$. (a) What is the probability that a sample contains no detected mutations and at most one sequencing error? (b) Determine the marginal distributions. (c) What is $P(Y=1|X=0)$? (d) Are mutation detection and sequencing error independent?",
+      "solution": "Step 1: For part (a), add the joint probabilities with $X=0$ and $Y\\le1$: $P(X=0,Y\\le1)=p(0,0)+p(0,1)=1/6+1/4=5/12$.\n\nStep 2: For part (b), sum over $Y$ to get $p_X$. Thus $P_X(0)=1/6+1/4+1/8=13/24$ and $P_X(1)=1/8+1/6+1/6=11/24$.\n\nStep 3: Sum over $X$ to get $p_Y$. Thus $P_Y(0)=1/6+1/8=7/24$, $P_Y(1)=1/4+1/6=5/12$, and $P_Y(2)=1/8+1/6=7/24$.\n\nStep 4: For part (c), use conditional probability: $P(Y=1|X=0)=P(X=0,Y=1)/P_X(0)=(1/4)/(13/24)=6/13$.\n\nStep 5: For part (d), compare conditional and marginal probabilities. Since $P(Y=1|X=0)=6/13\\ne P(Y=1)=5/12$, $X$ and $Y$ are not independent."
     },
     "practice": {
-      "source": "Midterm 2 style",
-      "prompt": "Suppose p_{X,Y}(x,y)=c(x+y+1) for x=0,1,2 and y=0,1, and 0 otherwise. Find c, p_X(x), p_Y(y), P(X≥1|Y=1), and determine whether X and Y are independent.",
-      "answer": "Sum all weights: for y=0: 1+2+3=6; for y=1: 2+3+4=9; total 15, so $c=1/15$.\n$p_X(0)=3/15=1/5$, $p_X(1)=5/15=1/3$, $p_X(2)=7/15$.\n$p_Y(0)=6/15=2/5$, $p_Y(1)=9/15=3/5$.\n$P(X\\ge1|Y=1)=(3/15+4/15)/(3/5)=7/9$.\nNot independent, for example $p(0,0)=1/15$ but $p_X(0)p_Y(0)=2/25$."
+      "source": "Midterm 2 Problem 2",
+      "prompt": "Problem 2 [20 points]. In a tissue-engineering experiment, a bioengineer studies the distribution of two different cell types seeded onto a biodegradable scaffold. Let $X$ denote the number of stem cells attached to a randomly selected scaffold region, and $Y$ denote the number of immune cells attached to the same region. Suppose the joint probability mass function of $X$ and $Y$ is given by $$P_{X,Y}(x,y)=\\begin{cases}c(x+y+1),&x=0,1,2,\\ y=0,1\\\\0,&\\text{otherwise}\\end{cases}$$ (a) Find the value of the normalization constant $c$. (b) Find the marginal PMFs $p_X(x)$ and $p_Y(y)$. (c) Compute the probability that at least one stem cell is attached to the scaffold region given that exactly one immune cell is attached to the same region. (d) Evaluate and determine whether $X$ and $Y$ are independent.",
+      "answer": "Sum all weights: for $y=0$, $1+2+3=6$; for $y=1$, $2+3+4=9$; total 15, so $c=1/15$.\n$p_X(0)=3/15=1/5$, $p_X(1)=5/15=1/3$, $p_X(2)=7/15$.\n$p_Y(0)=6/15=2/5$, $p_Y(1)=9/15=3/5$.\n$P(X\\ge1|Y=1)=(3/15+4/15)/(3/5)=7/9$.\nNot independent, for example $p(0,0)=1/15$ but $p_X(0)p_Y(0)=2/25$."
     }
   },
   {
     "week": "Week 7",
-    "lectures": "Lectures 13–14",
+    "lectures": "Lectures 13-14",
     "title": "Covariance, Correlation, Multiple RVs, MGF",
     "color": "#993C1D",
     "bg": "#FAECE7",
@@ -503,7 +503,7 @@ const MODULES = [
       [
         "Moments from MGF",
         "$$E[X^n]=M_X^{(n)}(0)$$",
-        "First derivative gives mean, second gives $E[X^2]$."
+        "Clarification: $E[X]=M_X'(0)$ and $E[X^2]=M_X''(0)$."
       ],
       [
         "Independent sum MGF",
@@ -514,17 +514,17 @@ const MODULES = [
     "example": {
       "source": "Week 7 lecture example",
       "prompt": "EXAMPLE: In a molecular diagnostics experiment, the concentration of circulating tumor DNA varies across patient samples due to biological heterogeneity. The biomarker concentration varies between 1 and 2, with all concentrations in this range being equally likely. For a given concentration value $x$, the number of mutant DNA fragments detected during sequencing follows a Poisson distribution with rate $x$. Calculate the covariance between the concentration and the number of mutant DNA fragments detected during sequencing.",
-      "solution": "Let $X\\sim U(1,2)$ and $Y|X\\sim Poisson(X)$. Then $E[X]=3/2$, $E[Y|X]=X$, so $E[Y]=3/2$.\n$E[XY]=E[E[XY|X]]=E[XE[Y|X]]=E[X^2]=\\int_1^2 x^2dx=7/3$.\n$Cov[X,Y]=7/3-(3/2)(3/2)=1/12$."
+      "solution": "Step 1: Define the variables. Let $X\\sim U(1,2)$ be the concentration and let $Y|X=x\\sim Poisson(x)$ be the fragment count.\n\nStep 2: Compute $E[X]$. For $X\\sim U(1,2)$, $E[X]=(1+2)/2=3/2$.\n\nStep 3: Use the conditional mean of a Poisson random variable: $E[Y|X]=X$. Therefore $E[Y]=E[E[Y|X]]=E[X]=3/2$.\n\nStep 4: Compute $E[XY]$ by conditioning on $X$: $E[XY]=E[E[XY|X]]=E[XE[Y|X]]=E[X^2]$.\n\nStep 5: Evaluate $E[X^2]=\\int_1^2 x^2\\,dx=7/3$.\n\nStep 6: Use $Cov[X,Y]=E[XY]-E[X]E[Y]$: $Cov[X,Y]=7/3-(3/2)(3/2)=1/12$."
     },
     "practice": {
       "source": "Homework 6 Problem 1",
       "prompt": "Problem 1 [17 points]. In a multiplex biosensor experiment, two sources of biological signal are measured from each sample: $X$: normalized receptor-binding signal, and $Y$: normalized downstream fluorescence signal. Suppose the variance of the receptor-binding signal is 4, while the variance of the fluorescence signal is 9. A bioengineer constructs two derived readouts: $Z=2X-Y$ and $W=X+Y$. The readout $Z$ represents a contrast between amplified receptor binding and fluorescence, while $W$ represents the total combined signal. Suppose experimental analysis shows that $Z$ and $W$ are independent. Find the covariance and correlation between $X$ and $Y$.",
-      "answer": "Since Z and W are independent, $Cov(Z,W)=0$.\n$Cov(2X-Y,X+Y)=2Var(X)+2Cov(X,Y)-Cov(X,Y)-Var(Y)=8+Cov(X,Y)-9$.\nSet equal to 0: $Cov(X,Y)=1$.\n$\\rho=Cov/(\\sigma_X\\sigma_Y)=1/(2\\cdot3)=1/6$."
+      "answer": "Since $Z$ and $W$ are independent, $Cov(Z,W)=0$.\n$Cov(2X-Y,X+Y)=2Var(X)+2Cov(X,Y)-Cov(X,Y)-Var(Y)=8+Cov(X,Y)-9$.\nSet equal to 0: $Cov(X,Y)=1$.\n$\\rho=Cov(X,Y)/(\\sigma_X\\sigma_Y)=1/(2\\cdot3)=1/6$."
     }
   },
   {
     "week": "Week 8",
-    "lectures": "Lectures 15–16",
+    "lectures": "Lectures 15-16",
     "title": "Probability Bounds",
     "color": "#A32D2D",
     "bg": "#FCEBEB",
@@ -563,18 +563,18 @@ const MODULES = [
     ],
     "example": {
       "source": "Week 8 lecture example",
-      "prompt": "EXAMPLE: In a DNA sequencing experiment, each sequencing read independently produces an error with probability 0.05. Suppose $X$ denotes the total number of sequencing errors among 1000 reads. A bioengineer is concerned about sequencing runs in which at least 7% of all reads contain errors, since such runs are considered experimentally unusable. For a given experiment, find an upper bound on the probability that at least 7% of reads contain sequencing errors. Solve using Markov’s inequality.",
-      "solution": "$X\\sim Binomial(n=1000,p=0.05)$, so $E[X]=50$. At least 7% means $X\\ge70$.\nBy Markov: $P(X\\ge70)\\le E[X]/70=50/70\\approx0.714$."
+      "prompt": "EXAMPLE: In a DNA sequencing experiment, each sequencing read independently produces an error with probability 0.05. Suppose $X$ denotes the total number of sequencing errors among 1000 reads. A bioengineer is concerned about sequencing runs in which at least 7% of all reads contain errors, since such runs are considered experimentally unusable. For a given experiment, find an upper bound on the probability that at least 7% of reads contain sequencing errors. Solve using Markov's inequality.",
+      "solution": "Step 1: Identify the count distribution. $X\\sim Binomial(n=1000,p=0.05)$.\n\nStep 2: Compute the mean needed for Markov's inequality: $E[X]=np=1000(0.05)=50$.\n\nStep 3: Translate the event. At least 7% of 1000 reads means $X\\ge70$.\n\nStep 4: Apply Markov's inequality for nonnegative $X$: $P(X\\ge70)\\le E[X]/70$.\n\nStep 5: Substitute: $P(X\\ge70)\\le50/70\\approx0.714$."
     },
     "practice": {
-      "source": "Different-type practice",
-      "prompt": "Suppose a biosensor error count X has E[X]=40 and Var[X]=30. Use Chebyshev's inequality to bound P(|X−40|≥10). Then use it to bound P(X≥55).",
-      "answer": "$P(|X-40|\\ge10)\\le30/10^2=0.30$.\nFor $P(X\\ge55)$, $X-40\\ge15$ implies $|X-40|\\ge15$, so $P(X\\ge55)\\le30/15^2=30/225=0.1333$."
+      "source": "Week 8 lecture example",
+      "prompt": "EXAMPLE: In a DNA sequencing experiment, each sequencing read independently produces an error with probability 0.05. Suppose $X$ denotes the total number of sequencing errors among 1000 reads. A bioengineer is concerned about sequencing runs in which at least 7% of all reads contain errors, since such runs are considered experimentally unusable. For a given experiment, find an upper bound on the probability that at least 7% of reads contain sequencing errors. Solve using Chebyshev's inequality.",
+      "answer": "$X\\sim Binomial(n=1000,p=0.05)$, so $E[X]=50$ and $Var[X]=47.5$. At least 7% means $X\\ge70$.\n$P(X\\ge70)\\le P(|X-50|\\ge20)\\le47.5/20^2=0.11875$."
     }
   },
   {
     "week": "Week 9",
-    "lectures": "Lectures 17–18",
+    "lectures": "Lectures 17-18",
     "title": "LLN, CLT, Statistical Inference, Mean Estimation",
     "color": "#4338CA",
     "bg": "#EEF2FF",
@@ -634,7 +634,7 @@ const MODULES = [
     "example": {
       "source": "Week 9 lecture example",
       "prompt": "EXAMPLE: A bioengineer uses identical and independent biosensors to measure the concentration of a signaling molecule in a biological sample. Let $X_i$ denote the concentration measured by the $i$-th biosensor. Suppose each measurement has expected value of $\\mu$ with a standard deviation of $\\sigma$. How many biosensors are needed so that the average measured concentration is within $\\epsilon=5$ units of $\\mu$ with probability at least 95%?",
-      "solution": "Use Chebyshev on $\\bar X_n$. Need $P(|\\bar X_n-\\mu|\\ge5)\\le0.05$.\n$Var(\\bar X_n)=\\sigma^2/n$, so $P(|\\bar X_n-\\mu|\\ge5)\\le\\sigma^2/(25n)$.\nRequire $\\sigma^2/(25n)\\le0.05$, so $n\\ge\\sigma^2/1.25$. Round up to a whole number."
+      "solution": "Step 1: The target is $P(|\\bar X_n-\\mu|<5)\\ge0.95$, which is equivalent to $P(|\\bar X_n-\\mu|\\ge5)\\le0.05$.\n\nStep 2: Use the variance of the sample average: $Var(\\bar X_n)=\\sigma^2/n$.\n\nStep 3: Apply Chebyshev's inequality: $P(|\\bar X_n-\\mu|\\ge5)\\le Var(\\bar X_n)/5^2$.\n\nStep 4: Substitute: $P(|\\bar X_n-\\mu|\\ge5)\\le \\sigma^2/(25n)$.\n\nStep 5: Require this bound to be at most $0.05$: $\\sigma^2/(25n)\\le0.05$.\n\nStep 6: Solve for $n$: $n\\ge\\sigma^2/1.25$. Round up to the next whole biosensor count."
     },
     "practice": {
       "source": "Homework 6 Problem 4",
@@ -644,7 +644,7 @@ const MODULES = [
   },
   {
     "week": "Week 10",
-    "lectures": "Lectures 19–20",
+    "lectures": "Lectures 19-20",
     "title": "Variance Estimation, MLE, Hypothesis Testing",
     "color": "#854F0B",
     "bg": "#FAEEDA",
@@ -653,22 +653,22 @@ const MODULES = [
       [
         "Known-mean variance estimator",
         "$$\\hat\\sigma_\\mu^2=\\frac1n\\sum_{i=1}^n(X_i-\\mu)^2$$",
-        "Unbiased if true μ is known."
+        "Unbiased if true $\\mu$ is known."
       ],
       [
         "Biased variance with sample mean",
         "$$\\bar S^2=\\frac1n\\sum_{i=1}^n(X_i-\\bar X)^2$$",
-        "Biased low for σ²."
+        "Biased low for $\\sigma^2$."
       ],
       [
         "Bias of biased variance",
         "$$E[\\bar S^2]=\\frac{n-1}{n}\\sigma^2,\\quad Bias=-\\frac{1}{n}\\sigma^2$$",
-        "Shows why divide by n−1."
+        "Shows why divide by $n-1$."
       ],
       [
         "Sample variance",
         "$$S^2=\\frac{1}{n-1}\\sum_{i=1}^n(X_i-\\bar X)^2$$",
-        "Unbiased estimator of σ²."
+        "Unbiased estimator of $\\sigma^2$."
       ],
       [
         "Computational variance",
@@ -678,12 +678,12 @@ const MODULES = [
       [
         "Sample standard deviation",
         "$$S=\\sqrt{S^2}$$",
-        "Common estimator of σ, but generally biased."
+        "Common estimator of $\\sigma$, but generally biased."
       ],
       [
         "Likelihood",
         "$$L(\\theta)=\\prod_{i=1}^n f(X_i;\\theta)$$",
-        "Probability/density of observed data as a function of θ."
+        "Probability/density of observed data as a function of $\\theta$."
       ],
       [
         "Log likelihood",
@@ -703,12 +703,12 @@ const MODULES = [
       [
         "Exponential MLE",
         "$$\\hat\\lambda=1/\\bar X$$",
-        "For iid exponential(rate λ)."
+        "For iid exponential(rate $\\lambda$)."
       ],
       [
         "Z test statistic",
         "$$Z=\\frac{\\bar X-\\mu_0}{\\sigma/\\sqrt n}$$",
-        "Use when σ known or CLT approximation is allowed."
+        "Use when $\\sigma$ known or CLT approximation is allowed."
       ],
       [
         "p-value right tail",
@@ -718,18 +718,18 @@ const MODULES = [
       [
         "Critical rule",
         "$$\\text{Reject }H_0\\text{ if }p<\\alpha$$",
-        "Small p-value = data is unlikely under H0."
+        "Small p-value = data is unlikely under $H_0$."
       ],
       [
         "Type I / Type II",
-        "Type I = reject true H0; Type II = fail to reject false H0; Power = 1−β",
+        "Type I = reject true $H_0$; Type II = fail to reject false $H_0$; Power = $1-\\beta$",
         "Useful for interpretation questions."
       ]
     ],
     "example": {
       "source": "Week 10 lecture example",
       "prompt": "EXAMPLE: A team of bioengineers is evaluating the degradation time of a biodegradable polymer used in a tissue scaffold. To estimate the mean and variability of the degradation time, the team records the time (in minutes) it takes for the polymer to fully degrade in six independent trials under identical experimental conditions. Let $T$ represent the degradation time. The observed sample of degradation times is: $T_1=18$, $T_2=21$, $T_3=17$, $T_4=16$, $T_5=24$, $T_6=20$. Assuming that $T_1,T_2,T_3,T_4,T_5,T_6$ are i.i.d. with the same distribution as $T$. Find the values of the sample mean, the sample variance, and the sample standard deviation for the observed sample.",
-      "solution": "$\\bar T=(18+21+17+16+24+20)/6=19.33$ minutes.\n$S^2=\\frac{1}{5}\\sum(T_i-19.33)^2=8.67$ min$^2$.\n$S=\\sqrt{8.67}=2.94$ minutes."
+      "solution": "Step 1: Compute the sample mean: $\\bar T=(18+21+17+16+24+20)/6=19.33$ minutes.\n\nStep 2: Use the unbiased sample variance formula with $n-1=5$: $S^2=\\frac{1}{5}\\sum_{i=1}^6(T_i-\\bar T)^2$.\n\nStep 3: Substitute $\\bar T=19.33$: $S^2=\\frac{1}{5}\\sum_{i=1}^6(T_i-19.33)^2=8.67$ min$^2$.\n\nStep 4: Take the square root to get the sample standard deviation: $S=\\sqrt{8.67}=2.94$ minutes."
     },
     "practice": {
       "source": "Homework 6 Problem 5",
@@ -741,148 +741,172 @@ const MODULES = [
 const EXTRA_EXAMPLES = {
   "Week 1": [
     {
-      type: "Set counting",
-      prompt: "A lab tests 80 samples. $|A|=35$, $|B|=28$, and $|A\\cap B|=10$. Find $|A\\cup B|$ and the number in neither event.",
-      solution: "$|A\\cup B|=35+28-10=53$. Neither is $80-53=27$."
+      type: "DNA barcode collision",
+      source: "Week 1 lecture example",
+      prompt: "EXAMPLE: A bioengineering experiment uses DNA barcodes to label cells. Each barcode is a sequence of length 4, where each position can be one of four nucleotides ($A$, $C$, $G$, $T$). A researcher labels 20 cells, assigning each cell a barcode independently and uniformly at random. What is the probability that at least two cells receive the same barcode?",
+      solution: "Step 1: Count possible barcodes. Each of 4 positions has 4 choices, so there are $4^4=256$ barcodes.\n\nStep 2: Use the complement because \"at least two share\" is easier as $1-P(\\text{all different})$.\n\nStep 3: Compute the no-collision probability: $P(\\text{all different})=\\frac{256}{256}\\frac{255}{256}\\cdots\\frac{237}{256}\\approx0.476$.\n\nStep 4: Subtract from 1: $P(\\text{at least one shared barcode})\\approx1-0.476=0.524$."
     },
     {
-      type: "Counting setup",
-      prompt: "A researcher chooses 4 distinct sensors from 9 sensors. How many choices are possible if order does not matter?",
-      solution: "Use combinations: $\\binom{9}{4}=126$."
+      type: "Set union/complement",
+      source: "Week 1 lecture example",
+      prompt: "EXAMPLE: A study examines 200 patients for two cardiovascular risk factors. Let $H$ be the set of patients with hypertension and $C$ be the set of patients with high cholesterol. The study reports: $|H|=80$, $|C|=70$, $|H\\cap C|=30$. (a) Compute the number of patients with hypertension or high cholesterol. (b) Compute the number of patients with neither hypertension nor high cholesterol. (c) Compute the number of patients who do not have hypertension and do not have high cholesterol.",
+      solution: "Step 1: For part (a), use inclusion-exclusion: $|H\\cup C|=|H|+|C|-|H\\cap C|=80+70-30=120$.\n\nStep 2: For part (b), \"neither\" is the complement of $H\\cup C$: $|(H\\cup C)^c|=200-120=80$.\n\nStep 3: For part (c), use De Morgan's law: $H^c\\cap C^c=(H\\cup C)^c$.\n\nStep 4: Therefore the number with no hypertension and no high cholesterol is also $80$."
     }
   ],
   "Week 2": [
     {
-      type: "Bayes test-positive",
-      prompt: "Disease prevalence is $0.04$. A test has sensitivity $0.95$ and false-positive rate $0.08$. Find $P(\\text{disease}|+)$.",
-      solution: "$P(+)=0.95(0.04)+0.08(0.96)=0.1148$. Bayes gives $0.95(0.04)/0.1148\\approx0.331$."
+      type: "Independence check",
+      source: "Homework 2 Problem 4",
+      prompt: "Problem 4 [14 points]. A bioengineering lab studies single cells under controlled thermodynamic conditions. Each cell is characterized by two properties: whether it has high ATP concentration (event $A$) and whether it is actively proliferating (event $B$). From experimental measurements across a large population of cells, the following probabilities are observed: $P(A)=0.6$, $P(B)=0.5$, and $P(A\\cap B)=0.30$. (a) Determine whether events $A$ and $B$ are independent, and justify your answer. (b) Suppose that under a different thermodynamic condition, such as nutrient limitation, the joint probability changes to $P(A\\cap B)=0.15$ while $P(A)$ and $P(B)$ remain the same. Are the events still independent?",
+      solution: "Step 1: To test independence, compare $P(A\\cap B)$ with $P(A)P(B)$.\n\n(a) Compute $P(A)P(B)=0.6(0.5)=0.30$. Since this equals $P(A\\cap B)=0.30$, $A$ and $B$ are independent.\n\n(b) Under the new condition, $P(A)P(B)$ is still $0.30$, but $P(A\\cap B)=0.15$. Since $0.15\\ne0.30$, the events are not independent."
     },
     {
-      type: "Independence check",
-      prompt: "If $P(A)=0.4$, $P(B)=0.5$, and $P(A\\cap B)=0.18$, are $A$ and $B$ independent?",
-      solution: "Check $P(A)P(B)=0.4(0.5)=0.20$. Since $0.18\\ne0.20$, they are not independent."
+      type: "Two-test Bayes",
+      source: "Midterm 1 Problem 3",
+      prompt: "Problem 3 [16 points]. In a bioengineering study, a diagnostic pipeline is used to detect a genetic mutation in patient samples. The pipeline consists of two sequential tests: a screening test followed by a confirmatory test, where the confirmatory test is only performed if the screening test is positive. In the population, 10% of samples carry the mutation. The screening test correctly identifies 90% of mutation-positive samples but also returns a positive result in 20% of mutation-negative samples. The confirmatory test correctly identifies 95% of mutation-positive samples and returns a positive result in 10% of mutation-negative samples. Assume that the outcomes of the screening and confirmatory tests are independent given whether the sample carries the mutation. A randomly selected sample tests positive on the screening test and subsequently tests positive on the confirmatory test. (a) What is the probability that the sample carries the mutation given that it tested positive on the screening test? (b) What is the probability that the sample carries the mutation given that it tested positive on both the screening and confirmatory tests?",
+      solution: "Step 1: Define events. Let $M$ be mutation, $S$ be screening positive, and $C$ be confirmatory positive.\n\n(a) Use Bayes after the screening test: $P(M|S)=\\frac{P(S|M)P(M)}{P(S|M)P(M)+P(S|M^c)P(M^c)}$.\n\n(a) Substitute: $P(M|S)=\\frac{0.90(0.10)}{0.90(0.10)+0.20(0.90)}=1/3$.\n\n(b) Treat the screening-positive group as the updated population. Then $P(M^c|S)=2/3$.\n\n(b) Apply Bayes again using the confirmatory test: $P(M|S\\cap C)=\\frac{0.95(1/3)}{0.95(1/3)+0.10(2/3)}\\approx0.826$."
     }
   ],
   "Week 3": [
     {
-      type: "PMF validity",
-      prompt: "A random variable has $P(X=0)=c$, $P(X=1)=2c$, and $P(X=2)=3c$. Find $c$ and $E[X]$.",
-      solution: "$c+2c+3c=1$, so $c=1/6$. $E[X]=0(c)+1(2c)+2(3c)=8c=4/3$."
+      type: "Geometric CDF",
+      source: "Week 3 lecture example",
+      prompt: "EXAMPLE: A PCR-based assay is used to detect a specific DNA sequence in a biological sample. Due to technical and biological variability, the assay successfully detects the target in a given run with probability 0.90, and fails otherwise. Suppose the assay is repeated until the DNA sequence is successfully detected. Determine the probability that the first successful detection occurs on the third run. What is the chance the first successful run occurred before the fourth run?",
+      solution: "Step 1: Identify the distribution. The assay repeats until the first success, so $X\\sim Geometric(p=0.90)$.\n\nStep 2: First success on run 3 means two failures followed by one success: $P(X=3)=(0.10)^2(0.90)=0.009$.\n\nStep 3: \"Before the fourth run\" means $X<4$, or $X\\le3$.\n\nStep 4: Use the complement of failing the first 3 runs: $P(X\\le3)=1-(0.10)^3=0.999$."
     },
     {
-      type: "Identify distribution",
-      prompt: "A device is tested 12 times independently. Each test succeeds with probability $0.8$. Let $X$ be the number of successes.",
-      solution: "Fixed number of independent trials and count successes, so $X\\sim Binomial(n=12,p=0.8)$."
+      type: "Binomial count",
+      source: "Midterm 1 Problem 5",
+      prompt: "Problem 5 [16 points]. In a bioengineering experiment, a CRISPR-based editing protocol is applied independently to 5 cells. For each cell, the probability that the target gene is successfully edited is 0.60. Please answer the questions below and note that answers may be left as exact fractions or decimals. (a) What is the probability that exactly 3 of the 5 cells are successfully edited? (b) What is the probability that at least 1 of the 5 cells is successfully edited? (c) What is the expected number of successfully edited cells? (d) What is the variance of the number of successfully edited cells?",
+      solution: "Step 1: Identify the distribution. There are 5 independent cells and each is edited with probability $0.60$, so $X\\sim Binomial(n=5,p=0.60)$.\n\n(a) Exactly 3 edited cells: $P(X=3)=\\binom53(0.60)^3(0.40)^2$.\n\n(b) At least 1 edited cell is easier by complement: $P(X\\ge1)=1-P(X=0)=1-(0.40)^5$.\n\n(c) Use the binomial mean: $E[X]=np=5(0.60)=3$.\n\n(d) Use the binomial variance: $Var[X]=np(1-p)=5(0.60)(0.40)=1.2$."
     }
   ],
   "Week 4": [
     {
-      type: "Distribution ID",
-      prompt: "A sequencing machine records the number of read errors in one fixed cycle. Errors occur independently at a constant average rate.",
-      solution: "This is Poisson because it counts events in a fixed interval. Use $X\\sim Poisson(\\lambda)$, where $\\lambda$ is the expected error count per cycle."
+      type: "Hypergeometric",
+      source: "Week 4 lecture example",
+      prompt: "EXAMPLE: A PCR-laboratory has a collection of $N=20$ biological samples, of which $K=6$ contain a target DNA mutation. A researcher randomly selects $n=5$ samples without replacement for testing. Determine the probability that exactly 4 of the selected samples contain the mutation. Find the expected number of mutated samples in the selection.",
+      solution: "Step 1: Identify the distribution. Sampling is without replacement from a finite collection, so $X\\sim Hypergeometric(N=20,K=6,n=5)$.\n\nStep 2: Exactly 4 mutated samples means choose 4 from the 6 mutated samples and 1 from the 14 non-mutated samples.\n\nStep 3: Divide by all possible samples of size 5: $P(X=4)=\\frac{\\binom64\\binom{14}{1}}{\\binom{20}{5}}\\approx0.0135$.\n\nStep 4: Use the hypergeometric mean: $E[X]=nK/N=5(6/20)=1.5$."
     },
     {
-      type: "Pascal vs geometric",
-      prompt: "A detector is run until 5 successful detections occur. Let $X$ be the total number of runs needed.",
-      solution: "This is Pascal/negative binomial. $m=5$ successes, $k$ is total runs, and $p$ is success probability per run."
+      type: "Poisson approximation",
+      source: "Homework 4 Problem 3",
+      prompt: "Problem 3 [18 points]. In a high-throughput single-cell assay, 50 independent cells are analyzed for the presence of a rare mutation. Each cell contains the mutation with probability $p=0.10$, independently of the others. What is the probability that more than 3 mutated cells are present, exceeding the platform's capacity? Solve the problem: (a) using the Binomial distribution, and (b) using a Poisson approximation.",
+      solution: "Step 1: For part (a), the exact model is $X\\sim Binomial(n=50,p=0.10)$ because there are 50 independent cells.\n\n(a) More than 3 means use the complement: $P(X>3)=1-P(X\\le3)\\approx0.748$.\n\nStep 2: For part (b), check the Poisson approximation clue: $n$ is fairly large and $p$ is small.\n\n(b) Set $\\lambda=np=50(0.10)=5$, so $X\\approx Poisson(5)$.\n\nStep 3: Approximate the same tail: $P(X>3)=1-P(X\\le3)\\approx0.735$."
     }
   ],
   "Week 5": [
     {
-      type: "Transformation support",
-      prompt: "Let $X\\sim U(0,1)$ and $Y=2X+3$. Find the support of $Y$ and the density shape.",
-      solution: "Since $0<X<1$, $3<Y<5$. Linear transformation of a uniform stays uniform: $f_Y(y)=1/2$ for $3<y<5$."
+      type: "Transformation: square root",
+      source: "Midterm 2 Problem 1",
+      prompt: "Problem 1 [20 points]. In a CRISPR gene-editing experiment, a bioengineer measures the editing efficiency of individual cells. Let $X$ denote the fraction of successfully edited DNA molecules in a randomly selected cell. Suppose $X$ has probability density function $$f_X(x)=\\begin{cases}2x,&0\\le x\\le1\\\\0,&\\text{otherwise}\\end{cases}$$ To quantify editing instability, the bioengineer defines the variability score: $Y=\\sqrt X$. Find the probability density function of $Y$. (Hint: Consider using the methods of transformations.)",
+      solution: "Step 1: Identify the transformation: $Y=g(X)=\\sqrt X$.\n\nStep 2: Find the inverse: $y=\\sqrt x$ gives $g^{-1}(y)=y^2$.\n\nStep 3: Find the derivative of the inverse: $\\frac{d}{dy}g^{-1}(y)=2y$.\n\nStep 4: Find the support. Since $0\\le X\\le1$, we have $0\\le Y\\le1$.\n\nStep 5: Apply the transformation formula: $f_Y(y)=f_X(y^2)|2y|=2y^2(2y)=4y^3$ for $0\\le y\\le1$, and $0$ otherwise."
     },
     {
-      type: "Count vs waiting time",
-      prompt: "Events occur at rate $\\lambda$. Which distribution for the number of events in 10 minutes? Which for time until first event?",
-      solution: "Count in fixed time: Poisson with mean $10\\lambda$. Waiting time until first event: Exponential(rate $\\lambda$)."
+      type: "Poisson count vs exponential wait",
+      source: "Week 5 lecture example",
+      prompt: "EXAMPLE: You are monitoring the binding of a rare ligand to a biosensor surface, where binding events occur randomly at an average rate of 8 events per hour. (a) What is the probability that exactly 5 binding events are observed in the first 30 minutes of the experiment? (b) What is the probability that the first binding event occurs between 30 minutes and 60 minutes after starting the observation?",
+      solution: "Step 1: For part (a), recognize a count in a fixed time interval. Counts in a Poisson process are Poisson.\n\n(a) The interval is 30 minutes = 0.5 hours, so $X\\sim Poisson(\\lambda=8(0.5)=4)$.\n\n(a) Compute $P(X=5)=e^{-4}4^5/5!\\approx0.156$.\n\nStep 2: For part (b), recognize a waiting-time question. Time until the first event is exponential.\n\n(b) Let $Y\\sim Exponential(\\lambda=8)$.\n\n(b) The requested probability is $P(0.5\\le Y\\le1)=F_Y(1)-F_Y(0.5)\\approx0.018$."
     }
   ],
   "Week 6": [
     {
-      type: "Marginal PMF",
-      prompt: "Given a joint PMF table $p_{XY}(x,y)$, how do you find $p_X(x)$?",
-      solution: "Sum out $Y$: $p_X(x)=\\sum_y p_{XY}(x,y)$."
+      type: "Conditional PMF given event",
+      source: "Week 6 lecture example",
+      prompt: "EXAMPLE: In a targeted sequencing experiment, a bioengineer analyzes short DNA fragments from a biological sample. Due to variability in the sample and sequencing process, the number of mutated fragments detected per sample varies. Based on prior experiments, the bioengineer knows that the number of mutated fragments in a sample can be 0, 1, 2, or 3, each occurring with equal likelihood. To ensure high-quality downstream analysis, a filtering step is applied that retains only samples with low mutation burden (at most one mutated fragment). Given that a sample passes the quality control filter, determine the conditional probability mass function (PMF) of the number of mutated fragments detected.",
+      solution: "Step 1: Define the conditioning event: $A=\\{X\\le1\\}=\\{X=0\\text{ or }X=1\\}$.\n\nStep 2: Compute the probability of the event. Since each value has probability $1/4$, $P(A)=P(X=0)+P(X=1)=1/4+1/4=1/2$.\n\nStep 3: Use the conditional PMF formula. For $x=0,1$, $P_{X|A}(x)=P(X=x)/P(A)=(1/4)/(1/2)=1/2$.\n\nStep 4: Values outside the filter cannot occur after conditioning, so for $x=2,3$, $P_{X|A}(x)=0$."
     },
     {
-      type: "Conditional PMF",
-      prompt: "Given $p_{XY}(x,y)$, how do you find $p_{X|Y}(x|y)$?",
-      solution: "Fix $Y=y$ and normalize: $p_{X|Y}(x|y)=p_{XY}(x,y)/p_Y(y)$."
+      type: "Joint PMF and independence",
+      source: "Midterm 2 Problem 2",
+      prompt: "Problem 2 [20 points]. In a tissue-engineering experiment, a bioengineer studies the distribution of two different cell types seeded onto a biodegradable scaffold. Let $X$ denote the number of stem cells attached to a randomly selected scaffold region, and $Y$ denote the number of immune cells attached to the same region. Suppose the joint probability mass function of $X$ and $Y$ is given by $$P_{X,Y}(x,y)=\\begin{cases}c(x+y+1),&x=0,1,2,\\ y=0,1\\\\0,&\\text{otherwise}\\end{cases}$$ (a) Find the value of the normalization constant $c$. (b) Find the marginal PMFs $p_X(x)$ and $p_Y(y)$. (c) Compute the probability that at least one stem cell is attached to the scaffold region given that exactly one immune cell is attached to the same region. (d) Evaluate and determine whether $X$ and $Y$ are independent.",
+      solution: "Step 1: Normalize the joint PMF. The total weight is $(1+2+3)+(2+3+4)=15$, so $c=1/15$.\n\nStep 2: Sum over $y$ to get $p_X$: $p_X(0)=3/15$, $p_X(1)=5/15$, and $p_X(2)=7/15$.\n\nStep 3: Sum over $x$ to get $p_Y$: $p_Y(0)=6/15$ and $p_Y(1)=9/15$.\n\nStep 4: Use conditional probability: $P(X\\ge1|Y=1)=(3/15+4/15)/(9/15)=7/9$.\n\nStep 5: Check independence using one counterexample. $P(X=0,Y=0)=1/15$, but $p_X(0)p_Y(0)=(3/15)(6/15)=2/25$. Since these are not equal, $X$ and $Y$ are not independent."
     }
   ],
   "Week 7": [
     {
-      type: "Covariance shortcut",
-      prompt: "If $E[X]=2$, $E[Y]=5$, and $E[XY]=13$, find $Cov(X,Y)$.",
-      solution: "$Cov(X,Y)=E[XY]-E[X]E[Y]=13-2(5)=3$."
+      type: "Covariance properties",
+      source: "Week 7 lecture example",
+      prompt: "EXAMPLE: In a biosensor experiment, background electronic noise and stochastic molecular fluctuations both contribute to the observed sensor measurements. Suppose $X$: normalized background sensor noise and $Y$: normalized molecular fluctuation signal. Assume that $X$ and $Y$ are independent standard normal random variables. A bioengineer defines two derived measurements: the amplified sensor response $Z=1+X+XY^2$ and the baseline corrected signal $W=1+X$. Calculate $Cov[Z,W]$.",
+      solution: "Step 1: Drop constants inside covariance: $Cov[Z,W]=Cov[1+X+XY^2,1+X]=Cov[X+XY^2,X]$.\n\nStep 2: Split covariance over addition: $Cov[X+XY^2,X]=Cov[X,X]+Cov[XY^2,X]$.\n\nStep 3: Since $X$ is standard normal, $Cov[X,X]=Var[X]=1$.\n\nStep 4: Compute the second term: $Cov[XY^2,X]=E[X^2Y^2]-E[XY^2]E[X]$.\n\nStep 5: Use independence and standard-normal moments: $E[X^2Y^2]=E[X^2]E[Y^2]=1$, while $E[XY^2]E[X]=0$.\n\nStep 6: Add the terms: $Cov[Z,W]=1+1-0=2$."
     },
     {
-      type: "Total expectation",
-      prompt: "If $E[Y|X]=2X+1$ and $E[X]=4$, find $E[Y]$.",
-      solution: "Use total expectation: $E[Y]=E[E[Y|X]]=E[2X+1]=2(4)+1=9$."
+      type: "Zero correlation not independence",
+      source: "Week 7 lecture example",
+      prompt: "EXAMPLE: In a bioengineering experiment, a researcher measures the normalized expression level of a regulatory protein in a cell. Let $X$ be the normalized protein expression level, which is equally likely between the values of $-1$ and $1$. The activity of a downstream signaling pathway depends on the square of the protein expression level, since both unusually high and unusually low expression disrupt cellular homeostasis. (a) Is the activity of the downstream signaling pathway independent of the normalized expression level? (b) Is the activity of the downstream signaling pathway correlated with the normalized expression level?",
+      solution: "Step 1: Model the expression level as $X\\sim Uniform(a=-1,b=1)$.\n\nStep 2: The pathway activity is determined by the square, so let $Y=X^2$.\n\n(a) $X$ and $Y$ are not independent because once $X$ is known, $Y$ is fixed.\n\nStep 3: For correlation, compute covariance: $Cov[X,Y]=E[XY]-E[X]E[Y]=E[X^3]-E[X]E[X^2]$.\n\nStep 4: By symmetry on $[-1,1]$, $E[X]=0$ and $E[X^3]=0$.\n\n(b) Therefore $Cov[X,Y]=0$, so $\\rho_{XY}=0$. The variables are dependent but uncorrelated."
     },
     {
-      type: "Total variance",
-      prompt: "Suppose $E[Y|X]=X$ and $Var(Y|X)=2$. If $Var(X)=5$, find $Var(Y)$.",
-      solution: "Use $Var(Y)=E[Var(Y|X)]+Var(E[Y|X])$. So $Var(Y)=E[2]+Var(X)=2+5=7$."
+      type: "Multiple random variables",
+      source: "Week 7 lecture example",
+      prompt: "EXAMPLE: In a multiplex biosensor experiment, a researcher simultaneously measures normalized glucose concentration $X$, normalized lactate concentration $Y$, and normalized inflammatory biomarker concentration $Z$. Suppose the joint probability density function of these three biomarkers is given by $$f_{X,Y,Z}(x,y,z)=\\begin{cases}c(x+2y+3z),&0\\le x,y,z\\le1\\\\0,&\\text{otherwise}\\end{cases}$$ (a) Find the constant $c$. (b) Find the marginal PDF of the glucose concentration $X$.",
+      solution: "Step 1: Use total probability to find $c$: $1=\\int_0^1\\int_0^1\\int_0^1 c(x+2y+3z)\\,dx\\,dy\\,dz$.\n\nStep 2: Evaluate the integral: $\\int_0^1\\int_0^1\\int_0^1 (x+2y+3z)\\,dx\\,dy\\,dz=3$, so $3c=1$ and $c=1/3$.\n\nStep 3: To find the marginal PDF of $X$, integrate out $y$ and $z$.\n\nStep 4: For $0\\le x\\le1$, $f_X(x)=\\int_0^1\\int_0^1 \\frac13(x+2y+3z)\\,dy\\,dz$.\n\nStep 5: Simplify: $f_X(x)=\\frac13(x+5/2)$ for $0\\le x\\le1$."
     },
     {
-      type: "Correlation",
-      prompt: "If $Cov(X,Y)=6$, $Var(X)=9$, and $Var(Y)=16$, find $\\rho_{XY}$.",
-      solution: "$\\sigma_X=3$ and $\\sigma_Y=4$, so $\\rho_{XY}=Cov(X,Y)/(\\sigma_X\\sigma_Y)=6/(3\\cdot4)=1/2$."
+      type: "Variance of a sum",
+      source: "Week 7 lecture example",
+      prompt: "EXAMPLE: A bioengineer designs an array of $n$ identical biosensors to measure the concentration of a signaling molecule. Assume that all biosensors have an average error of $\\mu$ with a variance of $\\sigma^2$. You are interested in calculating the average and variance of the total measurement error across all biosensors. (a) Assume that all biosensors are independent. (b) Assume that environmental fluctuations introduce correlations between every pair of biosensors, such that the covariance between any two distinct biosensors is $c$.",
+      solution: "Step 1: Let the total measurement error be $S=X_1+\\cdots+X_n$.\n\nStep 2: Use linearity of expectation: $E[S]=E[X_1]+\\cdots+E[X_n]=n\\mu$.\n\n(a) If the biosensors are independent, all covariance terms are 0, so $Var[S]=n\\sigma^2$.\n\n(b) If every distinct pair has covariance $c$, use $Var(S)=\\sum_i Var(X_i)+2\\sum_{i<j}Cov(X_i,X_j)$.\n\nStep 3: There are $\\binom n2$ distinct pairs, so $2\\binom n2c=n(n-1)c$.\n\nStep 4: Therefore $Var[S]=n\\sigma^2+n(n-1)c$."
     },
     {
-      type: "MGF moments",
-      prompt: "If $M_X(t)=e^{3t+2t^2}$, find $E[X]$ using the MGF pattern.",
-      solution: "$E[X]=M_X'(0)$. Since $M_X'(t)=(3+4t)e^{3t+2t^2}$, $M_X'(0)=3$."
+      type: "MGF from PMF/PDF",
+      source: "Week 7 lecture example",
+      prompt: "EXAMPLE: For each of the following bioengineering random variables, find the moment generating function (MGF). (a) In a single-cell sequencing experiment, a low-abundance gene is measured in an individual cell. Suppose the sequencing assay detects either one or two transcript molecules, where $P_X(1)=1/3$ and $P_X(2)=2/3$. (b) Suppose the fraction of activated membrane receptors on a cell surface is equally likely to take any value between 0 and 1 due to stochastic ligand exposure. Let $Y\\sim Uniform(a=0,b=1)$, where $Y$ represents the fraction of activated receptors.",
+      solution: "Step 1: For part (a), use the discrete MGF definition $M_X(s)=E[e^{sX}]$.\n\n(a) Substitute the PMF values: $M_X(s)=e^sP_X(1)+e^{2s}P_X(2)=\\frac13e^s+\\frac23e^{2s}$.\n\nStep 2: For part (b), use the continuous MGF definition $M_Y(s)=E[e^{sY}]$.\n\n(b) Since $Y\\sim Uniform(0,1)$, $f_Y(y)=1$ for $0\\le y\\le1$.\n\nStep 3: Integrate: $M_Y(s)=\\int_0^1 e^{sy}\\,dy=(e^s-1)/s$ for $s\\ne0$.\n\nStep 4: At $s=0$, every MGF equals 1, so $M_Y(0)=1$."
     },
     {
-      type: "Independent sum MGF",
-      prompt: "If $X$ and $Y$ are independent with $M_X(t)=e^{2(e^t-1)}$ and $M_Y(t)=e^{5(e^t-1)}$, identify the distribution of $X+Y$.",
-      solution: "For independent sums, $M_{X+Y}(t)=M_X(t)M_Y(t)=e^{7(e^t-1)}$. This is Poisson$(7)$."
+      type: "Moments from MGF",
+      source: "Week 7 lecture example",
+      prompt: "EXAMPLE: Suppose a biosensor measuring molecular concentration produces a discrete stochastic signal with MGF: $$M_X(s)=\\frac14+\\frac12e^s+\\frac14e^{2s}.$$ Find the mean and variance of the biosensor signal.",
+      solution: "Step 1: Differentiate once to get the mean: $M_X'(s)=\\frac12e^s+\\frac12e^{2s}$.\n\nStep 2: Evaluate at 0: $E[X]=M_X'(0)=1$.\n\nStep 3: Differentiate twice to get $E[X^2]$: $M_X''(s)=\\frac12e^s+e^{2s}$.\n\nStep 4: Evaluate at 0: $E[X^2]=M_X''(0)=3/2$.\n\nStep 5: Use $Var[X]=E[X^2]-(E[X])^2$: $Var[X]=3/2-1^2=1/2$."
     }
   ],
   "Week 8": [
     {
-      type: "Markov trigger",
-      prompt: "A nonnegative error count has $E[X]=12$. Bound $P(X\\ge40)$.",
-      solution: "Use Markov because $X\\ge0$ and only the mean is needed: $P(X\\ge40)\\le12/40=0.30$."
+      type: "Chebyshev bound",
+      source: "Week 8 lecture example",
+      prompt: "EXAMPLE: In a DNA sequencing experiment, each sequencing read independently produces an error with probability 0.05. Suppose $X$ denotes the total number of sequencing errors among 1000 reads. A bioengineer is concerned about sequencing runs in which at least 7% of all reads contain errors, since such runs are considered experimentally unusable. For a given experiment, find an upper bound on the probability that at least 7% of reads contain sequencing errors. Solve using Chebyshev's inequality.",
+      solution: "Step 1: Identify the count distribution: $X\\sim Binomial(n=1000,p=0.05)$.\n\nStep 2: Compute the mean and variance: $E[X]=1000(0.05)=50$ and $Var[X]=1000(0.05)(0.95)=47.5$.\n\nStep 3: Translate 7% of 1000 reads into a count: $X\\ge70$.\n\nStep 4: Convert the one-sided event into a Chebyshev event: $X\\ge70$ implies $|X-50|\\ge20$.\n\nStep 5: Apply Chebyshev: $P(X\\ge70)\\le P(|X-50|\\ge20)\\le47.5/20^2=0.11875$."
     },
     {
-      type: "Chebyshev trigger",
-      prompt: "A measurement has mean 100 and variance 25. Bound $P(|X-100|\\ge10)$.",
-      solution: "Use Chebyshev: $P(|X-100|\\ge10)\\le25/10^2=0.25$."
+      type: "Chernoff bound",
+      source: "Homework 6 Problem 6",
+      prompt: "Problem 6 [18 points]. In a single-cell microfluidics experiment, a bioengineer prepares a batch of droplets for single-cell RNA sequencing. Due to random loading variability, some droplets contain more than one cell. These are called doublet droplets and can interfere with downstream analysis. Suppose the number of doublet droplets in one batch is modeled as a Poisson random variable $X\\sim Poisson(\\lambda=5)$. A batch is considered low quality if it contains at least 12 doublet droplets. Use a Chernoff bound to find an upper bound on the probability of having at least 12 doublet droplets. Make sure to first derive the moment generating function of $X$.",
+      solution: "Step 1: Start with the MGF for a Poisson random variable. For $X\\sim Poisson(5)$, $M_X(t)=\\exp(5(e^t-1))$.\n\nStep 2: Apply Chernoff's bound for an upper tail: $P(X\\ge12)\\le e^{-12t}M_X(t)$ for $t>0$.\n\nStep 3: Substitute the MGF: $P(X\\ge12)\\le\\exp(5(e^t-1)-12t)$.\n\nStep 4: Optimize the exponent by differentiating: $\\frac{d}{dt}[5(e^t-1)-12t]=5e^t-12$.\n\nStep 5: Set the derivative to 0: $5e^t=12$, so $t=\\ln(12/5)$."
     }
   ],
   "Week 9": [
     {
-      type: "CLT setup",
-      prompt: "For iid measurements with $\\mu=20$, $\\sigma=4$, and $n=64$, approximate $P(\\bar X>21)$.",
-      solution: "$SE=4/\\sqrt{64}=0.5$. $Z=(21-20)/0.5=2$. Probability is $P(Z>2)$."
+      type: "CLT with continuity correction",
+      source: "Week 9 lecture example",
+      prompt: "EXAMPLE: A bioengineer is evaluating the quality of a DNA sequencing experiment. In this experiment, each sequencing read may contain an error due to limitations of the sequencing chemistry, imaging noise, or base-calling uncertainty. Suppose that each read independently has probability of 0.05 to contain an error. The bioengineer generates 100 reads and wants to approximate the probability that 10 to 15 reads contain errors. Solve the problem exactly using Binomial distribution and also Central Limit Theorem.",
+      solution: "Step 1: Exact model: $S_{100}\\sim Binomial(n=100,p=0.05)$.\n\nStep 2: Write the exact probability as a binomial sum: $P(10\\le S_{100}\\le15)=\\sum_{k=10}^{15}\\binom{100}{k}(0.05)^k(0.95)^{100-k}\\approx0.0282$.\n\nStep 3: For the CLT approximation, compute $\\mu=np=5$ and $\\sigma^2=np(1-p)=4.75$.\n\nStep 4: Apply continuity correction: $P(10\\le S_{100}\\le15)\\approx P(9.5\\le N\\le15.5)$ where $N\\sim N(5,4.75)$.\n\nStep 5: Standardize the two endpoints and use the standard normal CDF."
     },
     {
-      type: "Bias check",
-      prompt: "If $E[\\hat\\theta]=\\theta+3$, what is the bias of $\\hat\\theta$?",
-      solution: "$Bias(\\hat\\theta)=E[\\hat\\theta]-\\theta=(\\theta+3)-\\theta=3$."
+      type: "Point estimators",
+      source: "Week 9 lecture example",
+      prompt: "EXAMPLE: Suppose a bioengineer wants to estimate the true average concentration of a biomarker, $X$, in a patient population. Let $\\theta$ denote the true average biomarker concentration and $\\sigma^2$ the true variance of biomarker concentration. The bioengineer collects a random sample of $n$ independent and representative patient measurements: $X_1,X_2,\\ldots,X_n$. Evaluate the following estimators for $\\theta$: $\\hat\\Theta_1=X_1$, $\\hat\\Theta_2=\\bar X=(X_1+X_2+\\cdots+X_n)/n$, and $\\hat\\Theta_3=(X_1^2+X_2^2+\\cdots+X_n^2)/n^2$.",
+      solution: "Step 1: Check $\\hat\\Theta_1=X_1$. Since $E[X_1]=\\theta$, this estimator is unbiased and $MSE(\\hat\\Theta_1)=Var(X_1)=\\sigma^2$.\n\nStep 2: Check $\\hat\\Theta_2=\\bar X$. Since $E[\\bar X]=\\theta$, this estimator is unbiased and $MSE(\\hat\\Theta_2)=Var(\\bar X)=\\sigma^2/n$.\n\nStep 3: Check $\\hat\\Theta_3=(X_1^2+\\cdots+X_n^2)/n^2$. Since $E[X_i^2]=\\sigma^2+\\theta^2$, $E[\\hat\\Theta_3]=(\\sigma^2+\\theta^2)/n$.\n\nStep 4: Because $E[\\hat\\Theta_3]$ is not generally equal to $\\theta$, $\\hat\\Theta_3$ is generally biased for $\\theta$."
     }
   ],
   "Week 10": [
     {
-      type: "MLE setup",
-      prompt: "For iid Poisson$(\\lambda)$ data, what likelihood should you start with?",
-      solution: "$L(\\lambda)=\\prod_{i=1}^n e^{-\\lambda}\\lambda^{x_i}/x_i!$. Then use log likelihood and differentiate."
+      type: "MLE exponential",
+      source: "Week 10 lecture example",
+      prompt: "EXAMPLE: A bioengineer is studying the degradation time of a therapeutic enzyme embedded in a tissue scaffold. The degradation time is continuous, non-negative, and is assumed to follow an Exponential distribution with unknown rate parameter $\\theta$: $X_i\\sim Exponential(\\lambda=\\theta)$. Four independent degradation-time measurements are recorded, in hours: $x_1=1.23$, $x_2=3.32$, $x_3=1.98$, $x_4=2.12$. Assuming that $X_1,X_2,X_3,X_4$ are independent and identically distributed, find the likelihood function and the maximum likelihood estimate of the degradation rate $\\theta$.",
+      solution: "Step 1: Write the exponential density: $f(x;\\theta)=\\theta e^{-\\theta x}$ for $x\\ge0$.\n\nStep 2: Multiply the four independent densities: $L(1.23,3.32,1.98,2.12;\\theta)=\\theta^4e^{-\\theta(1.23+3.32+1.98+2.12)}$.\n\nStep 3: Add the observations: $1.23+3.32+1.98+2.12=8.65$, so $L(1.23,3.32,1.98,2.12;\\theta)=\\theta^4e^{-8.65\\theta}$.\n\nStep 4: Take logs: $\\ell(\\theta)=4\\ln\\theta-8.65\\theta$.\n\nStep 5: Differentiate and set to 0: $\\ell'(\\theta)=4/\\theta-8.65=0$.\n\nStep 6: Solve: $\\hat\\theta=4/8.65\\approx0.462$."
     },
     {
-      type: "Hypothesis test decision",
-      prompt: "If a right-tailed z test gives $z=2.1$ and $\\alpha=0.05$, what is the reject rule?",
-      solution: "Reject when $z>z_{0.95}=1.645$. Since $2.1>1.645$, reject $H_0$ at $0.05$."
+      type: "P-value: one-sided vs two-sided",
+      source: "Week 10 lecture example",
+      prompt: "EXAMPLE: A team of bioengineers is testing an automated microfluidic device designed to sort immune cells into two categories: activated and non-activated. According to the design specification, the system should classify cells as activated 50% of the time when using a standardized cell mixture. Let $\\theta$ denote the probability that a randomly selected cell is classified as activated by the device: $\\theta=P(\\text{activated classification})$. To assess the accuracy of the system, the team runs 100 trials using the reference cell population and observes 60 activations. Answer the following: (a) Based on the observation, is there sufficient evidence at the 0.05 significance level to conclude that the device activates more than 50% of cells? What is the p-value associated with this test? (b) Is there evidence at the 0.05 significance level to suggest that the device's activation rate is not equal to 50%? What is the p-value associated with this test?",
+      solution: "Step 1: Under $H_0$, the activation count is $X\\sim Binomial(n=100,p=0.50)$.\n\nStep 2: Compute the null mean and variance: $E[X]=50$ and $Var[X]=100(0.50)(0.50)=25$.\n\nStep 3: Standardize the observed count $X=60$: $z=(60-50)/5=2$.\n\n(a) For the right-tailed test, $p=1-\\Phi(2)\\approx0.0228$. Since $0.0228<0.05$, reject $H_0$.\n\n(b) For the two-sided test, $p=2[1-\\Phi(2)]\\approx0.0456$. Since $0.0456<0.05$, reject $H_0$."
     }
   ]
 };
 const QUICK_SHEETS = [
   {
-    "label": "Week 1 Lectures 1–2",
+    "label": "Week 1 Lectures 1-2",
     "title": "Probability, Statistics, Counting, Sets",
     "color": "#5F5E5A",
     "bg": "#F1EFE8",
@@ -930,7 +954,7 @@ const QUICK_SHEETS = [
     ]
   },
   {
-    "label": "Week 2 Lectures 3–4",
+    "label": "Week 2 Lectures 3-4",
     "title": "Probability Spaces, Conditional Probability, Bayes",
     "color": "#0F6E56",
     "bg": "#E1F5EE",
@@ -973,7 +997,7 @@ const QUICK_SHEETS = [
     ]
   },
   {
-    "label": "Week 3 Lectures 5–6",
+    "label": "Week 3 Lectures 5-6",
     "title": "Random Variables, PMF, Expected Value, Variance",
     "color": "#854F0B",
     "bg": "#FAEEDA",
@@ -1030,13 +1054,13 @@ const QUICK_SHEETS = [
       ],
       [
         "Geometric",
-        "$$P(X=k)=(1-p)^{k-1}p,\\ E[X]=1/p,\\ Var[X]=(1-p)/p^2$$",
-        "Number of trials until first success."
+        "$$P(X=k)=(1-p)^{k-1}p,\\ E[X]=1/p,\\ Var[X]=(1-p)/p^2,\\ P(X>k)=(1-p)^k$$",
+        "Number of trials until first success; tail shortcut is $(1-p)^k$."
       ]
     ]
   },
   {
-    "label": "Week 4 Lectures 7–8",
+    "label": "Week 4 Lectures 7-8",
     "title": "Pascal, Hypergeometric, Poisson, Continuous RVs",
     "color": "#993C1D",
     "bg": "#FAECE7",
@@ -1068,8 +1092,13 @@ const QUICK_SHEETS = [
       ],
       [
         "Poisson properties",
-        "$$E[X]=\\lambda,\\quad Var[X]=\\lambda$$",
-        "Check: support $0,1,2,...$ and mean = variance = $\\lambda$. Approx Binomial when $n$ large, $p$ small, $\\lambda=np$."
+        "$$E[X]=\\lambda,\\quad Var[X]=\\lambda,\\quad N(t)\\sim Poisson(\\lambda t)$$",
+        "Check: support $0,1,2,...$ and mean = variance = $\\lambda$. Approx Binomial when $n$ large, $p$ small, $\\lambda=np$; for rate $\\lambda$ per unit time, interval $t$ gives mean $\\lambda t$."
+      ],
+      [
+        "Tail shortcuts",
+        "$$\\begin{aligned}P(X>n)&=1-P(X\\le n)=1-F_X(n)\\\\P(X>n)&=1-\\sum_{k=0}^{n}P(X=k)\\quad\\text{(discrete integer-valued X)}\\\\P(X\\ge n)&=1-P(X<n)\\\\P(X>n)&=\\int_n^\\infty f_X(u)\\,du=1-F_X(n)\\quad\\text{(continuous X)}\\end{aligned}$$",
+        "Use complements for upper tails; sums for discrete X and integrals for continuous X."
       ],
       [
         "PDF properties",
@@ -1088,13 +1117,13 @@ const QUICK_SHEETS = [
       ],
       [
         "Uniform",
-        "$$X\\sim U(a,b): f(x)=1/(b-a),\\ E[X]=(a+b)/2,\\ Var[X]=(b-a)^2/12$$",
+        "$$X\\sim U(a,b): f(x)=1/(b-a),\\ F_X(x)=(x-a)/(b-a),\\ a\\le x\\le b,\\ E[X]=(a+b)/2,\\ Var[X]=(b-a)^2/12$$",
         "Identify: all values in interval equally likely. $a$ = lower endpoint, $b$ = upper endpoint."
       ]
     ]
   },
   {
-    "label": "Week 5 Lectures 9–10",
+    "label": "Week 5 Lectures 9-10",
     "title": "Transformations and Continuous Distributions",
     "color": "#185FA5",
     "bg": "#E6F1FB",
@@ -1120,8 +1149,18 @@ const QUICK_SHEETS = [
         "Safest method when transformation is tricky."
       ],
       [
+        "Continuous LOTUS",
+        "$$\\begin{aligned}E[g(X)]&=\\int_{-\\infty}^{\\infty}g(x)f_X(x)\\,dx\\\\\\text{Special cases:}\\quad E[X]&=\\int_{-\\infty}^{\\infty}x f_X(x)\\,dx\\\\E[X^2]&=\\int_{-\\infty}^{\\infty}x^2f_X(x)\\,dx\\end{aligned}$$",
+        "Use the density directly for a function of $X$; mean and second moment are special cases."
+      ],
+      [
+        "Inverse examples",
+        "$$\\begin{aligned}Y=aX+b&\\Rightarrow g^{-1}(y)=\\frac{y-b}{a}\\\\Y=1/X&\\Rightarrow g^{-1}(y)=1/y,\\ \\left|\\frac{d}{dy}g^{-1}(y)\\right|=1/y^2\\\\Y=\\sqrt X&\\Rightarrow g^{-1}(y)=y^2,\\ \\frac{d}{dy}g^{-1}(y)=2y\\end{aligned}$$",
+        "Always find the support/range of Y first before writing $f_Y(y)$."
+      ],
+      [
         "Exponential PDF/CDF",
-        "$$f(x)=\\lambda e^{-\\lambda x},\\ x\\ge0;\\quad F(x)=1-e^{-\\lambda x}$$",
+        "$$f(x)=\\lambda e^{-\\lambda x},\\ x\\ge0;\\quad F(x)=1-e^{-\\lambda x};\\quad P(X>x)=e^{-\\lambda x}$$",
         "Identify: waiting time until first event, lifetime, decay time, time between Poisson events."
       ],
       [
@@ -1141,13 +1180,13 @@ const QUICK_SHEETS = [
       ],
       [
         "Standardization",
-        "$$Z=\\frac{X-\\mu}{\\sigma}$$",
+        "$$Z=\\frac{X-\\mu}{\\sigma},\\quad P(X\\le x)=\\Phi\\left(\\frac{x-\\mu}{\\sigma}\\right)$$",
         "Convert normal probability to standard normal table/CDF."
       ]
     ]
   },
   {
-    "label": "Week 6 Lectures 11–12",
+    "label": "Week 6 Lectures 11-12",
     "title": "Joint, Marginal, Conditional Distributions",
     "color": "#3C3489",
     "bg": "#EEEDFE",
@@ -1188,6 +1227,11 @@ const QUICK_SHEETS = [
         "Integrate over a region."
       ],
       [
+        "Expectation of two RVs",
+        "$$E[g(X,Y)]=\\sum_x\\sum_y g(x,y)p_{X,Y}(x,y),\\quad E[g(X,Y)]=\\iint g(x,y)f_{X,Y}(x,y)\\,dx\\,dy$$",
+        "Use the joint PMF/PDF directly for functions of two variables."
+      ],
+      [
         "Continuous marginal",
         "$$f_X(x)=\\int f_{XY}(x,y)dy,\\quad f_Y(y)=\\int f_{XY}(x,y)dx$$",
         "Integrate out the other variable."
@@ -1200,7 +1244,7 @@ const QUICK_SHEETS = [
     ]
   },
   {
-    "label": "Week 7 Lectures 13–14",
+    "label": "Week 7 Lectures 13-14",
     "title": "Covariance, Correlation, Multiple RVs, MGF",
     "color": "#993C1D",
     "bg": "#FAECE7",
@@ -1218,11 +1262,11 @@ const QUICK_SHEETS = [
       [
         "Covariance properties",
         "$$Cov[aX+b,cY+d]=ac\\,Cov[X,Y]$$",
-        "Constants vanish; scale factors come out."
+        "Constants vanish; scale factors come out. Independence implies zero covariance, but zero covariance does not guarantee independence."
       ],
       [
         "Variance of sum",
-        "$$Var[X+Y]=Var[X]+Var[Y]+2Cov[X,Y]$$",
+        "$$Var[X+Y]=Var[X]+Var[Y]+2Cov[X,Y],\\quad Var[X-Y]=Var[X]+Var[Y]-2Cov[X,Y]$$",
         "Do not drop covariance unless independent."
       ],
       [
@@ -1248,7 +1292,12 @@ const QUICK_SHEETS = [
       [
         "Moments from MGF",
         "$$E[X^n]=M_X^{(n)}(0)$$",
-        "First derivative gives mean, second gives $E[X^2]$."
+        "Clarification: $E[X]=M_X'(0)$ and $E[X^2]=M_X''(0)$."
+      ],
+      [
+        "Common MGFs",
+        "$$\\begin{aligned}\\text{Bernoulli}(p):\\ &M_X(t)=1-p+pe^t\\\\\\text{Binomial}(n,p):\\ &M_X(t)=(1-p+pe^t)^n\\\\\\text{Poisson}(\\lambda):\\ &M_X(t)=\\exp(\\lambda(e^t-1))\\\\\\text{Exponential}(\\lambda):\\ &M_X(t)=\\frac{\\lambda}{\\lambda-t},\\ t<\\lambda\\\\\\text{Normal}(\\mu,\\sigma^2):\\ &M_X(t)=\\exp(\\mu t+\\sigma^2 t^2/2)\\end{aligned}$$",
+        "Memorize the standard families that show up most often on exams."
       ],
       [
         "Independent sum MGF",
@@ -1258,7 +1307,7 @@ const QUICK_SHEETS = [
     ]
   },
   {
-    "label": "Week 8 Lectures 15–16",
+    "label": "Week 8 Lectures 15-16",
     "title": "Probability Bounds",
     "color": "#A32D2D",
     "bg": "#FCEBEB",
@@ -1270,7 +1319,7 @@ const QUICK_SHEETS = [
       ],
       [
         "Chebyshev inequality",
-        "$$P(|X-E[X]|\\ge b)\\le\\frac{Var[X]}{b^2}$$",
+        "$$P(|X-E[X]|\\ge b)\\le\\frac{Var[X]}{b^2},\\quad P(|X-E[X]|<b)\\ge 1-\\frac{Var[X]}{b^2}$$",
         "Use with mean and variance; works for any distribution."
       ],
       [
@@ -1296,7 +1345,7 @@ const QUICK_SHEETS = [
     ]
   },
   {
-    "label": "Week 9 Lectures 17–18",
+    "label": "Week 9 Lectures 17-18",
     "title": "LLN, CLT, Statistical Inference, Mean Estimation",
     "color": "#4338CA",
     "bg": "#EEF2FF",
@@ -1333,8 +1382,8 @@ const QUICK_SHEETS = [
       ],
       [
         "CLT for sum",
-        "$$S_n=\\sum X_i\\approx N(n\\mu,n\\sigma^2)$$",
-        "Use for binomial counts as sum of Bernoulli variables."
+        "$$S_n=\\sum X_i\\approx N(n\\mu,n\\sigma^2),\\quad X\\sim Binomial(n,p)\\approx N(np,np(1-p)),\\quad P(X\\le k)\\approx P(N\\le k+0.5)$$",
+        "Use for sums and binomial counts; add continuity correction when asked."
       ],
       [
         "Standard error",
@@ -1354,7 +1403,7 @@ const QUICK_SHEETS = [
     ]
   },
   {
-    "label": "Week 10 Lectures 19–20",
+    "label": "Week 10 Lectures 19-20",
     "title": "Variance Estimation, MLE, Hypothesis Testing",
     "color": "#854F0B",
     "bg": "#FAEEDA",
@@ -1362,22 +1411,22 @@ const QUICK_SHEETS = [
       [
         "Known-mean variance estimator",
         "$$\\hat\\sigma_\\mu^2=\\frac1n\\sum_{i=1}^n(X_i-\\mu)^2$$",
-        "Unbiased if true μ is known."
+        "Unbiased if true $\\mu$ is known."
       ],
       [
         "Biased variance with sample mean",
         "$$\\bar S^2=\\frac1n\\sum_{i=1}^n(X_i-\\bar X)^2$$",
-        "Biased low for σ²."
+        "Biased low for $\\sigma^2$."
       ],
       [
         "Bias of biased variance",
         "$$E[\\bar S^2]=\\frac{n-1}{n}\\sigma^2,\\quad Bias=-\\frac{1}{n}\\sigma^2$$",
-        "Shows why divide by n−1."
+        "Shows why divide by $n-1$."
       ],
       [
         "Sample variance",
         "$$S^2=\\frac{1}{n-1}\\sum_{i=1}^n(X_i-\\bar X)^2$$",
-        "Unbiased estimator of σ²."
+        "Unbiased estimator of $\\sigma^2$."
       ],
       [
         "Computational variance",
@@ -1387,12 +1436,12 @@ const QUICK_SHEETS = [
       [
         "Sample standard deviation",
         "$$S=\\sqrt{S^2}$$",
-        "Common estimator of σ, but generally biased."
+        "Common estimator of $\\sigma$, but generally biased."
       ],
       [
         "Likelihood",
         "$$L(\\theta)=\\prod_{i=1}^n f(X_i;\\theta)$$",
-        "Probability/density of observed data as a function of θ."
+        "Probability/density of observed data as a function of $\\theta$."
       ],
       [
         "Log likelihood",
@@ -1412,26 +1461,26 @@ const QUICK_SHEETS = [
       [
         "Exponential MLE",
         "$$\\hat\\lambda=1/\\bar X$$",
-        "For iid exponential(rate λ)."
+        "For iid exponential(rate $\\lambda$)."
       ],
       [
         "Z test statistic",
         "$$Z=\\frac{\\bar X-\\mu_0}{\\sigma/\\sqrt n}$$",
-        "Use when σ known or CLT approximation is allowed."
+        "Use when $\\sigma$ known or CLT approximation is allowed."
       ],
       [
-        "p-value right tail",
-        "$$p=1-\\Phi(z_{obs})$$",
-        "For $H_1:\\mu>\\mu_0$."
+        "p-value tails",
+        "$$p=\\Phi(z_{obs})\\ (\\text{left tail}),\\quad p=1-\\Phi(z_{obs})\\ (\\text{right tail}),\\quad p=2[1-\\Phi(|z_{obs}|)]\\ (\\text{two-sided})$$",
+        "Match the p-value formula to the direction of $H_1$."
       ],
       [
         "Critical rule",
         "$$\\text{Reject }H_0\\text{ if }p<\\alpha$$",
-        "Small p-value = data is unlikely under H0."
+        "Small p-value = data is unlikely under $H_0$."
       ],
       [
         "Type I / Type II",
-        "Type I = reject true H0; Type II = fail to reject false H0; Power = 1−β",
+        "Type I = reject true $H_0$; Type II = fail to reject false $H_0$; Power = $1-\\beta$",
         "Useful for interpretation questions."
       ]
     ]
@@ -1462,7 +1511,7 @@ const DISTRIBUTION_ID_GUIDE = [
 const FINALS = [
   {
     "id": "2025",
-    "title": "Practice Final Version A — Spring 2025 PDF wording + LaTeX notation",
+    "title": "Practice Final Version A - Spring 2025 PDF wording + LaTeX notation",
     "duration": 10800,
     "questions": [
       {
@@ -1476,23 +1525,23 @@ const FINALS = [
           "bayes",
           "0.16"
         ],
-        "solution": "Let A=positive test and O=off-target edit. P(O)=0.05, P(A|O)=0.92, P(A|O^c)=0.12. P(A)=0.92(0.05)+0.12(0.95)=0.16. P(O|A)=0.92(0.05)/0.16=0.2875."
+        "solution": "Let $A=$ positive test and $O=$ off-target edit. $P(O)=0.05$, $P(A|O)=0.92$, $P(A|O^c)=0.12$. $P(A)=0.92(0.05)+0.12(0.95)=0.16$. $P(O|A)=0.92(0.05)/0.16=0.2875$."
       },
       {
         "id": "25q2",
         "points": 11,
         "topic": "Conditional expectation",
-        "prompt": `Problem 2 [11 points]. In a synthetic biology experiment, you are studying the relationship between gene activation (modeled as random variable X) and the presence of a specific regulatory protein (modeled as random variable Y) in a cell population. The random variables X and Y are binary and jointly distributed as shown in the table below:
+        "prompt": `Problem 2 [11 points]. In a synthetic biology experiment, you are studying the relationship between gene activation (modeled as random variable $X$) and the presence of a specific regulatory protein (modeled as random variable $Y$) in a cell population. The random variables $X$ and $Y$ are binary and jointly distributed as shown in the table below:
 
-Y = 0 (No protein), Y = 1 (Protein present)
-X = 0 (Gene off): 1/5, 2/5
-X = 1 (Gene on): 2/5, 0
+$Y=0$ (No protein), $Y=1$ (Protein present)
+$X=0$ (Gene off): $1/5$, $2/5$
+$X=1$ (Gene on): $2/5$, $0$
 
 Let $Z=E[X|Y]$, the expected level of gene activation given the protein state. Answer the following:
-a) Find the marginal PMFs of gene activation, X, and protein presence, Y
-b) Find the conditional PMFs of X when Y=0 or when Y=1
-c) Find the probability mass function of Z
-d) Find E[Z] and Var[Z]`,
+a) Find the marginal PMFs of gene activation, $X$, and protein presence, $Y$
+b) Find the conditional PMFs of $X$ when $Y=0$ or when $Y=1$
+c) Find the probability mass function of $Z$
+d) Find $E[Z]$ and $Var[Z]$`,
         "keywords": [
           "3/5",
           "2/5",
@@ -1500,7 +1549,7 @@ d) Find E[Z] and Var[Z]`,
           "8/75",
           "z"
         ],
-        "solution": "P_X(0)=3/5, P_X(1)=2/5; P_Y(0)=3/5, P_Y(1)=2/5. X|Y=0~Bernoulli(2/3); X|Y=1~Bernoulli(0). Z=2/3 with prob 3/5 and 0 with prob 2/5. E[Z]=2/5. Var[Z]=4/15-4/25=8/75."
+        "solution": "$P_X(0)=3/5$, $P_X(1)=2/5$; $P_Y(0)=3/5$, $P_Y(1)=2/5$. $X|Y=0\\sim Bernoulli(2/3)$; $X|Y=1\\sim Bernoulli(0)$. $Z=2/3$ with probability $3/5$ and $0$ with probability $2/5$. $E[Z]=2/5$. $Var[Z]=4/15-4/25=8/75$."
       },
       {
         "id": "25q3",
@@ -1520,7 +1569,7 @@ Find $E[Y]$ and $Var[Y]$.`,
           "1-p",
           "4p^2"
         ],
-        "solution": "E[N]=1/p, Var[N]=(1-p)/p^2. E[X]=a/2, Var[X]=a^2/12. E[Y]=E[N]E[X]=a/(2p). Var[Y]=E[N]Var[X]+Var[N](E[X])^2=a^2/(12p)+a^2(1-p)/(4p^2)."
+        "solution": "$E[N]=1/p$, $Var[N]=(1-p)/p^2$. $E[X]=a/2$, $Var[X]=a^2/12$. $E[Y]=E[N]E[X]=a/(2p)$. $Var[Y]=E[N]Var[X]+Var[N](E[X])^2=a^2/(12p)+a^2(1-p)/(4p^2)$."
       },
       {
         "id": "25q4",
@@ -1534,13 +1583,13 @@ Find $E[Y]$ and $Var[Y]$.`,
           "2pi",
           "e^{-y/2}"
         ],
-        "solution": "Branches x=sqrt(y), x=-sqrt(y). f_Y(y)=f_X(sqrt y)/(2sqrt y)+f_X(-sqrt y)/(2sqrt y)=1/(sqrt(2πy))e^{-y/2}, y>0."
+        "solution": "Branches $x=\\sqrt y$ and $x=-\\sqrt y$. $f_Y(y)=f_X(\\sqrt y)/(2\\sqrt y)+f_X(-\\sqrt y)/(2\\sqrt y)=\\frac{1}{\\sqrt{2\\pi y}}e^{-y/2}$, for $y>0$."
       },
       {
         "id": "25q5",
         "points": 11,
         "topic": "MGF",
-        "prompt": `Problem 5 [11 points]. A random variable X is defined based on its probability density function:
+        "prompt": `Problem 5 [11 points]. A random variable $X$ is defined based on its probability density function:
 
 $$f_X(x)=\\frac{1}{2a}e^{-|x|/a}$$
 
@@ -1551,13 +1600,13 @@ Where $a\\in\\mathbb R$ and $a>0$. Given that $Y=|X|$, derive the moment generat
           "1/(1-at)",
           "t<1/a"
         ],
-        "solution": "Y has exponential distribution with rate 1/a. Thus M_Y(t)=(1/a)/(1/a-t)=1/(1-at), for t<1/a."
+        "solution": "$Y$ has exponential distribution with rate $1/a$. Thus $M_Y(t)=(1/a)/(1/a-t)=1/(1-at)$, for $t<1/a$."
       },
       {
         "id": "25q6",
         "points": 11,
         "topic": "Covariance by conditioning",
-        "prompt": `Problem 6 [11 points]. A random variable X is defined based on its cumulative distribution function:
+        "prompt": `Problem 6 [11 points]. A random variable $X$ is defined based on its cumulative distribution function:
 
 $$F_X(x)=\\begin{cases}0,&x\\le1\\\\(x-1)/(3-1),&1<x\\le3\\\\1,&x>3\\end{cases}$$
 
@@ -1569,7 +1618,7 @@ Provided that $Y|X\\sim Exponential(X)$, find the covariance of $X$ and $Y$. Bas
           "decrease",
           "1/x"
         ],
-        "solution": "X~Uniform(1,3). E[X]=2. E[Y|X]=1/X, so E[Y]=(1/2)∫_1^3 1/x dx=ln3/2. E[XY]=E[X(1/X)]=1. Cov=1−2(ln3/2)=1−ln3≈−0.10. E[Y|X]=1/X decreases as X increases."
+        "solution": "$X\\sim Uniform(1,3)$. $E[X]=2$. $E[Y|X]=1/X$, so $E[Y]=(1/2)\\int_1^3 (1/x)\\,dx=\\ln 3/2$. $E[XY]=E[X(1/X)]=1$. $Cov(X,Y)=1-2(\\ln 3/2)=1-\\ln 3\\approx-0.10$. $E[Y|X]=1/X$ decreases as $X$ increases."
       },
       {
         "id": "25q7",
@@ -1582,7 +1631,7 @@ Provided that $Y|X\\sim Exponential(X)$, find the covariance of $X$ and $Y$. Bas
           "3.194",
           "0.00068"
         ],
-        "solution": "Y~Binomial(2000,0.02). μ=40, σ²=39.2. P(Y>60)≈P(Z>(60−40)/sqrt(39.2))=P(Z>3.194)=1−0.99932=0.00068."
+        "solution": "$Y\\sim Binomial(2000,0.02)$. $\\mu=40$, $\\sigma^2=39.2$. $P(Y>60)\\approx P\\left(Z>\\frac{60-40}{\\sqrt{39.2}}\\right)=P(Z>3.194)=1-0.99932=0.00068$."
       },
       {
         "id": "25q8",
@@ -1596,7 +1645,7 @@ Provided that $Y|X\\sim Exponential(X)$, find the covariance of $X$ and $Y$. Bas
           "n",
           "log likelihood"
         ],
-        "solution": "ℓ(λ)=−nλ+(Σx_i)lnλ−Σln(x_i!). Set dℓ/dλ=−n+Σx_i/λ=0. Thus λhat=Σx_i/n=Xbar. Second derivative is negative."
+        "solution": "$\\ell(\\lambda)=-n\\lambda+(\\sum x_i)\\ln\\lambda-\\sum\\ln(x_i!)$. Set $d\\ell/d\\lambda=-n+\\sum x_i/\\lambda=0$. Thus $\\hat\\lambda=\\sum x_i/n=\\bar X$. Second derivative is negative."
       },
       {
         "id": "25q9",
@@ -1613,7 +1662,7 @@ to estimate $\\theta$. Calculate the bias of $\\hat\\Theta$ for estimating $\\th
           "overestimate",
           "E[xbar^2]"
         ],
-        "solution": "E[(Xbar)^2]=Var(Xbar)+(E[Xbar])²=σ²/n+μ². Bias=σ²/n, which is positive, so it overestimates μ² on average."
+        "solution": "$E[(\\bar X)^2]=Var(\\bar X)+(E[\\bar X])^2=\\sigma^2/n+\\mu^2$. Bias $=\\sigma^2/n$, which is positive, so it overestimates $\\mu^2$ on average."
       },
       {
         "id": "25q10",
@@ -1630,59 +1679,59 @@ c) For a new patient who shows 73 PVCs in a one-hour recording, compute the p-va
           "0.05",
           "mu>50"
         ],
-        "solution": "H0: μ=50; H1: μ>50. c=50+12Φ^{-1}(0.99)=50+12(2.33)=77.96. For 73, z=(73−50)/12=1.92, p=1−0.9726=0.0274. Reject at 0.05."
+        "solution": "$H_0:\\mu=50$; $H_1:\\mu>50$. $c=50+12\\Phi^{-1}(0.99)=50+12(2.33)=77.96$. For 73, $z=(73-50)/12=1.92$, so $p=1-0.9726=0.0274$. Reject at $0.05$."
       }
     ]
   },
   {
     "id": "2024",
-    "title": "Practice Final Version B — Spring 2024 condensed wording",
+    "title": "Practice Final Version B - Spring 2024 condensed wording",
     "duration": 10800,
     "questions": [
       {
         "id": "24q1",
         "points": 11,
         "topic": "Conditional probability",
-        "prompt": "A biased coin has P(H)=p and P(T)=q=1−p. A game ends when HH or TT first appears. I win if HH appears. Given that I won, find P(first toss was H).",
+        "prompt": "A biased coin has $P(H)=p$ and $P(T)=q=1-p$. A game ends when $HH$ or $TT$ first appears. I win if $HH$ appears. Given that I won, find $P(\\text{first toss was }H)$.",
         "keywords": [
           "1/(2-p)",
           "bayes",
           "q",
           "1+q"
         ],
-        "solution": "Using Bayes with A=I win: P(A|H)=p/(1-pq), P(A|T)=p^2/(1-pq). P(H|A)=P(A|H)p/[P(A|H)p+P(A|T)q]=1/(1+q)=1/(2-p)."
+        "solution": "Using Bayes with $A=\\text{I win}$: $P(A|H)=p/(1-pq)$ and $P(A|T)=p^2/(1-pq)$. Then $P(H|A)=P(A|H)p/[P(A|H)p+P(A|T)q]=1/(1+q)=1/(2-p)$."
       },
       {
         "id": "24q2",
         "points": 11,
         "topic": "CLT",
-        "prompt": "A codeword has 1000 bits, each with independent error probability 0.10. Decoding fails if errors exceed 125. Use CLT and Φ(25/sqrt(90))=0.9958 to approximate failure probability.",
+        "prompt": "A codeword has 1000 bits, each with independent error probability 0.10. Decoding fails if errors exceed 125. Use CLT and $\\Phi(25/\\sqrt{90})=0.9958$ to approximate failure probability.",
         "keywords": [
           "100",
           "90",
           "0.0042",
           "25/sqrt"
         ],
-        "solution": "Y~Binomial(1000,0.1). μ=100, σ²=90. P(Y>125)≈P(Z>25/sqrt(90))=1−0.9958=0.0042."
+        "solution": "$Y\\sim Binomial(1000,0.1)$. $\\mu=100$, $\\sigma^2=90$. $P(Y>125)\\approx P(Z>25/\\sqrt{90})=1-0.9958=0.0042$."
       },
       {
         "id": "24q3",
         "points": 11,
         "topic": "Poisson LOTUS",
-        "prompt": "X is Poisson with mean λ. Without using Var[X]=λ, show E[X²]=λ²+λ using LOTUS.",
+        "prompt": "$X$ is Poisson with mean $\\lambda$. Without using $Var[X]=\\lambda$, show $E[X^2]=\\lambda^2+\\lambda$ using LOTUS.",
         "keywords": [
           "E[X(X-1)]",
           "lambda^2",
           "lambda^2+lambda",
           "lotus"
         ],
-        "solution": "Compute E[X(X−1)]=Σ k(k−1)e^{−λ}λ^k/k!=λ². Since X²=X(X−1)+X, E[X²]=λ²+λ."
+        "solution": "Compute $E[X(X-1)]=\\sum k(k-1)e^{-\\lambda}\\lambda^k/k!=\\lambda^2$. Since $X^2=X(X-1)+X$, $E[X^2]=\\lambda^2+\\lambda$."
       },
       {
         "id": "24q4",
         "points": 11,
         "topic": "Total expectation/variance",
-        "prompt": "X~Uniform(1,2). Given X=x, Y~Exponential(rate x). Find E[Y] and Var[Y]. Use ln2≈0.70.",
+        "prompt": "$X\\sim Uniform(1,2)$. Given $X=x$, $Y\\sim Exponential(\\text{rate }x)$. Find $E[Y]$ and $Var[Y]$. Use $\\ln2\\approx0.70$.",
         "keywords": [
           "ln2",
           "0.70",
@@ -1690,26 +1739,26 @@ c) For a new patient who shows 73 PVCs in a one-hour recording, compute the p-va
           "total variance",
           "2-ln2"
         ],
-        "solution": "E[Y|X]=1/X, Var[Y|X]=1/X². E[Y]=∫_1^2 1/x dx=ln2≈0.70. Var[Y]=E[1/X²]+Var(1/X). E[1/X²]=1/2. E[1/X]=ln2. Var(1/X)=1/2−(ln2)^2. Total Var=1/2+1/2−(ln2)^2=1−(ln2)^2≈0.51."
+        "solution": "$E[Y|X]=1/X$, $Var[Y|X]=1/X^2$. $E[Y]=\\int_1^2 (1/x)\\,dx=\\ln2\\approx0.70$. $Var[Y]=E[1/X^2]+Var(1/X)$. $E[1/X^2]=1/2$ and $E[1/X]=\\ln2$, so total variance is $1-(\\ln2)^2\\approx0.51$."
       },
       {
         "id": "24q5",
         "points": 11,
         "topic": "Indicator variables",
-        "prompt": "n people sit around a round table, n>5. Each tosses a fair coin. A person receives a present if their outcome differs from both neighbors. Let X be the number receiving presents. Find E[X] and outline Var[X].",
+        "prompt": "$n$ people sit around a round table, $n>5$. Each tosses a fair coin. A person receives a present if their outcome differs from both neighbors. Let $X$ be the number receiving presents. Find $E[X]$ and outline $Var[X]$.",
         "keywords": [
           "indicator",
           "1/4",
           "n/4",
           "covariance"
         ],
-        "solution": "Let I_i=1 if person i differs from both neighbors. P(I_i=1)=P(HTH or THT)=1/4, so E[X]=ΣE[I_i]=n/4. For Var[X], use Var(sum I_i)=ΣVar(I_i)+2ΣCov(I_i,I_j), noting only nearby indicators are dependent on the circle."
+        "solution": "Let $I_i=1$ if person $i$ differs from both neighbors. $P(I_i=1)=P(HTH\\text{ or }THT)=1/4$, so $E[X]=\\sum E[I_i]=n/4$. For $Var[X]$, use $Var(\\sum I_i)=\\sum Var(I_i)+2\\sum Cov(I_i,I_j)$, noting only nearby indicators are dependent on the circle."
       },
       {
         "id": "24q6",
         "points": 11,
         "topic": "Independence and moments",
-        "prompt": "X,Y,Z are independent, X~N(μ,σ²), and Y,Z~Uniform(0,2). Given E[X²Y+XYZ]=13 and E[XY²+ZX²]=14, find μ and σ.",
+        "prompt": "$X,Y,Z$ are independent, $X\\sim N(\\mu,\\sigma^2)$, and $Y,Z\\sim Uniform(0,2)$. Given $E[X^2Y+XYZ]=13$ and $E[XY^2+ZX^2]=14$, find $\\mu$ and $\\sigma$.",
         "keywords": [
           "E[Y]=1",
           "E[Z]=1",
@@ -1717,52 +1766,52 @@ c) For a new patient who shows 73 PVCs in a one-hour recording, compute the p-va
           "mu",
           "sigma"
         ],
-        "solution": "Use independence: E[Y]=E[Z]=1, E[Y²]=4/3, E[X²]=μ²+σ². First equation: E[X²]E[Y]+E[X]E[Y]E[Z]=μ²+σ²+μ=13. Second: E[X]E[Y²]+E[Z]E[X²]=(4/3)μ+μ²+σ²=14. Subtract gives μ/3=1, so μ=3. Then 9+σ²+3=13, so σ²=1 and σ=1."
+        "solution": "Use independence: $E[Y]=E[Z]=1$, $E[Y^2]=4/3$, and $E[X^2]=\\mu^2+\\sigma^2$. The first equation gives $\\mu^2+\\sigma^2+\\mu=13$. The second gives $(4/3)\\mu+\\mu^2+\\sigma^2=14$. Subtract to get $\\mu/3=1$, so $\\mu=3$. Then $9+\\sigma^2+3=13$, so $\\sigma^2=1$ and $\\sigma=1$."
       },
       {
         "id": "24q7",
         "points": 11,
         "topic": "MSE",
-        "prompt": "For iid X_i with mean θ and variance σ², compare Θ1=X1 and Θ2=Xbar. Show both are unbiased and for n>1, MSE(Θ1)>MSE(Θ2).",
+        "prompt": "For iid $X_i$ with mean $\\theta$ and variance $\\sigma^2$, compare $\\Theta_1=X_1$ and $\\Theta_2=\\bar X$. Show both are unbiased and for $n>1$, $MSE(\\Theta_1)>MSE(\\Theta_2)$.",
         "keywords": [
           "unbiased",
           "sigma^2",
           "sigma^2/n",
           "mse"
         ],
-        "solution": "E[X1]=θ and E[Xbar]=θ, so both unbiased. MSE=Var for unbiased estimators. Var(Θ1)=σ², Var(Θ2)=σ²/n. For n>1, σ²>σ²/n."
+        "solution": "$E[X_1]=\\theta$ and $E[\\bar X]=\\theta$, so both are unbiased. $MSE=Var$ for unbiased estimators. $Var(\\Theta_1)=\\sigma^2$ and $Var(\\Theta_2)=\\sigma^2/n$. For $n>1$, $\\sigma^2>\\sigma^2/n$."
       },
       {
         "id": "24q8",
         "points": 11,
         "topic": "MLE Exponential",
-        "prompt": "Find the MLE of θ for iid exponential(rate θ) observations (1.23, 3.32, 1.98, 2.12). Check second derivative.",
+        "prompt": "Find the MLE of $\\theta$ for iid exponential(rate $\\theta$) observations $(1.23,3.32,1.98,2.12)$. Check second derivative.",
         "keywords": [
           "4/sum",
           "0.462",
           "negative",
           "1/xbar"
         ],
-        "solution": "ℓ(θ)=nlnθ−θΣx_i. dℓ/dθ=n/θ−Σx_i=0, so θhat=n/Σx_i=4/(1.23+3.32+1.98+2.12)=4/8.65≈0.462. Second derivative −n/θ²<0."
+        "solution": "$\\ell(\\theta)=n\\ln\\theta-\\theta\\sum x_i$. Set $d\\ell/d\\theta=n/\\theta-\\sum x_i=0$, so $\\hat\\theta=n/\\sum x_i=4/(1.23+3.32+1.98+2.12)=4/8.65\\approx0.462$. Second derivative $-n/\\theta^2<0$."
       },
       {
         "id": "24q9",
         "points": 11,
         "topic": "MGF Laplace",
-        "prompt": "Find the MGF of X with pdf f_X(x)=λ/2 e^{−λ|x|}, x real, λ>0.",
+        "prompt": "Find the MGF of $X$ with pdf $f_X(x)=\\lambda e^{-\\lambda|x|}/2$, $x$ real, $\\lambda>0$.",
         "keywords": [
           "lambda^2",
           "lambda^2-t^2",
           "t<lambda",
           "split"
         ],
-        "solution": "Split at 0: M(t)=λ/2∫_{−∞}0 e^{tx}e^{λx}dx+λ/2∫_0∞e^{tx}e^{−λx}dx = λ/2[1/(λ+t)+1/(λ−t)] = λ²/(λ²−t²), |t|<λ."
+        "solution": "Split at 0: $M(t)=\\frac{\\lambda}{2}\\int_{-\\infty}^0 e^{tx}e^{\\lambda x}\\,dx+\\frac{\\lambda}{2}\\int_0^\\infty e^{tx}e^{-\\lambda x}\\,dx=\\frac{\\lambda}{2}[1/(\\lambda+t)+1/(\\lambda-t)]=\\lambda^2/(\\lambda^2-t^2)$, $|t|<\\lambda$."
       },
       {
         "id": "24q10",
         "points": 11,
         "topic": "Correlation",
-        "prompt": "Cov(X1,X2)=1, Var(X1)=2, Var(X2)=4. Let X3=X1+X2+319 and X4=X2+1241. Find corr(X3,X4).",
+        "prompt": "$Cov(X_1,X_2)=1$, $Var(X_1)=2$, $Var(X_2)=4$. Let $X_3=X_1+X_2+319$ and $X_4=X_2+1241$. Find $corr(X_3,X_4)$.",
         "keywords": [
           "5",
           "4",
@@ -1770,13 +1819,13 @@ c) For a new patient who shows 73 PVCs in a one-hour recording, compute the p-va
           "5/sqrt",
           "cov"
         ],
-        "solution": "Cov(X3,X4)=Cov(X1+X2,X2)=Cov(X1,X2)+Var(X2)=1+4=5. Var(X3)=2+4+2(1)=8. Var(X4)=4. Corr=5/sqrt(8*4)=5/sqrt32."
+        "solution": "$Cov(X_3,X_4)=Cov(X_1+X_2,X_2)=Cov(X_1,X_2)+Var(X_2)=1+4=5$. $Var(X_3)=2+4+2(1)=8$ and $Var(X_4)=4$. Thus $corr(X_3,X_4)=5/\\sqrt{8\\cdot4}=5/\\sqrt{32}$."
       }
     ]
   },
   {
     "id": "2023",
-    "title": "Practice Final Version C — Spring 2023 condensed wording",
+    "title": "Practice Final Version C - Spring 2023 condensed wording",
     "duration": 10800,
     "questions": [
       {
@@ -1789,118 +1838,118 @@ c) For a new patient who shows 73 PVCs in a one-hour recording, compute the p-va
           "0.188",
           "bayes"
         ],
-        "solution": "P(+)=0.98(0.10)+0.10(0.90)=0.188. P(user|+)=0.98(0.10)/0.188≈0.52."
+        "solution": "$P(+)=0.98(0.10)+0.10(0.90)=0.188$. $P(\\text{user}|+)=0.98(0.10)/0.188\\approx0.52$."
       },
       {
         "id": "23q2",
         "points": 11,
         "topic": "Conditional expectation",
-        "prompt": "For joint PMF p(0,0)=1/5, p(0,1)=2/5, p(1,0)=2/5, p(1,1)=0, let Z=E[X|Y]. Find the PMF of Z, E[Z], and Var[Z].",
+        "prompt": "For joint PMF $p(0,0)=1/5$, $p(0,1)=2/5$, $p(1,0)=2/5$, $p(1,1)=0$, let $Z=E[X|Y]$. Find the PMF of $Z$, $E[Z]$, and $Var[Z]$.",
         "keywords": [
           "2/3",
           "3/5",
           "2/5",
           "8/75"
         ],
-        "solution": "Same calculation: Z=2/3 with probability 3/5 and 0 with probability 2/5. E[Z]=2/5. Var[Z]=8/75."
+        "solution": "Same calculation: $Z=2/3$ with probability $3/5$ and $0$ with probability $2/5$. $E[Z]=2/5$ and $Var[Z]=8/75$."
       },
       {
         "id": "23q3",
         "points": 11,
         "topic": "Random sum",
-        "prompt": "N~Poisson(β). Given N, X_i~Exponential(λ), independent of each other and of N. Let Y=sum_{i=1}^N X_i. Find E[Y] and Var[Y].",
+        "prompt": "$N\\sim Poisson(\\beta)$. Given $N$, $X_i\\sim Exponential(\\lambda)$, independent of each other and of $N$. Let $Y=\\sum_{i=1}^N X_i$. Find $E[Y]$ and $Var[Y]$.",
         "keywords": [
           "beta/lambda",
           "2beta/lambda^2",
           "total variance"
         ],
-        "solution": "E[N]=β, Var[N]=β, E[X]=1/λ, Var[X]=1/λ². E[Y]=β/λ. Var[Y]=β/λ²+β(1/λ)²=2β/λ²."
+        "solution": "$E[N]=\\beta$, $Var[N]=\\beta$, $E[X]=1/\\lambda$, $Var[X]=1/\\lambda^2$. $E[Y]=\\beta/\\lambda$. $Var[Y]=\\beta/\\lambda^2+\\beta(1/\\lambda)^2=2\\beta/\\lambda^2$."
       },
       {
         "id": "23q4",
         "points": 11,
         "topic": "Transformation",
-        "prompt": "Let X be standard normal and Y=X². Find f_Y(y) using transformations.",
+        "prompt": "Let $X$ be standard normal and $Y=X^2$. Find $f_Y(y)$ using transformations.",
         "keywords": [
           "sqrt",
           "e^{-y/2}",
           "sqrt(2pi y)"
         ],
-        "solution": "f_Y(y)=1/(sqrt(2πy))e^{-y/2}, y>0, from branches ±sqrt(y)."
+        "solution": "$f_Y(y)=\\frac{1}{\\sqrt{2\\pi y}}e^{-y/2}$, $y>0$, from branches $\\pm\\sqrt y$."
       },
       {
         "id": "23q5",
         "points": 11,
         "topic": "MGF",
-        "prompt": "X has pdf f_X(x)=1/(2a)e^{−|x|/a}, a>0. Given Y=|X|, derive M_Y(t).",
+        "prompt": "$X$ has pdf $f_X(x)=\\frac{1}{2a}e^{-|x|/a}$, $a>0$. Given $Y=|X|$, derive $M_Y(t)$.",
         "keywords": [
           "1/(1-at)",
           "exponential",
           "t<1/a"
         ],
-        "solution": "Y~Exponential(rate 1/a), so M_Y(t)=1/(1−at), t<1/a."
+        "solution": "$Y\\sim Exponential(\\text{rate }1/a)$, so $M_Y(t)=1/(1-at)$, $t<1/a$."
       },
       {
         "id": "23q6",
         "points": 11,
         "topic": "Covariance",
-        "prompt": "X has CDF 0 for x≤1, (x−1)/2 for 1<x≤3, and 1 for x>3. Given Y|X~Exponential(rate X), find Cov(X,Y), using ln3≈1.10.",
+        "prompt": "$X$ has CDF 0 for $x\\le1$, $(x-1)/2$ for $1<x\\le3$, and 1 for $x>3$. Given $Y|X\\sim Exponential(\\text{rate }X)$, find $Cov(X,Y)$, using $\\ln3\\approx1.10$.",
         "keywords": [
           "1-ln3",
           "-0.10",
           "uniform"
         ],
-        "solution": "X~Uniform(1,3). E[X]=2, E[Y]=ln3/2, E[XY]=1, so Cov=1−ln3≈−0.10."
+        "solution": "$X\\sim Uniform(1,3)$. $E[X]=2$, $E[Y]=\\ln3/2$, $E[XY]=1$, so $Cov(X,Y)=1-\\ln3\\approx-0.10$."
       },
       {
         "id": "23q7",
         "points": 11,
         "topic": "CLT",
-        "prompt": "A codeword has 1000 bits and each bit has independent error probability 0.10. Decoding fails if errors exceed 125. Use CLT with Φ(25/sqrt(90))≈0.9958.",
+        "prompt": "A codeword has 1000 bits and each bit has independent error probability 0.10. Decoding fails if errors exceed 125. Use CLT with $\\Phi(25/\\sqrt{90})\\approx0.9958$.",
         "keywords": [
           "0.0042",
           "100",
           "90"
         ],
-        "solution": "Y~Binomial(1000,0.10). μ=100, σ²=90. P(Y>125)=1−Φ(25/sqrt90)=0.0042."
+        "solution": "$Y\\sim Binomial(1000,0.10)$. $\\mu=100$, $\\sigma^2=90$. $P(Y>125)=1-\\Phi(25/\\sqrt{90})=0.0042$."
       },
       {
         "id": "23q8",
         "points": 11,
         "topic": "MLE Poisson",
-        "prompt": "For iid Poisson(λ) sample X1,...,Xn, derive the MLE for λ.",
+        "prompt": "For iid $Poisson(\\lambda)$ sample $X_1,\\ldots,X_n$, derive the MLE for $\\lambda$.",
         "keywords": [
           "bar",
           "sum/n",
           "poisson",
           "mle"
         ],
-        "solution": "Log likelihood: −nλ+(Σx_i)lnλ−constant. Set derivative to 0: λhat=Σx_i/n=Xbar."
+        "solution": "Log likelihood: $-n\\lambda+(\\sum x_i)\\ln\\lambda-\\text{constant}$. Set derivative to 0: $\\hat\\lambda=\\sum x_i/n=\\bar X$."
       },
       {
         "id": "23q9",
         "points": 11,
         "topic": "Bias",
-        "prompt": "For iid X_i with mean μ and variance σ², estimate θ=μ² using Θhat=(Xbar)^2. Calculate the bias.",
+        "prompt": "For iid $X_i$ with mean $\\mu$ and variance $\\sigma^2$, estimate $\\theta=\\mu^2$ using $\\hat\\Theta=(\\bar X)^2$. Calculate the bias.",
         "keywords": [
           "sigma^2/n",
           "bias",
           "positive"
         ],
-        "solution": "E[(Xbar)^2]=μ²+σ²/n, so bias=σ²/n."
+        "solution": "$E[(\\bar X)^2]=\\mu^2+\\sigma^2/n$, so bias $=\\sigma^2/n$."
       },
       {
         "id": "23q10",
         "points": 11,
         "topic": "Hypothesis testing",
-        "prompt": "A coin is tossed 100 times and 60 heads are observed. Test H0:p=0.5 vs H1:p>0.5 at α=0.05 and α=0.01. Use Φ(2)≈0.977, Φ^{-1}(0.95)=1.645, Φ^{-1}(0.99)=2.33. Find p-value.",
+        "prompt": "A coin is tossed 100 times and 60 heads are observed. Test $H_0:p=0.5$ vs $H_1:p>0.5$ at $\\alpha=0.05$ and $\\alpha=0.01$. Use $\\Phi(2)\\approx0.977$, $\\Phi^{-1}(0.95)=1.645$, $\\Phi^{-1}(0.99)=2.33$. Find p-value.",
         "keywords": [
           "2",
           "0.023",
           "reject 0.05",
           "not 0.01"
         ],
-        "solution": "Under H0, mean=50 and SD=sqrt(25)=5. z=(60−50)/5=2. p-value=1−Φ(2)=0.023. Reject at 0.05 because 2>1.645; do not reject at 0.01 because 2<2.33."
+        "solution": "Under $H_0$, mean $=50$ and $SD=\\sqrt{25}=5$. $z=(60-50)/5=2$. p-value $=1-\\Phi(2)=0.023$. Reject at $0.05$ because $2>1.645$; do not reject at $0.01$ because $2<2.33$."
       }
     ]
   }
@@ -2241,11 +2290,11 @@ function ModuleCard({ m, progress={}, onProgressChange=()=>{}, targetWeek="" }) 
         <h3 style={{ margin:"0 0 4px", fontSize:"15px" }}>{m.title}</h3>
         <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"13px", lineHeight:1.6 }}>{finalTopic?.examUse || m.focus}</p>
       </div>
-      <span style={{ color:m.color, fontSize:"24px", lineHeight:1 }}>{open?"−":"+"}</span>
+      <span style={{ color:m.color, fontSize:"24px", lineHeight:1 }}>{open?"-":"+"}</span>
     </div>
     {open && <div style={{ marginTop:"1rem" }}>
       {finalTopic && <div style={{ background:finalTopic.priority==="support"?C.grayBg:C.redBg, color:finalTopic.priority==="support"?C.gray:C.red, border:`0.5px solid ${(finalTopic.priority==="support"?C.gray:C.red)}40`, borderRadius:"var(--border-radius-md)", padding:"0.75rem 0.85rem", marginBottom:"0.9rem", fontSize:"12.5px", lineHeight:1.65 }}>
-        <strong>Study step {finalTopic.order}: {finalTopic.step}.</strong> Final exam connection: {finalTopic.topics.join(" · ")}
+        <strong>Study step {finalTopic.order}: {finalTopic.step}.</strong> Final exam connection: {finalTopic.topics.join(" | ")}
       </div>}
       <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(150px, 1fr))", gap:"8px", marginBottom:"0.9rem" }}>
         {[["formulas","Formula sheet"],["example","Source example"],["practice","Practice done"]].map(([id,label])=><label key={id} style={{ display:"flex", gap:"7px", alignItems:"center", fontSize:"12.5px", color:"var(--color-text-secondary)", background:"var(--color-background-secondary)", border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.55rem 0.65rem" }}>
@@ -2261,19 +2310,22 @@ function ModuleCard({ m, progress={}, onProgressChange=()=>{}, targetWeek="" }) 
         <Pill color={m.color} bg="var(--color-background-primary)">{m.example.source}</Pill>
         <h4 style={{ margin:"0.75rem 0 0.35rem", color:m.color }}>Example wording from source</h4>
         <div style={{ fontSize:"13.5px", lineHeight:1.75 }}><MathBlock text={m.example.prompt}/></div>
-        <Reveal title="Example solution" color={m.color}>{m.example.solution}</Reveal>
+        <Reveal title="Step-by-step example solution" color={m.color}>{m.example.solution}</Reveal>
         {!!EXTRA_EXAMPLES[m.week]?.length && <div style={{ marginTop:"1rem", display:"grid", gap:"8px" }}>
           <h4 style={{ margin:"0.25rem 0 0", color:m.color }}>More example types</h4>
           {EXTRA_EXAMPLES[m.week].map(ex=><div key={ex.type} style={{ background:"var(--color-background-primary)", border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.85rem" }}>
-            <Pill color={m.color} bg={m.bg}>{ex.type}</Pill>
+            <div style={{ display:"flex", gap:"6px", flexWrap:"wrap" }}>
+              <Pill color={m.color} bg={m.bg}>{ex.type}</Pill>
+              {ex.source && <Pill color={C.gray} bg={C.grayBg}>{ex.source}</Pill>}
+            </div>
             <div style={{ marginTop:"0.55rem", fontSize:"13px", lineHeight:1.7 }}><MathBlock text={ex.prompt}/></div>
-            <Reveal title="Example setup / answer" color={m.color}>{ex.solution}</Reveal>
+            <Reveal title="Step-by-step example solution" color={m.color}>{ex.solution}</Reveal>
           </div>)}
         </div>}
       </div>}
       {section==='practice' && <div style={{ background:"var(--color-background-secondary)", borderRadius:"var(--border-radius-md)", padding:"1rem", border:"0.5px solid var(--color-border-tertiary)" }}>
         <Pill color={m.color} bg={m.bg}>{m.practice.source}</Pill>
-        <h4 style={{ margin:"0.75rem 0 0.35rem", color:m.color }}>Different-type practice</h4>
+        <h4 style={{ margin:"0.75rem 0 0.35rem", color:m.color }}>Practice wording from source</h4>
         <div style={{ fontSize:"13.5px", lineHeight:1.75 }}><MathBlock text={m.practice.prompt}/></div>
         <Reveal title="Practice answer" color={m.color}>{m.practice.answer}</Reveal>
       </div>}
@@ -2295,7 +2347,7 @@ function DashboardTab({ progress, onProgressChange, setTab, jumpToLecture }) {
   return <div style={S.content}>
     <div style={{ ...S.card, display:"grid", gridTemplateColumns:"minmax(0, 1.5fr) minmax(260px, 0.8fr)", gap:"1rem", alignItems:"start" }}>
       <div>
-        <Pill color={C.indigo} bg={C.indigoBg}>Final: {EXAM_INFO.date} · {EXAM_INFO.time}</Pill>
+        <Pill color={C.indigo} bg={C.indigoBg}>Final: {EXAM_INFO.date} | {EXAM_INFO.time}</Pill>
         <h1 style={{ margin:"0.65rem 0 0.35rem", fontSize:"clamp(24px, 4vw, 40px)", lineHeight:1.1, letterSpacing:0 }}>Aim for 9 clean solutions, not random coverage.</h1>
         <p style={{ margin:"0 0 1rem", color:"var(--color-text-secondary)", lineHeight:1.7, fontSize:"14px" }}>{EXAM_INFO.problems}, {EXAM_INFO.points}. {EXAM_INFO.target}. Focus on derivations, setup, and recognizing which formula family each problem is asking for.</p>
         <div style={{ display:"flex", gap:"8px", flexWrap:"wrap" }}>
@@ -2305,7 +2357,7 @@ function DashboardTab({ progress, onProgressChange, setTab, jumpToLecture }) {
         </div>
       </div>
       <div style={{ background:nextModule.bg, border:`0.5px solid ${nextModule.color}40`, borderRadius:"var(--border-radius-md)", padding:"1rem" }}>
-        <Pill color={nextModule.color} bg="var(--color-background-primary)">Next up · {nextModule.week}</Pill>
+        <Pill color={nextModule.color} bg="var(--color-background-primary)">Next up | {nextModule.week}</Pill>
         <h3 style={{ margin:"0.7rem 0 0.4rem", fontSize:"16px" }}>{nextModule.title}</h3>
         <ProgressBar value={pct(["formulas","example","practice"].filter(k=>nextProgress[k]).length, 3)} color={nextModule.color} />
         <div style={{ display:"flex", gap:"8px", flexWrap:"wrap", marginTop:"0.8rem" }}>
@@ -2412,7 +2464,7 @@ function FormulaSheetTab() {
         <button style={S.btn("outline")} onClick={openPrintableFormulaSheet}>Open print / save PDF</button>
       </div>
     </div>
-    <div style={S.alert(C.amber,C.amberBg)}>For a PDF: press <strong>Open print / save PDF</strong>, then choose “Save as PDF” in the print window. Set paper size to Letter 8.5 x 11 and orientation to landscape.</div>
+    <div style={S.alert(C.amber,C.amberBg)}>For a PDF: press <strong>Open print / save PDF</strong>, then choose "Save as PDF" in the print window. Set paper size to Letter 8.5 x 11 and orientation to landscape.</div>
     <div style={{ display:"grid", gap:"18px", marginBottom:"1rem" }}>
       {FORMULA_SHEET_PAGES.map((page,i)=><FormulaA4Page key={page.title} page={page} index={i}/>)}
     </div>
@@ -2514,7 +2566,7 @@ function formatTime(sec) {
   const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60), s = sec%60;
   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
-function normalize(s="") { return String(s).toLowerCase().replace(/\s+/g," ").replace(/[−–]/g,"-"); }
+function normalize(s="") { return String(s).toLowerCase().replace(/\s+/g," ").replace(/[\u2212\u2013]/g,"-"); }
 function scoreQuestion(q, ans) {
   const n = normalize(ans);
   if (!n.trim()) return 0;
@@ -2569,7 +2621,7 @@ function TimedFinalTab() {
     </div>
     {!started && !finished && <div style={S.alert(C.gray,C.grayBg)}>Choose a version, press Start, then type answers in the boxes. Answers and scoring are hidden until you submit or time expires.</div>}
     {final.questions.map((q,i)=><div key={q.id} style={S.card}>
-      <div style={{ display:"flex", gap:"8px", flexWrap:"wrap", marginBottom:"0.7rem" }}><Pill color={C.indigo} bg={C.indigoBg}>Q{i+1} · {q.points} pts</Pill><Pill color={C.gray} bg={C.grayBg}>{q.topic}</Pill>{finished && <Pill color={(scores[q.id]||0)>=q.points*0.75?C.teal:C.red} bg={(scores[q.id]||0)>=q.points*0.75?C.tealBg:C.redBg}>{scores[q.id]||0}/{q.points}</Pill>}</div>
+      <div style={{ display:"flex", gap:"8px", flexWrap:"wrap", marginBottom:"0.7rem" }}><Pill color={C.indigo} bg={C.indigoBg}>Q{i+1} | {q.points} pts</Pill><Pill color={C.gray} bg={C.grayBg}>{q.topic}</Pill>{finished && <Pill color={(scores[q.id]||0)>=q.points*0.75?C.teal:C.red} bg={(scores[q.id]||0)>=q.points*0.75?C.tealBg:C.redBg}>{scores[q.id]||0}/{q.points}</Pill>}</div>
       <div style={{ fontSize:"13.5px", lineHeight:1.8, marginBottom:"0.85rem" }}><MathBlock text={q.prompt}/></div>
       <textarea disabled={!started || finished} value={answers[q.id]||""} onChange={e=>setAnswers(a=>({...a,[q.id]:e.target.value}))} placeholder={started&&!finished?"Type your derivation and final answer here...":"Start the timer to type your answer."} style={{ ...S.input, opacity:(!started||finished)?0.75:1 }}/>
       {finished && <div style={{ marginTop:"0.85rem", background:"var(--color-background-secondary)", borderRadius:"var(--border-radius-md)", padding:"0.9rem 1rem", border:"0.5px solid var(--color-border-tertiary)", fontSize:"13px", lineHeight:1.75 }}>
@@ -2596,7 +2648,7 @@ export default function StudyHub() {
       <div style={{ width:"34px", height:"34px", borderRadius:"9px", background:C.indigo, display:"flex", alignItems:"center", justifyContent:"center", color:"#fff", fontWeight:800 }}>B</div>
       <div>
         <h2 style={{ margin:0, fontSize:"16px" }}>BENG 100 Study Hub</h2>
-        <p style={{ margin:0, fontSize:"11.5px", color:"var(--color-text-secondary)" }}>A+ final prep · Spring 2025 first · professor focus topics · derivations over memorization</p>
+        <p style={{ margin:0, fontSize:"11.5px", color:"var(--color-text-secondary)" }}>A+ final prep | Spring 2025 first | professor focus topics | derivations over memorization</p>
       </div>
       <div style={{ marginLeft:"auto", display:"flex", gap:"6px", flexWrap:"wrap" }}><Pill color={C.red} bg={C.redBg}>Show derivations for full credit</Pill></div>
     </div>
