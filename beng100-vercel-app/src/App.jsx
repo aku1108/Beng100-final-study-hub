@@ -471,6 +471,11 @@ const MODULES = [
         "Most common exam formula."
       ],
       [
+        "Independence condition",
+        "$$X,Y\\text{ independent}\\Rightarrow Cov[X,Y]=0$$",
+        "$Cov[X,Y]=0$ does not always mean $X$ and $Y$ are independent."
+      ],
+      [
         "Covariance properties",
         "$$Cov[aX+b,cY+d]=ac\\,Cov[X,Y]$$",
         "Constants vanish; scale factors come out."
@@ -1150,8 +1155,8 @@ const QUICK_SHEETS = [
       ],
       [
         "Continuous LOTUS",
-        "$$\\begin{aligned}E[g(X)]&=\\int_{-\\infty}^{\\infty}g(x)f_X(x)\\,dx\\\\\\text{Special cases:}\\quad E[X]&=\\int_{-\\infty}^{\\infty}x f_X(x)\\,dx\\\\E[X^2]&=\\int_{-\\infty}^{\\infty}x^2f_X(x)\\,dx\\end{aligned}$$",
-        "Use the density directly for a function of $X$; mean and second moment are special cases."
+        "$$\\begin{aligned}E[g(X)]&=\\int_{-\\infty}^{\\infty}g(x)f_X(x)\\,dx\\\\E[X^2]&=\\int_{-\\infty}^{\\infty}x^2f_X(x)\\,dx\\end{aligned}$$",
+        "Use the density directly for a function of $X$; for $E[X^2]$, use $g(x)=x^2$."
       ],
       [
         "Inverse examples",
@@ -1260,9 +1265,14 @@ const QUICK_SHEETS = [
         "Most common exam formula."
       ],
       [
+        "Independence condition",
+        "$$X,Y\\text{ independent}\\Rightarrow Cov[X,Y]=0$$",
+        "$Cov[X,Y]=0$ does not always mean $X$ and $Y$ are independent."
+      ],
+      [
         "Covariance properties",
         "$$Cov[aX+b,cY+d]=ac\\,Cov[X,Y]$$",
-        "Constants vanish; scale factors come out. Independence implies zero covariance, but zero covariance does not guarantee independence."
+        "Constants vanish; scale factors come out."
       ],
       [
         "Variance of sum",
@@ -1297,7 +1307,7 @@ const QUICK_SHEETS = [
       [
         "Common MGFs",
         "$$\\begin{aligned}\\text{Bernoulli}(p):\\ &M_X(t)=1-p+pe^t\\\\\\text{Binomial}(n,p):\\ &M_X(t)=(1-p+pe^t)^n\\\\\\text{Poisson}(\\lambda):\\ &M_X(t)=\\exp(\\lambda(e^t-1))\\\\\\text{Exponential}(\\lambda):\\ &M_X(t)=\\frac{\\lambda}{\\lambda-t},\\ t<\\lambda\\\\\\text{Normal}(\\mu,\\sigma^2):\\ &M_X(t)=\\exp(\\mu t+\\sigma^2 t^2/2)\\end{aligned}$$",
-        "Memorize the standard families that show up most often on exams."
+        ""
       ],
       [
         "Independent sum MGF",
@@ -1955,6 +1965,10 @@ c) For a new patient who shows 73 PVCs in a one-hour recording, compute the p-va
   }
 ];
 
+function getSpring2025Final() {
+  return FINALS.find(final => final.id === "2025") || FINALS[0];
+}
+
 const FINAL_TOPIC_WEEKS = new Set(["Week 2","Week 3","Week 4","Week 5","Week 6","Week 7","Week 8","Week 9","Week 10"]);
 const STORAGE_KEY = "beng100-study-progress-v2";
 const EXAM_INFO = {
@@ -2131,10 +2145,10 @@ function compactFormulaText(str="") {
 }
 function renderFormulaSheetHtml() {
   const renderRows = sheet => sheet.formulas.map(([name, formula, use]) => `
-    <div class="formula-row ${weekFromSheetLabel(sheet.label) === "Week 1" ? "week-one-row" : ""}">
+    <div class="formula-row ${weekFromSheetLabel(sheet.label) === "Week 1" ? "week-one-row" : ""} ${name === "Continuous LOTUS" ? "wide-formula-row" : ""}">
       <div class="formula-name">${escapeHtml(name)}</div>
       <div class="formula-math">${escapeHtml(compactFormulaText(formula))}</div>
-      ${weekFromSheetLabel(sheet.label) === "Week 1" ? "" : `<div class="formula-use">${escapeHtml(use)}</div>`}
+      ${weekFromSheetLabel(sheet.label) === "Week 1" || name === "Continuous LOTUS" ? "" : `<div class="formula-use">${escapeHtml(use)}</div>`}
     </div>
   `).join("");
   const renderDistributionGuide = () => `
@@ -2184,6 +2198,7 @@ function renderFormulaSheetHtml() {
     .formula-grid { display: grid; gap: 3px; }
     .formula-row { display: grid; grid-template-columns: 20% 39% 41%; gap: 3px; align-items: start; border-bottom: .5px solid #eee; padding-bottom: 2px; }
     .formula-row.week-one-row { grid-template-columns: 38% 62%; }
+    .formula-row.wide-formula-row { grid-template-columns: 24% 76%; }
     .formula-name { font-size: 8px; font-weight: 700; line-height: 1.15; }
     .formula-math { font-size: 7.5px; line-height: 1.2; overflow-wrap: anywhere; }
     .formula-use { font-size: 7.2px; color: #444; line-height: 1.22; }
@@ -2233,6 +2248,96 @@ function openPrintableFormulaSheet() {
   win.document.write(renderFormulaSheetHtml());
   win.document.close();
 }
+function renderCheatTextHtml(text="") {
+  return escapeHtml(compactFormulaText(formatPartSpacing(text)));
+}
+function renderSpring2025FinalSheetHtml() {
+  const final = getSpring2025Final();
+  const questions = final.questions.map((q,i) => `
+    <section class="qa-block">
+      <div class="qa-head"><span>Q${i+1}</span><span>${escapeHtml(q.points)} pts</span><span>${escapeHtml(q.topic)}</span></div>
+      <div class="label">Exact question</div>
+      <div class="prompt">${renderCheatTextHtml(q.prompt)}</div>
+      <div class="label">Solution</div>
+      <div class="solution">${renderCheatTextHtml(q.solution)}</div>
+    </section>
+  `).join("");
+  return `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Spring 2025 Final Q/S Cheat Sheet</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <style>
+    @page { size: letter landscape; margin: 0.2in; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e8e8e8; color: #171717; font-family: Arial, Helvetica, sans-serif; }
+    .toolbar { position: sticky; top: 0; z-index: 2; padding: 10px 14px; background: #fff; border-bottom: 1px solid #ccc; display: flex; gap: 8px; align-items: center; }
+    .toolbar button { border: 1px solid #777; background: #111827; color: #fff; border-radius: 6px; padding: 8px 11px; cursor: pointer; }
+    .toolbar span { font-size: 12px; color: #555; }
+    .sheet { width: 1056px; margin: 12px auto; padding: 20px 22px; background: #fff; }
+    header { border-bottom: 1px solid #111; padding-bottom: 5px; margin-bottom: 6px; display: flex; justify-content: space-between; gap: 12px; align-items: end; }
+    h1 { margin: 0; font-size: 13px; line-height: 1.1; }
+    .note { font-size: 8px; color: #555; }
+    main { column-count: 3; column-gap: 10px; }
+    .qa-block { break-inside: avoid; border: .5px solid #d8d8d8; border-radius: 3px; padding: 4px; margin-bottom: 6px; }
+    .qa-head { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 3px; font-size: 7px; font-weight: 700; }
+    .qa-head span { border: .5px solid #ddd; border-radius: 999px; padding: 1px 4px; }
+    .label { font-size: 6.8px; font-weight: 800; color: #333; margin: 2px 0 1px; text-transform: uppercase; letter-spacing: .03em; }
+    .prompt, .solution { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 6.2px; line-height: 1.22; }
+    .solution { background: #f7f7f7; border-top: .5px solid #e5e5e5; padding-top: 2px; margin-top: 2px; }
+    .katex { font-size: 1em !important; }
+    .katex-display { margin: 1px 0; overflow: visible; text-align: left; }
+    @media print {
+      body { background: #fff; }
+      .toolbar { display: none; }
+      .sheet { margin: 0; width: auto; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar"><button onclick="window.print()">Print / Save as PDF</button><span>Spring 2025 exact questions + solutions. Use landscape for the most compact layout.</span></div>
+  <section class="sheet">
+    <header>
+      <h1>Spring 2025 Final Q/S Cheat Sheet</h1>
+      <div class="note">${escapeHtml(final.title)} | ${final.questions.length} questions</div>
+    </header>
+    <main>${questions}</main>
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script>
+    window.addEventListener("load", function() {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false }
+        ],
+        throwOnError: false
+      });
+    });
+  </script>
+</body>
+</html>`;
+}
+function downloadSpring2025FinalSheet() {
+  const blob = new Blob([renderSpring2025FinalSheetHtml()], { type: "text/html;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "spring-2025-final-questions-solutions.html";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+function openPrintableSpring2025FinalSheet() {
+  const win = window.open("", "_blank");
+  if (!win) return;
+  win.document.open();
+  win.document.write(renderSpring2025FinalSheetHtml());
+  win.document.close();
+}
 function FormulaA4Page({ page, index }) {
   return <div style={{ background:"#fff", color:"#171717", border:"1px solid var(--color-border-tertiary)", boxShadow:"0 2px 8px #00000014", width:"100%", maxWidth:"1056px", minHeight:"816px", margin:"0 auto 18px", padding:"26px", overflow:"hidden" }}>
     <div style={{ borderBottom:"1px solid #222", paddingBottom:"6px", marginBottom:"6px" }} />
@@ -2250,10 +2355,11 @@ function FormulaA4Page({ page, index }) {
         <div style={{ display:"grid", gap:"3px" }}>
           {sheet.formulas.map(([name, formula, use])=>{
             const isWeekOne = weekFromSheetLabel(sheet.label) === "Week 1";
-            return <div key={`${sheet.label}-${name}`} style={{ display:"grid", gridTemplateColumns:isWeekOne?"38% 62%":"20% 39% 41%", gap:"3px", borderBottom:"0.5px solid #eee", paddingBottom:"2px", alignItems:"start" }}>
+            const isWideFormula = name === "Continuous LOTUS";
+            return <div key={`${sheet.label}-${name}`} style={{ display:"grid", gridTemplateColumns:isWeekOne?"38% 62%":isWideFormula?"24% 76%":"20% 39% 41%", gap:"3px", borderBottom:"0.5px solid #eee", paddingBottom:"2px", alignItems:"start" }}>
             <div style={{ fontSize:"8px", fontWeight:800, lineHeight:1.15 }}>{name}</div>
             <div style={{ fontSize:"7.5px", lineHeight:1.2, overflowWrap:"anywhere" }}><MathBlock text={compactFormulaText(formula)}/></div>
-            {!isWeekOne && <div style={{ fontSize:"7.2px", color:"#444", lineHeight:1.22 }}><MathBlock text={use}/></div>}
+            {!isWeekOne && !isWideFormula && <div style={{ fontSize:"7.2px", color:"#444", lineHeight:1.22 }}><MathBlock text={use}/></div>}
           </div>;
           })}
         </div>
@@ -2330,6 +2436,41 @@ function ModuleCard({ m, progress={}, onProgressChange=()=>{}, targetWeek="" }) 
         <Reveal title="Practice answer" color={m.color}>{m.practice.answer}</Reveal>
       </div>}
     </div>}
+  </div>;
+}
+function Spring2025FinalCheatSection() {
+  const final = getSpring2025Final();
+  return <div style={{ marginBottom:"1rem" }}>
+    <div style={{ ...S.card, display:"flex", justifyContent:"space-between", gap:"1rem", alignItems:"center", flexWrap:"wrap" }}>
+      <div>
+        <Pill color={C.red} bg={C.redBg}>Spring 2025 exact Q/S</Pill>
+        <h2 style={{ margin:"0.55rem 0 0.25rem", fontSize:"20px" }}>2025 Final Questions + Solutions</h2>
+        <p style={{ margin:0, color:"var(--color-text-secondary)", fontSize:"13px", lineHeight:1.6 }}>Exact question wording and solutions are pulled from the Spring 2025 final practice version in this hub.</p>
+      </div>
+      <div style={{ display:"flex", gap:"8px", flexWrap:"wrap" }}>
+        <button style={S.btn("primary", C.red)} onClick={downloadSpring2025FinalSheet}>Download 2025 Q/S HTML</button>
+        <button style={S.btn("outline")} onClick={openPrintableSpring2025FinalSheet}>Open 2025 Q/S print</button>
+      </div>
+    </div>
+    <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(300px, 1fr))", gap:"10px" }}>
+      {final.questions.map((q,i)=><details key={q.id} style={{ ...S.card, marginBottom:0 }}>
+        <summary style={{ cursor:"pointer", display:"flex", gap:"8px", flexWrap:"wrap", alignItems:"center", listStyle:"none" }}>
+          <Pill color={C.red} bg={C.redBg}>Q{i+1}</Pill>
+          <Pill color={C.gray} bg={C.grayBg}>{q.points} pts</Pill>
+          <Pill color={C.indigo} bg={C.indigoBg}>{q.topic}</Pill>
+        </summary>
+        <div style={{ marginTop:"0.75rem", display:"grid", gap:"0.75rem" }}>
+          <div>
+            <h4 style={{ margin:"0 0 0.35rem", fontSize:"13px", color:C.red }}>Exact question</h4>
+            <div style={{ fontSize:"12.5px", lineHeight:1.7 }}><MathBlock text={q.prompt}/></div>
+          </div>
+          <div style={{ background:"var(--color-background-secondary)", border:"0.5px solid var(--color-border-tertiary)", borderRadius:"var(--border-radius-md)", padding:"0.75rem" }}>
+            <h4 style={{ margin:"0 0 0.35rem", fontSize:"13px", color:C.red }}>Solution</h4>
+            <div style={{ fontSize:"12.5px", lineHeight:1.7 }}><MathBlock text={q.solution}/></div>
+          </div>
+        </div>
+      </details>)}
+    </div>
   </div>;
 }
 function DashboardTab({ progress, onProgressChange, setTab, jumpToLecture }) {
@@ -2468,6 +2609,7 @@ function FormulaSheetTab() {
     <div style={{ display:"grid", gap:"18px", marginBottom:"1rem" }}>
       {FORMULA_SHEET_PAGES.map((page,i)=><FormulaA4Page key={page.title} page={page} index={i}/>)}
     </div>
+    <Spring2025FinalCheatSection />
     <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:"1rem", flexWrap:"wrap", marginBottom:"1rem" }}>
       <div style={S.alert(C.gray,C.grayBg)}>Searchable full formula tables are still below for studying on screen.</div>
       <label style={{ fontSize:"13px", display:"flex", gap:"6px", alignItems:"center" }}><input type="checkbox" checked={onlyFinal} onChange={e=>setOnlyFinal(e.target.checked)}/> Final-heavy topics only</label>
